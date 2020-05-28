@@ -3,35 +3,37 @@
   <head>
     <meta charset="UTF-8">
     <title>Zach Ghera</title>
-
+ 
     <link rel="stylesheet" href="styles/style.css">
+ 
+    <script src="scripts/script.js" async></script>
   </head>
   <body>
-    <nav id="nav-bar">
-      <ul>
-        <li><img src="images/home-logo.png" alt="Home Logo"></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Experience</a></li>
-        <li><a href="#">Projects</a></li>
-        <li><a href="#">Contact</a></li>
-        <li><a href="#">Resume</a></li>
+    <nav>
+      <ul id="nav-bar">
+        <li style="float:left">
+          <a class="nav-lnk" 
+          href="https://8080-dot-12459592-dot-devshell.appspot.com/">ZG</a></li>
+        <li class="nav-el"><a class="nav-lnk" href="zghera-resume.pdf">Resume</a></li>
+        <li class="nav-el"><a class="nav-lnk" href="#contact">Contact</a></li>
+        <li class="nav-el"><a class="nav-lnk" href="#projects">Projects</a></li>
+        <li class="nav-el"><a class="nav-lnk" href="#experience">Experience</a></li>
+        <li class="nav-el"><a class="nav-lnk" href="#about">About</a></li>
       </ul>
     </nav>
-
+ 
     <aside id="side-bar">
-      <ul>
-        <li>...</li>
-      </ul>
+      **side-bar will go here**
     </aside>
-
-    <section class="content">
+ 
+    <section id="header" class="content">
       <p>Hi, my name is</p>
       <h1>Zach Ghera</h1>
     </section>
-
-    <section class="content">
+ 
+    <section id="about" class="content">
       <h2>About Me</h2>
-      <img src="images/zghera.jpeg" alt="Me">
+      <img src="images/zghera-wide.jpg" alt="Me">
       <p>Hello there! I'm Zach, a rising junior at Purdue University studying
         Computer Engineering.</p>
       <p>I have a passion for technology and solving complex problems through 
@@ -40,8 +42,8 @@
         outside of classes.
       </p>
     </section>
-
-    <section class="content">
+ 
+    <section id="experience" class="content">
       <h2>Work Experience</h2>
       <section class="content">
         <h3>STEP Intern @ Google</h3>
@@ -61,13 +63,13 @@
             in C++ and applied it to the primary storage format for Google logs database. 
             This minimized compression overhead on small data by training Zstd dictionaries 
             for certain log types with structured data. This was implemented for standard 
-            compression and compression streams.
+            compression and compression streams
           </li>
           <li>Created performance benchmarking tool to measure the benefits of the new design.
-             Analyzed and visualized the performance results using Python and SQL.
+             Analyzed and visualized the performance results using Python and SQL
           </li>
           <li>Improved the compression ratio by 10-15% for certain log storage types with minimal
-             performance reduction.
+             performance reduction
           </li>
         </ul>
         <img src="images/g-plat-logo.png" alt="Google Platforms Logo">
@@ -92,8 +94,8 @@
         <img src="images/CSSI-wireframe.png" alt="CSSI Web App Wireframe">
       </section>
     </section>
-
-    <section class="content">
+ 
+    <section id="projects" class="content">
       <h2>Projects</h2>
       <section class="content">
         <h3>AMP</h3>
@@ -137,13 +139,11 @@
         <img src="images/engr161.png" alt="Mars Rover Prototype Robot">
       </section>
     </section>
-
-    <section class="content">
+ 
+    <section id="contact" class="content">
       <h2>Get In Touch</h4>
       <p>...</p>
       <a href="mailto:zachary.ghera@gmail.com" id="link-box">Say Hi</a>
     </section>
-
-    <script src="scripts/script.js"></script>
   </body>
 </html>

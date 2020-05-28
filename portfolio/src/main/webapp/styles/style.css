@@ -1,9 +1,43 @@
-#content {
+body {
+  background-color: #03004A;
+  color:rgb(161, 161, 161);
+}
+ 
+img {
+  height: 10%;
+  width: 10%;
+}
+ 
+#nav-bar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #03004A;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+ 
+.nav-el {
+  float: right;
+}
+  
+.nav-lnk {
+  display: block;
+  color: #55FBDC;
+  text-align: center;
+  padding: 1vw 1vw;
+  padding-bottom: 1vw;
+  width: 10vw;
+}
+ 
+.nav-lnk:hover {
+  color: white;
+}
+ 
+.content {
   margin-left: auto;
   margin-right: auto;
   width: 650px;
-}
-
-#greeting-container {
-  margin-top: 20px;
 }
