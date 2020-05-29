@@ -1,0 +1,78 @@
+/* General Elements */
+body {
+  background-color: #02003C;
+  color:rgb(161, 161, 161);
+}
+
+/* Navigation Bar */
+
+#outter-nav {
+  top: 0;
+  width: 100vw;
+  position: fixed;
+  background-color: #02003C;
+  color: #55FBDC;
+  padding: 2vmin;
+  padding-top: 3vmin;
+
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+#home-logo {
+  color: #55FBDC;
+  text-align: center;
+  flex-basis: 12%;
+  flex-shrink: 0;
+  text-decoration: none;
+  font-size: 22pt;
+}
+
+#inner-nav {
+  /* Flex item properies */
+  flex-basis: 80vw;
+  padding-right: 3%;
+  font-size: auto;
+  font-family: Arial, Helvetica, sans-serif;
+
+  /* Flex container properites */
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-end;
+}
+ 
+#inner-nav > div{
+  flex-basis: 10%;
+  padding-right: 3%;
+  align-self: center;
+}
+  
+.nav-lnk {
+  display: block;
+  color: #55FBDC;
+  text-align: center;
+  text-decoration: none;
+}
+ 
+.nav-lnk:hover {
+  color: white;
+}
+
+#header {
+  padding-top: 8vh
+}
+
+.content {
+  padding-top: 2vh;
+  padding-left: 8vw;
+}
+
+.section {
+  padding-top: 30vw;
+}
+
+img {
+  height: 10%;
+  width: 10%;
+}
