@@ -100,7 +100,8 @@ img {
     height:60px;
     justify-content: center;
     position:fixed;
-    width:100%;
+    width:110vw;
+    left:-5vw;
     z-index:2;
   }
   #blue-bottom{
