@@ -1,11 +1,29 @@
 /* General Elements */
 body {
   background-color: #02003C;
-  color:rgb(161, 161, 161);
+  color:rgb(160, 160, 160);
+}
+
+#header {
+  padding-top: 8vh
+}
+ 
+.content {
+  padding-top: 2vh;
+  padding-left: 12vw;
+  z-index:0;
+}
+ 
+.section {
+  padding-top: 30vw;
+}
+ 
+img {
+  height: 10%;
+  width: 10%;
 }
  
 /* Navigation Bar */
- 
 #outter-nav {
   top: 0;
   width: 100vw;
@@ -28,7 +46,8 @@ body {
   text-decoration: none;
   font-size: 22pt;
 }
- 
+
+/* Right-side Nav Container */
 #inner-nav {
   /* Flex item properies */
   flex-basis: 80vw;
@@ -60,27 +79,7 @@ body {
 }
 
 /* Side Bar */
-
- 
-#header {
-  padding-top: 8vh
-}
- 
-.content {
-  padding-top: 2vh;
-  padding-left: 12vw;
-  z-index:0;
-}
- 
-.section {
-  padding-top: 30vw;
-}
- 
-img {
-  height: 10%;
-  width: 10%;
-}
- 
+/* |--> Container */
 #sidebar {
   width:85px;
   height:100%;
@@ -91,14 +90,10 @@ img {
   display:flex;
   flex-flow: column nowrap;
   justify-content: flex-end;
-
-  /* Debugging */
-  /* border:solid;
-  border-color:red; */
 }
 @media only screen and (max-width: 600px) {
   #sidebar {
-    width:100%;
+    width:100vw;
     height:60px;
     bottom: 0;
     z-index:2;
@@ -109,13 +104,9 @@ img {
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-
-    /* Debugging */
-    /* border:solid;
-    border-color:red; */
   }
-  #blueBottom{
-    width:100%;
+  #blue-bottom{
+    width:100vw;
     height:85px;
     bottom: 0;
     z-index:1;
@@ -125,6 +116,7 @@ img {
   }
 }
 
+/* |--> Container Elements */
 #sidebar > div {
   flex-shrink: 0;
   align-self: center;
@@ -135,10 +127,6 @@ img {
 
   text-align: left;
   font-size: 22px;
-
-  /* Debugging */
-  /* border:solid;
-  border-color:purple; */
 }
 @media only screen and (max-width: 600px) {
   #sidebar > div {
@@ -151,15 +139,11 @@ img {
 
     text-align: center;
     font-size: 22px;
-
-    /* Debugging */
-    /* border:solid;
-    border-color:purple */
   }
 }
  
 #sidebar > div > a {
   opacity:1 !important;
-  color:white !important;
+  color:rgb(160, 160, 160) !important;
   z-index:3;
 }
