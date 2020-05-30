@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/* TODO:Format */
 function reload(){
   window.open("https://8080-dot-12459592-dot-devshell.appspot.com/","_self");
 }
