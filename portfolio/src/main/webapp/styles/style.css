@@ -5,7 +5,7 @@ body {
 }
 
 #header {
-  padding-top: 8vh;
+  padding-top: 14vh;
 }
 
 h1 {
@@ -34,20 +34,34 @@ img {
   flex-flow: row wrap;
   font-family: 'Roboto Slab', serif;
   justify-content: space-between;
+  background-color:#41485B;
   padding: 2vmin;
   padding-top: 3vmin;
   position: fixed;
   top: 0;
   width: 100vw;
 }
- 
+
 #home-logo {
+  background:rgb(40,40,60);
+  border:solid;
+  border-color:black;
+  border-radius:50%;
   color: #008BB3;
-  flex-basis: 12%;
-  flex-shrink: 0;
-  font-size: 22pt;
+  font-size: 2em;
+  height:60px;
+  padding-top:15px;
   text-align: center;
   text-decoration: none;
+  width:75px;
+  z-index:3;
+}
+
+#home-logo:hover{
+  background:rgb(60,60,80);
+  border-color:rgb(100,100,200);
+  color: #18a5d4;
+  cursor:grab;
 }
 
 /* Right-side Nav Flex Element */
