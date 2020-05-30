@@ -18,14 +18,14 @@ h1 {
   padding-left: 12vw;
   z-index:0;
 }
- 
-.section {
-  padding-top: 30vw;
-}
- 
+
 img {
   height: 10%;
   width: 10%;
+}
+ 
+.section {
+  padding-top: 30vw;
 }
  
 /* Top Navigation Bar */
@@ -57,7 +57,7 @@ img {
   z-index:3;
 }
 
-#home-logo:hover{
+#home-logo:hover {
   background:rgb(60,60,80);
   border-color:rgb(100,100,200);
   color: #18a5d4;
