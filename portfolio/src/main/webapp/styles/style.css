@@ -61,7 +61,7 @@ img {
   justify-content: flex-end;
 }
  
-#inner-nav-container > div{
+#inner-nav-container > div {
   align-self: center;
   flex-basis: 10%;
   padding-right: 3%;
@@ -104,7 +104,8 @@ img {
     left:-5vw;
     z-index:2;
   }
-  #blue-bottom{
+  
+  #blue-bottom {
     background-color: #02003C;
     bottom: 0;
     height:85px;
