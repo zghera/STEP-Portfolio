@@ -11,7 +11,7 @@ h1 {
   text-shadow:5px 5px 20px rgb(90,130,250,.5);
 }
 
-h2{
+h2 {
   color:white;
 }
  
@@ -21,7 +21,7 @@ h3 {
   font-size:1em;
 }
 
-h5{
+h5 {
   color:rgb(184, 184, 165);
   font-family: 'Roboto', sans-serif;
 }
@@ -149,7 +149,8 @@ img {
     left:-5vw;
     z-index:2;
   }
-  #blue-bottom{
+  
+  #blue-bottom {
     background-color: rgb(12, 22, 27);
     bottom: 0;
     height:60px;
