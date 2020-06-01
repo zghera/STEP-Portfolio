@@ -85,7 +85,7 @@ h1 {
   justify-content: flex-end;
 }
  
-#inner-nav-container > div{
+#inner-nav-container > div {
   align-self: center;
   flex-basis: 10%;
   padding-right: 3%;
