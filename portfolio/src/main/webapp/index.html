@@ -3,147 +3,144 @@
   <head>
     <meta charset="UTF-8">
     <title>Zach Ghera</title>
-
+ 
     <link rel="stylesheet" href="styles/style.css">
+ 
+    <script src="scripts/script.js" async></script>
   </head>
   <body>
-    <nav id="nav-bar">
-      <ul>
-        <li><img src="images/home-logo.png" alt="Home Logo"></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Experience</a></li>
-        <li><a href="#">Projects</a></li>
-        <li><a href="#">Contact</a></li>
-        <li><a href="#">Resume</a></li>
-      </ul>
+    <nav id="outer-nav">
+      <a id="home-logo" href="https://8080-dot-12459592-dot-devshell.appspot.com/">
+        ZG</a>
+      <div id="inner-nav">
+        <div><a class="nav-lnk" href="#about">About</a></div>
+        <div><a class="nav-lnk" href="#experience">Experience</a></div>
+        <div><a class="nav-lnk" href="#projects">Projects</a></div>
+        <div><a class="nav-lnk" href="#contact">Contact</a></div>
+        <div><a class="nav-lnk" href="zghera-resume.pdf">Resume</a></div>
+      </div>
     </nav>
-
-    <aside id="side-bar">
-      <ul>
-        <li>...</li>
-      </ul>
-    </aside>
-
-    <section class="content">
-      <p>Hi, my name is</p>
-      <h1>Zach Ghera</h1>
-    </section>
-
-    <section class="content">
-      <h2>About Me</h2>
-      <img src="images/zghera.jpeg" alt="Me">
-      <p>Hello there! I'm Zach, a rising junior at Purdue University studying
-        Computer Engineering.</p>
-      <p>I have a passion for technology and solving complex problems through 
-        leading and collaborating with others. More specifically, I have been
-        actively pursuing and leading various projects focused on robotic systems
-        outside of classes.
-      </p>
-    </section>
-
-    <section class="content">
-      <h2>Work Experience</h2>
-      <section class="content">
-        <h3>STEP Intern @ Google</h3>
-        <h4>May - Aug 2020</h4>
-        <p>...</p>
-        <img src="images/trips.png" alt="Google Trips Logo">
-      </section>
-      <section class="content">
-        <h3>EP Intern @ Google</h3>
-        <h4>May - Aug 2019</h4>
-        <p>The purpose of my project was to optimize the core database 
-        implementation of Sawmill Logs, an exabyte scale data lake that supports 
-        internal analytics. Some of my accomplishments include: 
-        </p>
-        <ul>
-          <li>Developed and tested a reusable API for Zstd dictionary compression 
-            in C++ and applied it to the primary storage format for Google logs database. 
-            This minimized compression overhead on small data by training Zstd dictionaries 
-            for certain log types with structured data. This was implemented for standard 
-            compression and compression streams.
-          </li>
-          <li>Created performance benchmarking tool to measure the benefits of the new design.
-             Analyzed and visualized the performance results using Python and SQL.
-          </li>
-          <li>Improved the compression ratio by 10-15% for certain log storage types with minimal
-             performance reduction.
-          </li>
-        </ul>
-        <img src="images/g-plat-logo.png" alt="Google Platforms Logo">
-      </section>
-      <section class="content">
-        <h3>CSSI Student @ Google</h3>
-        <h4>July 2018</h4>
-        <ul>
-          <li>Selected for intensive three-week programming boot camp taught by Google software
-             engineers aimed to develop a practical and extensive web application by the end of
-             the program.
-          </li>
-          <li>Learned HTML/ CSS, JS, Python, Google App Engine over the three week period.
-          </li>
-          <li>Created CollegeConnect, a web app designed for students to interact and plan 
-            events with classmates. Implemented user accounts and email authentication utilizing
-            App Engine's Cloud Datastore for account information storage. Also integrated "Connect 
-            Event" creation notifications for host and invitees using Google Calendar API and 
-            Python's email module.
-          </li>
-        </ul>
-        <img src="images/CSSI-wireframe.png" alt="CSSI Web App Wireframe">
-      </section>
-    </section>
-
-    <section class="content">
-      <h2>Projects</h2>
-      <section class="content">
-        <h3>AMP</h3>
-        <h4>Software Team Lead | July 2019 - Present</h4>
-        <ul>
-          <li>Re-designed system structure & corresponding launch files for use of LiDAR
-             based SLAM pkg (HectorMapping). 
-          </li>
-          <li>Designed, implemented, and tested (in RViz simulation) the goal setting
-             algorithm for ROS Navigation input. 
-          </li>
-          <li>Developed the initial vision, mission, strategy and project management
-             structure for the organization. 
-          </li>
-        </ul>
-        <img src="images/amp2.jpg" alt="AMP 2D Kart Simulation">
-      </section>
-      <section class="content">
-        <h3>IEEE ROV</h3>
-        <h4>Software Team | Sep 2018 - May 2019</h4>
-        <p>Developed Python ROS node that subscribed to a camera feed of an unknown 
-          path, performed image recognition (filtering, moment identification, line 
-          transforms, etc.), and published control output to a ROS topic.
-        </p>
-        <img src="images/rovx.png" alt="Species Recognition Functionality">
-      </section>
-      <section class="content">
-        <h3>Engineering Design</h3>
-        <h4>Robotic Systems Team Lead | Sep 2018 - May 2019</h4>
-        <ul>
-          <li>Designed a small-scale prototype robot to autonomously and efficiently
-             “transport material on Mars”. 
-          </li>
-          <li>Created custom control algorithm in Python for path navigation, 
-            maneuvering, & cargo delivery systems. 
-          </li>
-          <li>Developed SLAM algorithm in Python for robot tasked to traverse 
-            and map a maze while avoiding hazards. 
-          </li>
-        </ul>
-        <img src="images/engr161.png" alt="Mars Rover Prototype Robot">
-      </section>
-    </section>
-
-    <section class="content">
-      <h2>Get In Touch</h4>
-      <p>...</p>
-      <a href="mailto:zachary.ghera@gmail.com" id="link-box">Say Hi</a>
-    </section>
-
-    <script src="scripts/script.js"></script>
+    <div>
+      <main>
+        <section id="header" class="content">
+          <p>Hi, my name is</p>
+          <h1>Zach Ghera</h1>
+        </section>
+    
+        <section id="about" class="content">
+          <h2>About Me</h2>
+          <img src="images/zghera-wide.jpg" alt="Me">
+          <p>Hello there! I'm Zach, a rising junior at Purdue University studying
+            Computer Engineering.</p>
+          <p>I have a passion for technology and solving complex problems through 
+            leading and collaborating with others. More specifically, I have been
+            actively pursuing and leading various projects focused on robotic systems
+            outside of classes.
+          </p>
+        </section>
+ 
+        <section id="experience" class="content">
+          <h2>Work Experience</h2>
+          <section class="content">
+            <h3>STEP Intern @ Google</h3>
+            <h4>May - Aug 2020</h4>
+            <p>...</p>
+            <img src="images/trips.png" alt="Google Trips Logo">
+          </section>
+          <section class="content">
+            <h3>EP Intern @ Google</h3>
+            <h4>May - Aug 2019</h4>
+            <p>The purpose of my project was to optimize the core database 
+            implementation of Sawmill Logs, an exabyte scale data lake that supports 
+            internal analytics. Some of my accomplishments include: 
+            </p>
+            <ul>
+              <li>Developed and tested a reusable API for Zstd dictionary compression 
+                in C++ and applied it to the primary storage format for Google logs database. 
+                This minimized compression overhead on small data by training Zstd dictionaries 
+                for certain log types with structured data. This was implemented for standard 
+                compression and compression streams.
+              </li>
+              <li>Created performance benchmarking tool to measure the benefits of the new design.
+                Analyzed and visualized the performance results using Python and SQL.
+              </li>
+              <li>Improved the compression ratio by 10-15% for certain log storage types with minimal
+                performance reduction.
+              </li>
+            </ul>
+            <img src="images/g-plat-logo.png" alt="Google Platforms Logo">
+          </section>
+          <section class="content">
+            <h3>CSSI Student @ Google</h3>
+            <h4>July 2018</h4>
+            <ul>
+              <li>Selected for intensive three-week programming boot camp taught by Google software
+                engineers aimed to develop a practical and extensive web application by the end of
+                the program.
+              </li>
+              <li>Learned HTML/ CSS, JS, Python, Google App Engine over the three week period.
+              </li>
+              <li>Created CollegeConnect, a web app designed for students to interact and plan 
+                events with classmates. Implemented user accounts and email authentication utilizing
+                App Engine's Cloud Datastore for account information storage. Also integrated "Connect 
+                Event" creation notifications for host and invitees using Google Calendar API and 
+                Python's email module.
+              </li>
+            </ul>
+            <img src="images/CSSI-wireframe.png" alt="CSSI Web App Wireframe">
+          </section>
+        </section>
+ 
+        <section id="projects" class="content">
+          <h2>Projects</h2>
+          <section class="content">
+            <h3>AMP</h3>
+            <h4>Software Team Lead | July 2019 - Present</h4>
+            <ul>
+              <li>Re-designed system structure & corresponding launch files for use of LiDAR
+                based SLAM pkg (HectorMapping). 
+              </li>
+              <li>Designed, implemented, and tested (in RViz simulation) the goal setting
+                algorithm for ROS Navigation input. 
+              </li>
+              <li>Developed the initial vision, mission, strategy and project management
+                structure for the organization. 
+              </li>
+            </ul>
+            <img src="images/amp2.jpg" alt="AMP 2D Kart Simulation">
+          </section>
+          <section class="content">
+            <h3>IEEE ROV</h3>
+            <h4>Software Team | Sep 2018 - May 2019</h4>
+            <p>Developed Python ROS node that subscribed to a camera feed of an unknown 
+              path, performed image recognition (filtering, moment identification, line 
+              transforms, etc.), and published control output to a ROS topic.
+            </p>
+            <img src="images/rovx.png" alt="Species Recognition Functionality">
+          </section>
+          <section class="content">
+            <h3>Engineering Design</h3>
+            <h4>Robotic Systems Team Lead | Sep 2018 - May 2019</h4>
+            <ul>
+              <li>Designed a small-scale prototype robot to autonomously and efficiently
+                “transport material on Mars”. 
+              </li>
+              <li>Created custom control algorithm in Python for path navigation, 
+                maneuvering, & cargo delivery systems. 
+              </li>
+              <li>Developed SLAM algorithm in Python for robot tasked to traverse 
+                and map a maze while avoiding hazards. 
+              </li>
+            </ul>
+            <img src="images/engr161.png" alt="Mars Rover Prototype Robot">
+          </section>
+        </section>
+        <section id="contact" class="content">
+          <h2>Get In Touch</h4>
+          <p>...</p>
+          <a href="mailto:zachary.ghera@gmail.com" id="link-box">Say Hi</a>
+        </section>
+      </main>
+    </div>
   </body>
 </html>
