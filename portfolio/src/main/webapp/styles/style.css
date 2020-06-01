@@ -42,7 +42,7 @@ body {
   justify-content: flex-end;
 }
  
-#inner-nav > div{
+#inner-nav > div {
   flex-basis: 10%;
   padding-right: 3%;
   align-self: center;
