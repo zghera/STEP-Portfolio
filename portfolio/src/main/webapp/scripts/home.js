@@ -13,5 +13,5 @@
 // limitations under the License.
 
 function reload(){
-  window.open("https://zghera-step-2020.appspot.com/","_self");
+  window.open("index.html","_self");
 }
