@@ -1,7 +1,7 @@
 /* General Elements */
 body {
-  color: white;
   background-color: #41485B;
+  color: white;
 }
 
 img {
@@ -101,7 +101,7 @@ h1 {
   float: left;
   height: 100%;
   justify-content: flex-end;
-  position:f ixed;
+  position: fixed;
   width: 85px;
   z-index: 1;
 }
