@@ -20,30 +20,28 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
-import java.util.ArrayList; 
+import java.util.List; 
 import java.util.Arrays; 
 
 /** Servlet that returns some example content. */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-  private final ArrayList<String> answers = new ArrayList<String>( 
-                                            Arrays.asList("A stick!", 
-                                                          "A wet log!", 
-                                                          "(some) Frogs!")); 
+  private static final List<String> ANSWERS = 
+      Arrays.asList("A stick!", "A wet log!", "(some) Frogs!")); 
                                                           
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) 
                                                           throws IOException {
     // Convert the array of answers to JSON
-    String json = convertToJson(answers);
+    String json_answers = convertToJson(ANSWERS);
 
     // Send the JSON as the response
     response.setContentType("application/json;");
-    response.getWriter().println(json);
+    response.getWriter().println(json_answers);
   }
 
-  private String convertToJson(ArrayList<String> answers) {
+  private String convertToJson(List<String> answers) {
     Gson gson = new Gson();
     String json = gson.toJson(answers);
     return json;
