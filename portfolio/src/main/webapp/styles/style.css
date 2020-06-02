@@ -1,56 +1,77 @@
 /* General Elements */
 body {
+  color:rgb(160, 160, 160);
   background-color: #02003C;
-  color:rgb(161, 161, 161);
 }
 
-/* Navigation Bar */
+img {
+  height: 10%;
+  width: 10%;
+}
 
+.content {
+  padding-top: 2vh;
+  padding-left: 12vw;
+  z-index:0;
+}
+ 
+.section {
+  padding-top: 30vw;
+}
+
+#header {
+  padding-top: 8vh;
+}
+ 
+/* ---- Top Navigation Bar ---- */
 #outer-nav {
-  top: 0;
-  width: 100vw;
-  position: fixed;
   background-color: #02003C;
   color: #55FBDC;
-  padding: 2vmin;
-  padding-top: 3vmin;
-
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
+  padding: 2vmin;
+  padding-top: 3vmin;
+  position: fixed;
+  top: 0;
+  width: 100vw;
 }
 
+/* Left flex element of 'outer-nav' container */
 #home-logo {
   color: #55FBDC;
-  text-align: center;
   flex-basis: 12%;
   flex-shrink: 0;
-  text-decoration: none;
   font-size: 22pt;
+  text-align: center;
+  text-decoration: none;
 }
 
-#inner-nav {
-  /* Flex item properies */
+/* Right flex element of 'outer-nav' container */
+.inner-nav-el {
   flex-basis: 80vw;
-  padding-right: 3%;
-  font-size: auto;
   font-family: Arial, Helvetica, sans-serif;
+  font-size: auto;
+  padding-right: 3%;
+}
 
-  /* Flex container properites */
+/* Flex container holding elements on right side of Nav-bar */
+#inner-nav-container {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-end;
 }
  
-#inner-nav > div {
+/* Child elements of 'inner-nav-container' */
+#inner-nav-container > div {
+  align-self: center;
   flex-basis: 10%;
   padding-right: 3%;
-  align-self: center;
 }
-  
+
 .nav-lnk {
-  display: block;
   color: #55FBDC;
+  display: block;
   text-align: center;
   text-decoration: none;
 }
@@ -59,20 +80,68 @@ body {
   color: white;
 }
 
-#header {
-  padding-top: 8vh
+/* ---- Side Bar ---- */
+/* |--> Container */
+#sidebar {
+  display:flex;
+  flex-flow: column nowrap;
+  float:left;
+  height:100%;
+  justify-content: flex-end;
+  position:fixed;
+  width:85px;
+  z-index:1;
+}
+@media only screen and (max-width: 600px) {
+  #sidebar {
+    align-items: center;
+    background:rgb(160,160,160,.3);
+    bottom: 0;
+    display:flex;
+    flex-flow: row nowrap;
+    height:60px;
+    justify-content: center;
+    position:fixed;
+    width:110vw;
+    left:-5vw;
+    z-index:2;
+  }
+  
+  #blue-bottom {
+    background-color: #02003C;
+    bottom: 0;
+    height:85px;
+    position:fixed;
+    width:100%;
+    z-index:1;
+  }
 }
 
-.content {
-  padding-top: 2vh;
-  padding-left: 8vw;
+/* |--> Container Elements */
+#sidebar > div {
+  align-self: center;
+  flex-basis: 50px;
+  flex-shrink: 0;
+  font-size: 22px;
+  margin-top: 5px;
+  text-align: left;
+  width: 50px;
 }
-
-.section {
-  padding-top: 30vw;
+@media only screen and (max-width: 600px) {
+  #sidebar > div {
+    align-self: center;
+    flex-basis: 50px;
+    flex-shrink: 0;
+    font-size: 22px;
+    height: 30px;
+    margin-left: 5px;
+    margin-right: 5px;
+    text-align: center;
+  }
 }
-
-img {
-  height: 10%;
-  width: 10%;
+ 
+#sidebar > div > a {
+  color:rgb(160, 160, 160) !important;
+  opacity:1 !important;
+  z-index:3;
 }
