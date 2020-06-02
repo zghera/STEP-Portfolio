@@ -1,89 +1,95 @@
 /* General Elements */
+:root {
+  --main-bg-color: rgb(12, 22, 27);
+  --border-color: rgb(40,40,250,.5);
+  --text-accent-color: #008bb3;
+  --main-text-color: rgb(184, 184, 165);
+}
+
 body {
-  color:rgb(184, 184, 165);
-  background-color: rgb(12, 22, 27);
+  background-color: var(--main-bg-color);
+  color: var(--main-text-color);
 }
 
 img {
-  border:solid;
-  border-color:rgb(40,40,250,.5);
-  box-shadow:5px 5px 20px rgb(40,40,250,.5);
-  height:17vw;
+  border: solid;
+  border-color: var(--border-color);
+  box-shadow: 5px 5px 20px var(--border-color);
+  height: 17vw;
   object-fit: fill;
-  width:30vw;
+  width: 30vw;
 }
 
 h1 {
-  color:#008BB3;
+  color: var(--text-accent-color);
   font-family: 'Roboto', sans-serif;
-  font-size:2.75em;
-  text-shadow:5px 5px 20px rgb(90,130,250,.5);
+  font-size: 2.75em;
+  text-shadow: 5px 5px 20px rgb(90,130,250,.5);
 }
 
 h2 {
-  color:white;
+  color: white;
 }
  
 h3 {
-  color:#008BB3;
+  color: var(--text-accent-color);
   font-family: 'Roboto', sans-serif;
-  font-size:1em;
+  font-size: 1em;
 }
 
 h5 {
-  color:rgb(184, 184, 165);
+  color: var(--main-text-color);
   font-family: 'Roboto', sans-serif;
 }
- 
+
 .content {
   font-family: 'Roboto Condensed', sans-serif;
   padding-top: 2vh;
   padding-left: 12vw;
-  z-index:0;
+  z-index: 0;
 }
 
 #header {
   padding-top: 11vmax;
 }
  
-/* Top Navigation Bar */
+/* ---- Top Navigation Bar ---- */
 #outer-nav {
+  background-color: var(--main-bg-color);
   display: flex;
   flex-flow: row wrap;
   font-family: 'Roboto Slab', serif;
   justify-content: space-between;
-  background-color: rgb(12, 22, 27);
-  padding: 2vmin;
-  padding-top: 3vmin;
+  padding: 3vmin 2vmin 2vmin;
   position: fixed;
   top: 0;
   width: 100vw;
-  z-index:2;
+  z-index: 2;
 }
 
 /* Left flex element of 'outer-nav' container */
 #home-logo {
-  background:rgb(40,40,60);
-  border:solid;
-  border-color:rgb(6, 6, 126);
-  border-radius:50%;
-  box-shadow:5px 5px 20px rgb(40,40,250,.5);
-  color: #008BB3;
+  background: rgb(40,40,60);
+  border: solid;
+  border-color: rgb(6, 6, 126);
+  border-radius: 50%;
+  box-shadow: 5px 5px 20px var(--border-color);
+  color: var(--text-accent-color);
   font-size: 2em;
-  height:60px;
-  padding-top:15px;
+  height: 60px;
+  padding-top: 15px;
   text-align: center;
   text-decoration: none;
-  text-shadow:5px 5px 20px #008BB3;
-  width:75px;
-  z-index:3;
+  text-shadow: 5px 5px 20px var(--text-accent-color);
+  width: 75px;
+  z-index: 3;
 }
 
 #home-logo:hover {
-  background:rgb(60,60,80);
-  border-color:rgb(100,100,200);
+  background: rgb(60,60,80);
+  border-color: rgb(100,100,200);
   color: #18a5d4;
-  cursor:grab;
+  cursor: grab;
 }
 
 /* Right flex element of 'outer-nav' container */
@@ -93,68 +99,67 @@ h5 {
   padding-right: 3%;
 }
 
-/* Right-side Nav Flex Container */
+/* Flex container holding elements on right side of Nav-bar */
 #inner-nav-container {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-end;
 }
- 
+
 /* Child elements of 'inner-nav-container' */
-#inner-nav-container > div{
+#inner-nav-container > div {
   align-self: center;
   flex-basis: 10%;
   padding-right: 3%;
 }
-  
+
 .nav-lnk {
-  color: #008BB3;
+  color: var(--text-accent-color);
   display: block;
+  height: 5vw;
+  padding-top: 2vw;
   text-align: center;
   text-decoration: none;
-  height:5vw;
-  padding-top:2vw;
 }
  
 .nav-lnk:hover {
-  color:#8860d0;
-  text-shadow:0px 0px 20px blue;
+  color: var(--text-accent-color);
+  text-shadow: 0px 0px 20px blue;
 }
 
-/* Side Bar */
+/* ---- Side Bar ---- */
 /* |--> Container */
 #sidebar {
-  display:flex;
+  display: flex;
   flex-flow: column nowrap;
-  float:left;
-  height:100%;
+  float: left;
+  height: 100%;
   justify-content: flex-end;
-  position:fixed;
-  width:85px;
-  z-index:1;
+  position: fixed;
+  width: 85px;
+  z-index: 1;
 }
 @media only screen and (max-width: 600px) {
   #sidebar {
     align-items: center;
     background-color: rgb(12, 22, 27,.3);
     bottom: 0;
-    display:flex;
+    display: flex;
     flex-flow: row nowrap;
-    height:60px;
+    height: 60px;
     justify-content: center;
-    position:fixed;
-    width:110vw;
-    left:-5vw;
-    z-index:2;
+    left: -5vw;
+    position: fixed;
+    width: 110vw;
+    z-index: 2;
   }
-  
   #blue-bottom {
-    background-color: rgb(12, 22, 27);
+    background-color: var(--main-bg-color);
     bottom: 0;
-    height:60px;
-    position:fixed;
-    width:100%;
-    z-index:1;
+    height: 60px;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
   }
 }
 
@@ -182,11 +187,11 @@ h5 {
 }
  
 #sidebar > div > a {
-  color:rgb(160, 160, 160) !important;
-  opacity:1 !important;
-  z-index:3;
+  color: rgb(160, 160, 160) !important;
+  opacity: 1 !important;
+  z-index: 3;
 }
 
 #sidebar > div > a:hover {
-  box-shadow:0px 0px 20px rgb(40,40,250,.7);
+  box-shadow: 0px 0px 20px rgb(40,40,250,.7);
 }
