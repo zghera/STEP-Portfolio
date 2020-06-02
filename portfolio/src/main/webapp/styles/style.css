@@ -4,6 +4,15 @@ body {
   background-color: #41485B;
 }
 
+img {
+  border:solid;
+  border-color:rgb(40,40,250,.5);
+  box-shadow:5px 5px 20px rgb(40,40,250,.5);
+  height:17vw;
+  object-fit: fill;
+  width:30vw;
+}
+
 h1 {
   font-family: 'Roboto', sans-serif;
 }
@@ -13,19 +22,6 @@ h1 {
   padding-top: 2vh;
   padding-left: 12vw;
   z-index:0;
-}
- 
-.section {
-  padding-top: 30vw;
-}
-
-.pic {
-  border:solid;
-  border-color:rgb(40,40,250,.5);
-  box-shadow:5px 5px 20px rgb(40,40,250,.5);
-  height:17vw;
-  object-fit: fill;
-  width:30vw;
 }
 
 #header {
@@ -47,6 +43,7 @@ h1 {
   z-index:2;
 }
 
+/* Left flex element of 'outer-nav' container */
 #home-logo {
   background:rgb(40,40,60);
   border:solid;
@@ -71,7 +68,7 @@ h1 {
   cursor:grab;
 }
 
-/* Right-side Nav Flex Element */
+/* Right flex element of 'outer-nav' container */
 .inner-nav-el {
   flex-basis: 80vw;
   font-size: auto;
@@ -84,7 +81,8 @@ h1 {
   flex-flow: row wrap;
   justify-content: flex-end;
 }
- 
+
+/* Child elements of 'inner-nav-container' */
 #inner-nav-container > div {
   align-self: center;
   flex-basis: 10%;
