@@ -36,6 +36,7 @@ h1 {
   position: fixed;
   top: 0;
   width: 100vw;
+  z-index:2;
 }
 
 /* Left flex element of 'outer-nav' container */
