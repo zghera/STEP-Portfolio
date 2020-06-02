@@ -4,6 +4,15 @@ body {
   background-color: rgb(12, 22, 27);
 }
 
+img {
+  border:solid;
+  border-color:rgb(40,40,250,.5);
+  box-shadow:5px 5px 20px rgb(40,40,250,.5);
+  height:17vw;
+  object-fit: fill;
+  width:30vw;
+}
+
 h1 {
   color:#008BB3;
   font-family: 'Roboto', sans-serif;
@@ -32,22 +41,9 @@ h5 {
   padding-left: 12vw;
   z-index:0;
 }
- 
-.section {
-  padding-top: 30vw;
-}
 
 #header {
   padding-top: 11vmax;
-}
-
-img {
-  border:solid;
-  border-color:rgb(40,40,250,.5);
-  box-shadow:5px 5px 20px rgb(40,40,250,.5);
-  height:17vw;
-  object-fit: fill;
-  width:30vw;
 }
  
 /* Top Navigation Bar */
@@ -65,6 +61,7 @@ img {
   z-index:2;
 }
 
+/* Left flex element of 'outer-nav' container */
 #home-logo {
   background:rgb(40,40,60);
   border:solid;
@@ -89,7 +86,7 @@ img {
   cursor:grab;
 }
 
-/* Right-side Nav Flex Element */
+/* Right flex element of 'outer-nav' container */
 .inner-nav-el {
   flex-basis: 80vw;
   font-size: auto;
@@ -103,6 +100,7 @@ img {
   justify-content: flex-end;
 }
  
+/* Child elements of 'inner-nav-container' */
 #inner-nav-container > div{
   align-self: center;
   flex-basis: 10%;
