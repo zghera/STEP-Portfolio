@@ -34,7 +34,7 @@ h5 {
   color: rgb(184, 184, 165);
   font-family: 'Roboto', sans-serif;
 }
- 
+
 .content {
   font-family: 'Roboto Condensed', sans-serif;
   padding-top: 2vh;
@@ -46,7 +46,7 @@ h5 {
   padding-top: 11vmax;
 }
  
-/* Top Navigation Bar */
+/* ---- Top Navigation Bar ---- */
 #outer-nav {
   background-color: rgb(12, 22, 27);
   display: flex;
@@ -92,20 +92,20 @@ h5 {
   padding-right: 3%;
 }
 
-/* Right-side Nav Flex Container */
+/* Flex container holding elements on right side of Nav-bar */
 #inner-nav-container {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-end;
 }
- 
+
 /* Child elements of 'inner-nav-container' */
-#inner-nav-container > div{
+#inner-nav-container > div {
   align-self: center;
   flex-basis: 10%;
   padding-right: 3%;
 }
-  
+
 .nav-lnk {
   color: #008bb3;
   display: block;
@@ -120,7 +120,7 @@ h5 {
   text-shadow: 0px 0px 20px blue;
 }
 
-/* Side Bar */
+/* ---- Side Bar ---- */
 /* |--> Container */
 #sidebar {
   display: flex;
@@ -146,7 +146,7 @@ h5 {
     width: 110vw;
     z-index: 2;
   }
-  #blue-bottom{
+  #blue-bottom {
     background-color: rgb(12, 22, 27);
     bottom: 0;
     height: 60px;
