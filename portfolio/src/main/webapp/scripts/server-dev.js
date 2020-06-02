@@ -12,11 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+var i = 0;
+
 function getAnswer() {
   fetch('/data')
-  .then(response => response.text())
-  .then(answ => {
-    document.getElementById('answer-container').innerText = answ;
+  .then(response => response.json())
+  .then(answ_list => {
+    document.getElementById('answer-container').innerText = 
+                                          answ_list[(i++) % 3];
   })
   .catch(err => {
     console.log("Error: " + err);
