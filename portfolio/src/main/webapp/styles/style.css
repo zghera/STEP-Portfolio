@@ -91,10 +91,10 @@ h1 {
 .nav-lnk {
   color: #008BB3;
   display: block;
-  text-align: center;
-  text-decoration: none;
   height:5vw;
   padding-top:2vw;
+  text-align: center;
+  text-decoration: none;
 }
  
 .nav-lnk:hover {
@@ -123,9 +123,9 @@ h1 {
     flex-flow: row nowrap;
     height: 60px;
     justify-content: center;
+    left: -5vw;
     position: fixed;
     width: 110vw;
-    left: -5vw;
     z-index: 2;
   }
   
