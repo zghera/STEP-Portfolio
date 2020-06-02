@@ -1,7 +1,7 @@
 /* General Elements */
 body {
-  color:white;
   background-color: #41485B;
+  color:white;
 }
 
 img {
@@ -26,11 +26,11 @@ h1 {
  
 /* ---- Top Navigation Bar ---- */
 #outer-nav {
+  background-color:#41485B;
   display: flex;
   flex-flow: row wrap;
   font-family: 'Roboto Slab', serif;
   justify-content: space-between;
-  background-color:#41485B;
   padding: 2vmin;
   padding-top: 3vmin;
   position: fixed;
