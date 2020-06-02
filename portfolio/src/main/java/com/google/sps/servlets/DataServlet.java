@@ -27,8 +27,7 @@ import java.util.Arrays;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
   private static final List<String> ANSWERS = 
-      Arrays.asList("A stick!", "A wet log!", "(some) Frogs!")); 
-                                                          
+      Arrays.asList("A stick!", "A wet log!", "(some) Frogs!");                                                        
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) 
