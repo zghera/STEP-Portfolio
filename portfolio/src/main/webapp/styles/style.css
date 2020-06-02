@@ -4,8 +4,9 @@ body {
   background-color: #41485B;
 }
 
-#header {
-  padding-top: 14vh;
+img {
+  height: 10%;
+  width: 10%;
 }
 
 h1 {
@@ -19,13 +20,8 @@ h1 {
   z-index:0;
 }
 
-img {
-  height: 10%;
-  width: 10%;
-}
- 
-.section {
-  padding-top: 30vw;
+#header {
+  padding-top: 14vh;
 }
  
 /* Top Navigation Bar */
@@ -42,6 +38,7 @@ img {
   width: 100vw;
 }
 
+/* Left flex element of 'outer-nav' container */
 #home-logo {
   background:rgb(40,40,60);
   border:solid;
@@ -64,7 +61,7 @@ img {
   cursor:grab;
 }
 
-/* Right-side Nav Flex Element */
+/* Right flex element of 'outer-nav' container */
 .inner-nav-el {
   flex-basis: 80vw;
   font-size: auto;
@@ -78,6 +75,7 @@ img {
   justify-content: flex-end;
 }
  
+/* Child elements of 'inner-nav-container' */
 #inner-nav-container > div {
   align-self: center;
   flex-basis: 10%;
