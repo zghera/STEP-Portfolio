@@ -1,7 +1,7 @@
 /* General Elements */
 body {
+  color: white;
   background-color: #41485B;
-  color:white;
 }
 
 img {
@@ -26,13 +26,12 @@ h1 {
  
 /* ---- Top Navigation Bar ---- */
 #outer-nav {
-  background-color:#41485B;
+  background-color: #41485B;
   display: flex;
   flex-flow: row wrap;
   font-family: 'Roboto Slab', serif;
   justify-content: space-between;
-  padding: 2vmin;
-  padding-top: 3vmin;
+  padding: 3vmin 2vmin 2vmin;
   position: fixed;
   top: 0;
   width: 100vw;
@@ -41,25 +40,25 @@ h1 {
 
 /* Left flex element of 'outer-nav' container */
 #home-logo {
-  background:rgb(40,40,60);
-  border:solid;
-  border-color:black;
-  border-radius:50%;
+  background: rgb(40,40,60);
+  border: solid;
+  border-color: black;
+  border-radius: 50%;
   color: #008BB3;
   font-size: 2em;
-  height:60px;
-  padding-top:15px;
+  height: 60px;
+  padding-top: 15px;
   text-align: center;
   text-decoration: none;
-  width:75px;
-  z-index:3;
+  width: 75px;
+  z-index: 3;
 }
 
 #home-logo:hover {
-  background:rgb(60,60,80);
-  border-color:rgb(100,100,200);
+  background: rgb(60,60,80);
+  border-color: rgb(100,100,200);
   color: #18a5d4;
-  cursor:grab;
+  cursor: grab;
 }
 
 /* Right flex element of 'outer-nav' container */
@@ -97,37 +96,37 @@ h1 {
 /* ---- Side Bar ---- */
 /* |--> Container */
 #sidebar {
-  display:flex;
+  display: flex;
   flex-flow: column nowrap;
-  float:left;
-  height:100%;
+  float: left;
+  height: 100%;
   justify-content: flex-end;
-  position:fixed;
-  width:85px;
-  z-index:1;
+  position:f ixed;
+  width: 85px;
+  z-index: 1;
 }
 @media only screen and (max-width: 600px) {
   #sidebar {
     align-items: center;
-    background:rgb(160,160,160,.3);
+    background: rgb(160,160,160,.3);
     bottom: 0;
-    display:flex;
+    display: flex;
     flex-flow: row nowrap;
-    height:60px;
+    height: 60px;
     justify-content: center;
-    position:fixed;
-    width:110vw;
-    left:-5vw;
-    z-index:2;
+    position: fixed;
+    width: 110vw;
+    left: -5vw;
+    z-index: 2;
   }
   
   #blue-bottom {
     background-color: #41485B;
     bottom: 0;
-    height:85px;
-    position:fixed;
-    width:100%;
-    z-index:1;
+    height: 85px;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
   }
 }
 
@@ -155,7 +154,7 @@ h1 {
 }
  
 #sidebar > div > a {
-  color:rgb(160, 160, 160) !important;
-  opacity:1 !important;
-  z-index:3;
+  color: rgb(160, 160, 160) !important;
+  opacity: 1 !important;
+  z-index: 3;
 }
