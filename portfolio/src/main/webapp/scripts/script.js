@@ -14,5 +14,5 @@
 
 /* TODO:Format */
 function reload(){
-  window.open("https://8080-dot-12459592-dot-devshell.appspot.com/","_self");
+  window.open("index.html","_self");
 }

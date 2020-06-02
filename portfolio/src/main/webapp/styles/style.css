@@ -1,7 +1,7 @@
 /* General Elements */
 body {
-  color:white;
   background-color: #41485B;
+  color:white;
 }
 
 img {
@@ -16,7 +16,7 @@ img {
 h1 {
   font-family: 'Roboto', sans-serif;
 }
- 
+
 .content {
   font-family: 'Roboto Condensed', sans-serif;
   padding-top: 2vh;
@@ -28,13 +28,13 @@ h1 {
   padding-top: 11vmax;
 }
  
-/* Top Navigation Bar */
+/* ---- Top Navigation Bar ---- */
 #outer-nav {
+  background-color:#41485B;
   display: flex;
   flex-flow: row wrap;
   font-family: 'Roboto Slab', serif;
   justify-content: space-between;
-  background-color:#41485B;
   padding: 2vmin;
   padding-top: 3vmin;
   position: fixed;
@@ -75,7 +75,7 @@ h1 {
   padding-right: 3%;
 }
 
-/* Right-side Nav Flex Container */
+/* Flex container holding elements on right side of Nav-bar */
 #inner-nav-container {
   display: flex;
   flex-flow: row wrap;
@@ -88,7 +88,7 @@ h1 {
   flex-basis: 10%;
   padding-right: 3%;
 }
-  
+
 .nav-lnk {
   color: #008BB3;
   display: block;
@@ -103,7 +103,7 @@ h1 {
   text-shadow:0px 0px 20px blue;
 }
 
-/* Side Bar */
+/* ---- Side Bar ---- */
 /* |--> Container */
 #sidebar {
   display:flex;
@@ -129,7 +129,8 @@ h1 {
     left:-5vw;
     z-index:2;
   }
-  #blue-bottom{
+  
+  #blue-bottom {
     background-color: #41485B;
     bottom: 0;
     height:85px;
