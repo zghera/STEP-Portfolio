@@ -38,18 +38,18 @@ public class DataServlet extends HttpServlet {
     response.getWriter().println(jsonAnswers);
   }
 
-  private String convertToJson(List<String> jsonAnswers) {
+  private String convertToJson(List<String> answers) {
     Gson gson = new Gson();
-    String json = gson.toJson(jsonAnswers);
+    String json = gson.toJson(answers);
     return json;
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Get the input from the form.
+    // Get the input from the html text form.
     String newComment = request.getParameter("new-comment");
 
-    // Add comment to the comments list
+    // Add new comment to the comments list
     comments.add(newComment);
 
     // Redirect back to the server HTML page.
