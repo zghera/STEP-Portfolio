@@ -51,15 +51,15 @@ function addQuoteToDom(quote) {
 
 function getRandomQuoteUsingPromiseChain() {
   fetch('/random-quote')
-  .then(function(response) { 
-    return response.text() 
-  })
-  .then(function(quote) {
-    document.getElementById('quote-container').innerText = quote;
-  })
-  .catch(function(err) {
-    console.log("Error: " + err);
-  });
+      .then(function(response) {
+        return response.text()
+      })
+      .then(function(quote) {
+        document.getElementById('quote-container').innerText = quote;
+      })
+      .catch(function(err) {
+        console.log('Error: ' + err);
+      });
 }
 
 /**
@@ -76,7 +76,16 @@ function getRandomQuoteUsingArrowFunctions() {
   })
   .catch(err => {
     console.log("Error: " + err);
-  });
+function getRandomQuoteUsingArrowFunctions() {
+  fetch('/random-quote')
+      .then(response => response.text())
+      .then(quote => {
+        document.getElementById('quote-container').innerText = quote;
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+      });
+}
 }
 
 /**

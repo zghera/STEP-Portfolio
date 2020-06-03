@@ -12,13 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+var answer_idx = 0;
+
 function getAnswer() {
   fetch('/data')
-  .then(response => response.text())
-  .then(answ => {
-    document.getElementById('answer-container').innerText = answ;
-  })
-  .catch(err => {
-    console.log("Error: " + err);
-  });
+      .then(response => response.json())
+      .then(answers => {
+        document.getElementById('answer-container').innerText =
+            answers[(answer_idx++) % answers.length];
+        if (answer_idx >= Number.MAX_SAFE_INTEGER) {
+          answer_idx = 0;
+        }
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        document.getElementById('answer-container').innerText =
+            'Something went wrong.';
+      });
 }
