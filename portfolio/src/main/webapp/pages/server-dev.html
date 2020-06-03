@@ -4,13 +4,18 @@
     <meta charset="UTF-8">
     <title>Zach Ghera</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/style.css">
-
+    <link rel="stylesheet" 
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap">
+    <link rel="stylesheet" 
+      href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap">
+    <link rel="stylesheet" 
+      href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap">
+    <link rel="stylesheet" href="/styles/home.css">
+    <link rel="stylesheet" href="/styles/server-dev.css">
+ 
     <script src="https://use.fontawesome.com/b54b8ad902.js" defer></script>
-    <script src="/scripts/script.js" defer></script>
+    <script src="/scripts/home.js" defer></script>
+    <script src="/scripts/server-dev.js" defer></script>
   </head>
   <body>
     <nav id="outer-nav">
@@ -42,9 +47,10 @@
         </aside>  
       </div>  
       <main>
-        <!-- Style in HTML element is temporary. Only to see temp text for now. -->
-        <section style="padding-top:25vh">
-          <p>Stuff is coming here soon</p>
+        <section class="content">
+          <p>Click here to discover the answer to the all important question:</p>
+          <button onclick="getAnswer()">What is brown and sticky?</button>
+          <div id="answer-container"></div>
         </section>
       </main>
     </div>
