@@ -16,17 +16,17 @@ var answer_idx = 0;
 
 function getAnswer() {
   fetch('/data')
-  .then(response => response.json())
-  .then(answers => {
-    document.getElementById('answer-container').innerText = 
-                              answers[(answer_idx++) % answers.length];
-    if(answer_idx >= Number.MAX_SAFE_INTEGER) {
-      answer_idx = 0;
-    }
-  })
-  .catch(err => {
-    console.log("Error: " + err);
-    document.getElementById('answer-container').innerText = 
-                                      "Something went wrong.";
-  });
+      .then(response => response.json())
+      .then(answers => {
+        document.getElementById('answer-container').innerText =
+            answers[(answer_idx++) % answers.length];
+        if (answer_idx >= Number.MAX_SAFE_INTEGER) {
+          answer_idx = 0;
+        }
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        document.getElementById('answer-container').innerText =
+            'Something went wrong.';
+      });
 }
