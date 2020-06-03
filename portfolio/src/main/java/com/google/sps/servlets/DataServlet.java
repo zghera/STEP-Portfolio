@@ -39,9 +39,9 @@ public class DataServlet extends HttpServlet {
     response.getWriter().println(jsonAnswers);
   }
 
-  private String convertToJson(List<String> jsonAnswers) {
+  private String convertToJson(List<String> answers) {
     Gson gson = new Gson();
-    String json = gson.toJson(jsonAnswers);
+    String json = gson.toJson(answers);
     return json;
   }
 }
