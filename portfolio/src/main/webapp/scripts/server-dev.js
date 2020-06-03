@@ -12,21 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-var answer_idx = 0;
-
-function getAnswer() {
-  fetch('/data')
-      .then(response => response.json())
-      .then(answers => {
-        document.getElementById('answer-container').innerText =
-            answers[(answer_idx++) % answers.length];
-        if (answer_idx >= Number.MAX_SAFE_INTEGER) {
-          answer_idx = 0;
-        }
+/**
+ * Fetches the previously entered comments from the server and inserts each
+ * comment as a list item of the 'comments' <ul> element.
+ */
+function getCommentsThread() {
+  fetch('/comment-data')
+    .then(response => response.json())
+    .then((commentList) => {
+      const commentThread = document.getElementById('comments');
+      commentList.forEach((comment) => {
+        commentThread.appendChild(createListElement(comment));
       })
       .catch(err => {
         console.log('Error: ' + err);
         document.getElementById('answer-container').innerText =
-            'Something went wrong.';
+            'Error: Unable to load the comments thread.';
       });
+  });
+}
+
+/** Creates an <li> element containing 'text'. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
 }
