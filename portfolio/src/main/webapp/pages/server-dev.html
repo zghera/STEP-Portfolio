@@ -46,11 +46,17 @@
           </div> 
         </aside>  
       </div>  
-      <main>
+      <main onload="getCommentsThread()">
         <section class="content">
-          <p>Click here to discover the answer to the all important question:</p>
-          <button onclick="getAnswer()">What is brown and sticky?</button>
-          <div id="answer-container"></div>
+          <h2>Add a new comment!
+          <form action="/comment-data" method="POST">
+            <input type="text" name="new-comment"><br/>
+            <input type="submit" /><br/>
+          </form>
+        </section>
+        <section class="content">
+          <h2>Comments Thread</h2>
+          <ul id="comments"></ul>
         </section>
       </main>
     </div>
