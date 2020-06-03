@@ -30,10 +30,10 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Convert the List of comments to JSON
+    // Convert the List of comments to JSON.
     String jsonComments = convertToJson(comments);
 
-    // Convert list to JSON and send to comment-data page
+    // Convert list to JSON and send to comment-data page.
     response.setContentType("application/json;");
     response.getWriter().println(jsonComments);
   }
@@ -49,7 +49,7 @@ public class DataServlet extends HttpServlet {
     // Get the input from the html text form.
     String newComment = request.getParameter("new-comment");
 
-    // Add new comment to the comments list
+    // Add new comment to the comments list.
     comments.add(newComment);
 
     // Redirect back to the server HTML page.
