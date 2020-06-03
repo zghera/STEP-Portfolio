@@ -16,6 +16,7 @@
  * Fetches the previously entered comments from the server and inserts each
  * comment as a list item of the 'comments' <ul> element.
  */
+
 function getCommentsThread() {
   fetch('/comment-data')
     .then(response => response.json())
@@ -26,8 +27,8 @@ function getCommentsThread() {
       })
       .catch(err => {
         console.log('Error: ' + err);
-        document.getElementById('answer-container').innerText =
-            'Error: Unable to load the comments thread.';
+        document.getElementById('comments').appendChild(createListElement(
+                              'Error: Unable to load the comments thread.'));
       });
   });
 }

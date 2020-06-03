@@ -17,7 +17,7 @@
     <script src="../scripts/home.js" defer></script>
     <script src="../scripts/server-dev.js" defer></script>
   </head>
-  <body>
+  <body onload="getCommentsThread()">
     <nav id="outer-nav">
       <div id="home-logo" onclick="reload()">ZG</div>
       <div id="inner-nav-container" class="inner-nav-el">
@@ -46,7 +46,7 @@
           </div> 
         </aside>  
       </div>  
-      <main onload="getCommentsThread()">
+      <main>
         <section class="content">
           <h2>Add a new comment!
           <form action="/comment-data" method="POST">

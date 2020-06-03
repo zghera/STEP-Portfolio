@@ -17,7 +17,7 @@ package com.google.sps.servlets;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.List; 
-import java.util.Arrays; 
+import java.util.ArrayList;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. */
 @WebServlet("/comment-data")
 public class DataServlet extends HttpServlet {
-  private static List<String> comments = new List<String>;                                                     
+  private static List<String> comments = new ArrayList<>();                                                     
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -53,6 +53,6 @@ public class DataServlet extends HttpServlet {
     comments.add(newComment);
 
     // Redirect back to the server HTML page.
-    response.sendRedirect("/server-dev.html");
+    response.sendRedirect("/pages/server-dev.html");
   }
 }
