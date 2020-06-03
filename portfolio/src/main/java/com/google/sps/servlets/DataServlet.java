@@ -30,19 +30,18 @@ public class DataServlet extends HttpServlet {
       Arrays.asList("A stick!", "A wet log!", "(some) Frogs!");                                                        
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) 
-                                                          throws IOException {
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Convert the array of answers to JSON
-    String json_answers = convertToJson(ANSWERS);
+    String jsonAnswers = convertToJson(ANSWERS);
 
     // Send the JSON as the response
     response.setContentType("application/json;");
-    response.getWriter().println(json_answers);
+    response.getWriter().println(jsonAnswers);
   }
 
-  private String convertToJson(List<String> answers) {
+  private String convertToJson(List<String> jsonAnswers) {
     Gson gson = new Gson();
-    String json = gson.toJson(answers);
+    String json = gson.toJson(jsonAnswers);
     return json;
   }
 }
