@@ -30,17 +30,17 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Convert the array of answers to JSON
-    String jsonAnswers = convertToJson(comments);
+    // Convert the List of comments to JSON
+    String jsonComments = convertToJson(comments);
 
-    // Send the JSON as the response
+    // Convert list to JSON and send to comment-data page
     response.setContentType("application/json;");
-    response.getWriter().println(jsonAnswers);
+    response.getWriter().println(jsonComments);
   }
 
-  private String convertToJson(List<String> answers) {
+  private String convertToJson(List<String> comments) {
     Gson gson = new Gson();
-    String json = gson.toJson(answers);
+    String json = gson.toJson(comments);
     return json;
   }
 
