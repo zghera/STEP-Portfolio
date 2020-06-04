@@ -32,16 +32,23 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns comments stored in the Datastore. */
 @WebServlet("/comment-data")
 public class ListCommentsServlet extends HttpServlet {
-
+  
+  /**
+  * This Method handles GET requests in order to display all of the comments that are stored 
+  * in the Comments kind of the Google Cloud Datastore.
+  * <p>
+  *
+  * @param  request  The <code>HttpServletRequest</code> for the GET request.
+  * @param  response The <code>HttpServletResponse</code> for the GET request.
+  * @return None. The Servlet writes to the /comment-data page which JavaScript then fetches 
+  *         in order to serve the comments to the UI. 
+  */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Query the datastore for the comments in most-recent order.
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
-
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
-    // Iterate through each entity and add comment text to a list.
     List<String> comments = new ArrayList<>();  
     for (Entity commentEntity : results.asIterable()) {
       String comment = (String) commentEntity.getProperty("text");
@@ -49,12 +56,18 @@ public class ListCommentsServlet extends HttpServlet {
       comments.add(comment);
     }
 
-    // Send the comment list as a JSON string.
     String jsonComments = convertToJson(comments);
     response.setContentType("application/json;");
     response.getWriter().println(jsonComments);
   }
 
+  /**
+  * Converts a list of strings to a JSON string.
+  * <p>
+  *
+  * @param  comments  The List of String comments that should be converted to a JSON string.
+  * @return <code>String</code> The JSON string corresponding to the list of comments.
+  */
   private String convertToJson(List<String> comments) {
     Gson gson = new Gson();
     String json = gson.toJson(comments);

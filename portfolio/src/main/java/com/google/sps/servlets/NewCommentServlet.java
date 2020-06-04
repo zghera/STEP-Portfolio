@@ -28,13 +28,21 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/new-comment")
 public class NewCommentServlet extends HttpServlet {
 
+  /**
+  * This Method handles POST requests corresponding to a new comment and creates a new Entity
+  * for that comment in the Google Cloud Datastore.
+  * <p>
+  * The POST request also results in a re-direct back to the original server-dev page.
+  *
+  * @param  request  The <code>HttpServletRequest</code> for the POST request.
+  * @param  response The <code>HttpServletResponse</code> for the POST request.
+  * @return None. A Entity of the Comment kind is created and upserted to the Datastore.
+  */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Get the input from the html text form.
     String newComment = request.getParameter("comment");
     long timestamp = System.currentTimeMillis();
 
-    // Add comment to datastore.
     Entity taskEntity = new Entity("Comment");
     taskEntity.setProperty("text", newComment);
     taskEntity.setProperty("timestamp", timestamp);
@@ -43,7 +51,6 @@ public class NewCommentServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(taskEntity);
 
-    // Redirect back to the server HTML page.
     response.sendRedirect("/pages/server-dev.html");
   }
 }
