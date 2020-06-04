@@ -27,7 +27,8 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that enters new comments into the Datastore. */
 @WebServlet("/new-comment")
 public class NewCommentServlet extends HttpServlet {
-
+  private static DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+  
   /**
   * This Method handles POST requests corresponding to a new comment and creates a new Entity
   * for that comment in the Google Cloud Datastore.
@@ -46,9 +47,7 @@ public class NewCommentServlet extends HttpServlet {
     Entity taskEntity = new Entity("Comment");
     taskEntity.setProperty("text", newComment);
     taskEntity.setProperty("timestamp", timestamp);
-    System.out.println(newComment);
 
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(taskEntity);
 
     response.sendRedirect("/pages/server-dev.html");
