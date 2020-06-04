@@ -23,14 +23,14 @@ function getCommentsThread() {
         const commentThread = document.getElementById('comments-thread');
         commentList.forEach((comment) => {
           commentThread.appendChild(createListElement(comment));
-        })
-        .catch(err => {
-          console.log('Error: ' + err);
-          document.getElementById('comments-thread').
-              appendChild(createListElement('Error: Unable to load ' +
-                                            'the comments thread.'));
         });
-  });
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        document.getElementById('comments-thread').
+        appendChild(createListElement('Error: Unable to load ' +
+                                      'the comments thread.'));
+      });
 }
 
 /**
