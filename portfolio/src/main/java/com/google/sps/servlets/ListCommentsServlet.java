@@ -38,6 +38,7 @@ public class ListCommentsServlet extends HttpServlet {
   * This Method handles GET requests in order to display all of the comments that are stored 
   * in the Comments kind of the Google Cloud Datastore.
   * <p>
+  * 
   * @param  request  The <code>HttpServletRequest</code> for the GET request.
   * @param  response The <code>HttpServletResponse</code> for the GET request.
   * @return None. The Servlet writes to the /comment-data page which JavaScript then fetches 
@@ -62,6 +63,7 @@ public class ListCommentsServlet extends HttpServlet {
   /**
   * Converts a list of strings to a JSON string.
   * <p>
+  *
   * @param  comments  The List of String comments that should be converted to a JSON string.
   * @return <code>String</code> The JSON string corresponding to the list of comments.
   */
