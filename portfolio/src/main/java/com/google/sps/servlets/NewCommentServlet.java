@@ -34,6 +34,7 @@ public class NewCommentServlet extends HttpServlet {
   * for that comment in the Google Cloud Datastore.
   * <p>
   * The POST request also results in a re-direct back to the original server-dev page.
+  * TODO(Issue #15): Do verfification on a new comment before adding it to the comments list.
   *
   * @param  request  The <code>HttpServletRequest</code> for the POST request.
   * @param  response The <code>HttpServletResponse</code> for the POST request.
