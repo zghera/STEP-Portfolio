@@ -51,7 +51,6 @@ public class ListCommentsServlet extends HttpServlet {
     List<String> comments = new ArrayList<>();  
     for (Entity commentEntity : results.asIterable()) {
       String comment = (String) commentEntity.getProperty("text");
-
       comments.add(comment);
     }
 
