@@ -41,16 +41,15 @@ public class ListCommentsServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
-    // Iterate through each entity and add comment text to a list
+    // Iterate through each entity and add comment text to a list.
     List<String> comments = new ArrayList<>();  
     for (Entity commentEntity : results.asIterable()) {
-      // long id = entity.getKey().getId();
       String comment = (String) commentEntity.getProperty("text");
 
       comments.add(comment);
     }
 
-    // Send the comment list as a JSON string
+    // Send the comment list as a JSON string.
     String jsonComments = convertToJson(comments);
     response.setContentType("application/json;");
     response.getWriter().println(jsonComments);

@@ -30,11 +30,11 @@ public class NewCommentServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Get the input from the html text form
+    // Get the input from the html text form.
     String newComment = request.getParameter("comment");
     long timestamp = System.currentTimeMillis();
 
-    // Add comment to datastore
+    // Add comment to datastore.
     Entity taskEntity = new Entity("Comment");
     taskEntity.setProperty("text", newComment);
     taskEntity.setProperty("timestamp", timestamp);
