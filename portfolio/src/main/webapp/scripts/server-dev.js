@@ -33,7 +33,11 @@ function getCommentsThread() {
   });
 }
 
-/** Creates an <li> element containing 'text'. */
+/**
+ * Creates an <li> element containing 'text'. 
+ * @param {string} text the inner text of the created <li> element.
+ * @return {li} The list element created.
+ */
 function createListElement(text) {
   const liElement = document.createElement('li');
   liElement.innerText = text;

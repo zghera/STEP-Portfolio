@@ -28,31 +28,53 @@ import javax.servlet.http.HttpServletResponse;
 public class DataServlet extends HttpServlet {
   private static List<String> comments = new ArrayList<>();                                                     
 
+  /**
+  * This Method handles GET requests in order to display all of the comments that are stored 
+  * in the Comments kind of the Google Cloud Datastore.
+  * <p>
+  *
+  * @param  request  The <code>HttpServletRequest</code> for the GET request.
+  * @param  response The <code>HttpServletResponse</code> for the GET request.
+  * @return None. The Servlet writes to the /comment-data page which JavaScript then fetches 
+  *         in order to serve the comments to the UI. 
+  */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Convert the List of comments to JSON.
     String jsonComments = convertToJson(comments);
 
-    // Convert list to JSON and send to comment-data page.
     response.setContentType("application/json;");
     response.getWriter().println(jsonComments);
   }
 
+  /**
+  * Converts a list of strings to a JSON string.
+  * <p>
+  *
+  * @param  comments  The List of String comments that should be converted to a JSON string.
+  * @return <code>String</code> The JSON string corresponding to the list of comments.
+  */
   private String convertToJson(List<String> comments) {
     Gson gson = new Gson();
     String json = gson.toJson(comments);
     return json;
   }
 
+  /**
+  * This Method handles POST requests corresponding to a new comment and appends that comment
+  * as new String to the static class variable <code>comments</code>.
+  * <p>
+  * The POST request also results in a re-direct back to the original server-dev page.
+  *
+  * @param  request  The <code>HttpServletRequest</code> for the POST request.
+  * @param  response The <code>HttpServletResponse</code> for the POST request.
+  * @return None. A new String corresponding to the new comment is appended to the 
+  *         <code>comments</code> list. 
+  */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Get the input from the html text form.
     String newComment = request.getParameter("new-comment");
-
-    // Add new comment to the comments list.
     comments.add(newComment);
 
-    // Redirect back to the server HTML page.
     response.sendRedirect("/pages/server-dev.html");
   }
 }
