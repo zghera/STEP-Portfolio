@@ -15,23 +15,34 @@
 /**
  * Fetches the previously entered comments from the server and inserts each
  * comment as a list item of the 'comments' <ul> element.
+ *
+ * <p>
+ *
+ * An option to determine the maximum number of comments is also included
+ * using a Query String parameter created from the num-comments form. When
+ * the page is (re-)loaded, the number of comments displayed is determined
+ * from the selection in the previous session. Otherwise, the last  most
+ * recently submitted number selection will be used. The number of comments
+ * will also never exceed the number of total comments returned from the
+ * datastore.
  */
 function getCommentsThread() {
   fetch('/comment-data')
       .then(response => response.json())
       .then((commentList) => {
         const commentThread = document.getElementById('comments-thread');
+        const urlParams = new URLSearchParams(window.location.search);
 
-        const numCommentsToDispStored = parseInt(sessionStorage.getItem("numCommentsToDisp"));
-        console.log(numCommentsToDispStored)
-        var numCommentsToDisp = document.getElementById("num-comments").value;
-        if (numCommentsToDisp != numCommentsToDispStored) {
-          numCommentsToDisp = numCommentsToDispNew;
+        // Determine the number of comments to display
+        var numComments = urlParams.get('num-comments');
+        const numCommentsStored = parseInt(
+            sessionStorage.getItem("numComments"));
+        if (numComments == null) {
+          numComments = numCommentsStored;
+        } else {
+          sessionStorage.setItem("numComments", numComments);
         }
-        sessionStorage.setItem("numCommentsToDisp", numCommentsToDisp);
-        console.log(numCommentsToDisp)
-        console.log('-------')
-        const maxCommentIdx = Math.min(numCommentsToDisp, commentList.length);
+        const maxCommentIdx = Math.min(numComments, commentList.length);
 
         document.getElementById('comments-thread').innerHTML = "";
         for (var cmntIdx = 0; cmntIdx < maxCommentIdx; cmntIdx++) {
@@ -48,6 +59,7 @@ function getCommentsThread() {
 
 /**
  * Creates an <li> element containing 'text'. 
+ * 
  * @param {string} text the inner text of the created <li> element.
  * @return {li} The list element created.
  */
