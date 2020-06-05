@@ -21,9 +21,22 @@ function getCommentsThread() {
       .then(response => response.json())
       .then((commentList) => {
         const commentThread = document.getElementById('comments-thread');
-        commentList.forEach((comment) => {
-          commentThread.appendChild(createListElement(comment));
-        });
+
+        const numCommentsToDispStored = parseInt(sessionStorage.getItem("numCommentsToDisp"));
+        console.log(numCommentsToDispStored)
+        var numCommentsToDisp = document.getElementById("num-comments").value;
+        if (numCommentsToDisp != numCommentsToDispStored) {
+          numCommentsToDisp = numCommentsToDispNew;
+        }
+        sessionStorage.setItem("numCommentsToDisp", numCommentsToDisp);
+        console.log(numCommentsToDisp)
+        console.log('-------')
+        const maxCommentIdx = Math.min(numCommentsToDisp, commentList.length);
+
+        document.getElementById('comments-thread').innerHTML = "";
+        for (var cmntIdx = 0; cmntIdx < maxCommentIdx; cmntIdx++) {
+          commentThread.appendChild(createListElement(commentList[cmntIdx]));
+        }
       })
       .catch(err => {
         console.log('Error: ' + err);

@@ -56,6 +56,11 @@
         </section>
         <section class="content">
           <h2>Comments Thread</h2>
+          <div>
+            <label for="num-comments">Number of comments to display (0 - 100): </label>
+            <input type="number" id="num-comments" min="0" max="100" value="0">
+            <button onclick="getCommentsThread()">Submit</button>
+          </div>
           <ul id="comments-thread"></ul>
         </section>
       </main>
