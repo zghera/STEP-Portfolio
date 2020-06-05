@@ -21,10 +21,9 @@
  * An option to determine the maximum number of comments is also included
  * using a Query String parameter created from the num-comments form. When
  * the page is (re-)loaded, the number of comments displayed is determined
- * from the selection in the previous session. Otherwise, the last  most
- * recently submitted number selection will be used. The number of comments
- * will also never exceed the number of total comments returned from the
- * datastore.
+ * from the selection in the previous session. Otherwise, the most recently
+ * submitted number selection will be used. The number of comments will
+ * also never exceed the number of total comments returned from the datastore.
  */
 function getCommentsThread() {
   fetch('/comment-data')
