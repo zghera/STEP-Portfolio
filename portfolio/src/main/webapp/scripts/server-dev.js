@@ -42,6 +42,7 @@ function getCommentsThread() {
           sessionStorage.setItem("numComments", numComments);
         }
         const maxCommentIdx = Math.min(numComments, commentList.length);
+        document.getElementById('num-comments').value = numComments;
 
         document.getElementById('comments-thread').innerHTML = "";
         for (var cmntIdx = 0; cmntIdx < maxCommentIdx; cmntIdx++) {
