@@ -25,21 +25,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that enters new comments into the Datastore. */
+/** Servlet that deletes all comments from the Datastore. */
 @WebServlet("/delete-comments")
 public class DeleteCommentsServlet extends HttpServlet {
   private static DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
   /**
-   * This Method handles POST requests corresponding to a new comment and creates a new Entity for
-   * that comment in the Google Cloud Datastore.
+   * This Method handles POST requests corresponding to deleting all Comment kind Entities from
+   * the Google Cloud Datastore.
    *
-   * <p>The POST request also results in a re-direct back to the original server-dev page.
-   * TODO(Issue #15): Do verfification on a new comment before adding it to the comments list.
+   * <p>
+   * 
+   * The POST request also results in a re-direct back to the original server-dev page.
    *
    * @param request The <code>HttpServletRequest</code> for the POST request.
    * @param response The <code>HttpServletResponse</code> for the POST request.
-   * @return None. A Entity of the Comment kind is created and upserted to the Datastore.
+   * @return None. All entities in the 'Comments' kind are deleted.
    */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
