@@ -17,9 +17,13 @@ package com.google.sps.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.getKey;
 import com.google.appengine.api.datastore.Key;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -49,10 +53,10 @@ public class DeleteCommentsServlet extends HttpServlet {
 
     List<Key> entityKeys = new ArrayList();
     for (Entity commentEntity : results.asIterable()) {
-      entityKeys.append(commentEntity.getKey())
+      entityKeys.append(commentEntity.getKey());
     }
     for (Key key : entityKeys) {
-      datastore.delete(key)
+      datastore.delete(key);
     }
 
     response.sendRedirect("/pages/server-dev.html");
