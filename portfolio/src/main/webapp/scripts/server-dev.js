@@ -12,21 +12,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-var answer_idx = 0;
-
-function getAnswer() {
-  fetch('/data')
+/**
+ * Fetches the previously entered comments from the server and inserts each
+ * comment as a list item of the 'comments' <ul> element.
+ */
+function getCommentsThread() {
+  fetch('/comment-data')
       .then(response => response.json())
-      .then(answers => {
-        document.getElementById('answer-container').innerText =
-            answers[(answer_idx++) % answers.length];
-        if (answer_idx >= Number.MAX_SAFE_INTEGER) {
-          answer_idx = 0;
-        }
-      })
-      .catch(err => {
-        console.log('Error: ' + err);
-        document.getElementById('answer-container').innerText =
-            'Something went wrong.';
-      });
+      .then((commentList) => {
+        const commentThread = document.getElementById('comments-thread');
+        commentList.forEach((comment) => {
+          commentThread.appendChild(createListElement(comment));
+        })
+        .catch(err => {
+          console.log('Error: ' + err);
+          document.getElementById('comments-thread').
+              appendChild(createListElement('Error: Unable to load ' +
+                                            'the comments thread.'));
+        });
+  });
+}
+
+/**
+ * Creates an <li> element containing 'text'. 
+ * @param {string} text the inner text of the created <li> element.
+ * @return {li} The list element created.
+ */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
 }
