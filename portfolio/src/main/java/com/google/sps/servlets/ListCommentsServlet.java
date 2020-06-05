@@ -14,6 +14,12 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.List; 
@@ -23,16 +29,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns some example content. */
+/** Servlet that returns comments stored in the Datastore. */
 @WebServlet("/comment-data")
-public class DataServlet extends HttpServlet {
-  private static List<String> comments = new ArrayList<>();                                                     
+public class ListCommentsServlet extends HttpServlet {
+  private static DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
   /**
   * This Method handles GET requests in order to display all of the comments that are stored 
   * in the Comments kind of the Google Cloud Datastore.
   * <p>
-  *
+  * 
   * @param  request  The <code>HttpServletRequest</code> for the GET request.
   * @param  response The <code>HttpServletResponse</code> for the GET request.
   * @return None. The Servlet writes to the /comment-data page which JavaScript then fetches 
@@ -40,6 +46,15 @@ public class DataServlet extends HttpServlet {
   */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+    PreparedQuery results = datastore.prepare(query);
+
+    List<String> comments = new ArrayList<>();  
+    for (Entity commentEntity : results.asIterable()) {
+      String comment = (String) commentEntity.getProperty("text");
+      comments.add(comment);
+    }
+
     String jsonComments = convertToJson(comments);
     response.setContentType("application/json;");
     response.getWriter().println(jsonComments);
@@ -56,24 +71,5 @@ public class DataServlet extends HttpServlet {
     Gson gson = new Gson();
     String json = gson.toJson(comments);
     return json;
-  }
-
-  /**
-  * This Method handles POST requests corresponding to a new comment and appends that comment
-  * as new String to the static class variable <code>comments</code>.
-  * <p>
-  * The POST request also results in a re-direct back to the original server-dev page.
-  * TODO(Issue #15): Do verfification on a new comment before adding it to the comments list.
-  *
-  * @param  request  The <code>HttpServletRequest</code> for the POST request.
-  * @param  response The <code>HttpServletResponse</code> for the POST request.
-  * @return None. A new String corresponding to the new comment is appended to the 
-  *         <code>comments</code> list. 
-  */
-  @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String newComment = request.getParameter("new-comment");
-    comments.add(newComment);
-    response.sendRedirect("/pages/server-dev.html");
   }
 }
