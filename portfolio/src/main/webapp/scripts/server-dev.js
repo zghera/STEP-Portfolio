@@ -35,7 +35,7 @@ function getCommentsThread() {
 
         var numComments = urlParams.get('num-comments');
         const numCommentsStored = parseInt(
-           sessionStorage.getItem('numComments'));
+            sessionStorage.getItem('numComments'));
         if (numComments == null) {
           numComments = numCommentsStored;
         } else {
@@ -49,12 +49,12 @@ function getCommentsThread() {
           commentThread.appendChild(createListElement(commentList[cmntIdx]));
         }
       })
-    .catch(err => {
-      console.log('Error: ' + err);
-      document.getElementById('comments-thread').
-      appendChild(createListElement('Error: Unable to load ' +
-                                    'the comments thread.'));
-    });
+      .catch(err => {
+        console.log('Error: ' + err);
+        document.getElementById('comments-thread').
+        appendChild(createListElement('Error: Unable to load ' +
+                                      'the comments thread.'));
+      });
 }
 
 /**
