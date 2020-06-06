@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 /**
  * Fetches the previously entered comments from the server and inserts each
  * comment as a list item of the 'comments' <ul> element.
@@ -32,29 +33,28 @@ function getCommentsThread() {
         const commentThread = document.getElementById('comments-thread');
         const urlParams = new URLSearchParams(window.location.search);
 
-        // Determine the number of comments to display
         var numComments = urlParams.get('num-comments');
         const numCommentsStored = parseInt(
-            sessionStorage.getItem("numComments"));
+           sessionStorage.getItem('numComments'));
         if (numComments == null) {
           numComments = numCommentsStored;
         } else {
-          sessionStorage.setItem("numComments", numComments);
+          sessionStorage.setItem('numComments', numComments);
         }
         const maxCommentIdx = Math.min(numComments, commentList.length);
         document.getElementById('num-comments').value = numComments;
 
-        document.getElementById('comments-thread').innerHTML = "";
+        document.getElementById('comments-thread').innerHTML = '';
         for (var cmntIdx = 0; cmntIdx < maxCommentIdx; cmntIdx++) {
           commentThread.appendChild(createListElement(commentList[cmntIdx]));
         }
       })
-      .catch(err => {
-        console.log('Error: ' + err);
-        document.getElementById('comments-thread').
-        appendChild(createListElement('Error: Unable to load ' +
-                                      'the comments thread.'));
-      });
+    .catch(err => {
+      console.log('Error: ' + err);
+      document.getElementById('comments-thread').
+      appendChild(createListElement('Error: Unable to load ' +
+                                    'the comments thread.'));
+    });
 }
 
 /**
