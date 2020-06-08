@@ -32,8 +32,8 @@ function getCommentsThread() {
         const commentThread = document.getElementById('comments-thread');
         const urlParams = new URLSearchParams(window.location.search);
 
-        // Determine the number of comments to display
-        var numComments = urlParams.get('num-comments');
+        // Determine the number of comments to display.
+        let numComments = urlParams.get('num-comments');
         const numCommentsStored = parseInt(
             sessionStorage.getItem("numComments"));
         if (numComments == null) {
@@ -44,7 +44,7 @@ function getCommentsThread() {
         const maxCommentIdx = Math.min(numComments, commentList.length);
 
         document.getElementById('comments-thread').innerHTML = "";
-        for (var cmntIdx = 0; cmntIdx < maxCommentIdx; cmntIdx++) {
+        for (let cmntIdx = 0; cmntIdx < maxCommentIdx; cmntIdx++) {
           commentThread.appendChild(createListElement(commentList[cmntIdx]));
         }
       })
