@@ -15,9 +15,7 @@
 /**
  * Fetches the previously entered comments from the server and inserts each
  * comment as a list item of the 'comments' <ul> element.
- *
- * <p>
- *
+ * 
  * An option to determine the maximum number of comments is also included
  * using a Query String parameter created from the num-comments form. When
  * the page is (re-)loaded, the number of comments displayed is determined
@@ -60,7 +58,7 @@ function getCommentsThread() {
  * Creates an <li> element containing 'text'. 
  * 
  * @param {string} text the inner text of the created <li> element.
- * @return {li} The list element created.
+ * @return {HTMLLIElement} The list element created.
  */
 function createListElement(text) {
   const liElement = document.createElement('li');
