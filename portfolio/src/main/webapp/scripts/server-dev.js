@@ -49,8 +49,9 @@ function getCommentsThread() {
         }
       })
       .catch(err => {
-        console.log('Error: ' + err);
+        console.log('Error in getCommentsThread: ' + err);
         document.getElementById('comments-thread').
+        // TODO(Issue #19): Create error page/notice
         appendChild(createListElement('Error: Unable to load ' +
                                       'the comments thread.'));
       });
@@ -67,3 +68,40 @@ function createListElement(text) {
   liElement.innerText = text;
   return liElement;
 }
+
+/**
+ * Fetches the URL that points to Blobstore and assigns the value of the
+ * commment submission form's action element to this URL. 
+ * 
+ * The Blobstore URL is generated and posted to the page /blobstore-upload-url
+ * in plain HTML. On page load, this URL is fetched so that the form data is 
+ * initially sent to Blobstore in order to process any files included in the 
+ * request. This POST request is then forwarded to the NewComment servlet 
+ * to enter form data into the Cload Datastore.
+ */
+function fetchBlobstoreUrl() {
+  fetch('/blobstore-upload-url')
+      .then((response) => response.text)
+      .then((imageUploadUrl) => {
+        const messageForm = document.getElementById('new-comment-form');
+        messageForm.action = imageUploadUrl;
+      })
+      .catch(err => {
+        console.log('Error in fetchBlobstoreUrl: ' + err);
+        document.getElementById('comments-thread').
+        // TODO(Issue #19): Create error page/notice
+        appendChild(createListElement('Error: Unable to fetch ' +
+                              'image upload url from Blobstore.'));
+      });
+}
+
+/**
+ * Wrapper function that calls functions that need to hapen upon loading 
+ * server-dev.html. This method prevents inline scripting on the body 
+ * html element. 
+ */
+function loadPage() {
+  fetchBlobstoreUrl();
+  getCommentsThread()
+}
+window.onload = loadPage;
