@@ -81,7 +81,7 @@ function createListElement(text) {
  */
 function fetchBlobstoreUrl() {
   fetch('/blobstore-upload-url')
-      .then((response) => response.text)
+      .then((response) => response.text())
       .then((imageUploadUrl) => {
         const messageForm = document.getElementById('new-comment-form');
         messageForm.action = imageUploadUrl;
