@@ -69,7 +69,7 @@ public class NewCommentServlet extends HttpServlet {
     Entity taskEntity = new Entity("Comment");
     taskEntity.setProperty("text", newComment);
     taskEntity.setProperty("timestamp", timestamp);
-    taskEntity.setProperty("imageUrl", timestamp);
+    taskEntity.setProperty("imageUrl", imageUrl);
 
     datastore.put(taskEntity);
 

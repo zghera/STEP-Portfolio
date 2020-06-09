@@ -27,11 +27,9 @@
 function getCommentsThread() {
   fetch('/comment-data')
       .then(response => response.json())
-      .then((commentList) => {
-        const commentThread = document.getElementById('comments-thread');
-        const urlParams = new URLSearchParams(window.location.search);
-
+      .then((commentsThread) => {
         // Determine the number of comments to display.
+        const urlParams = new URLSearchParams(window.location.search);
         let numComments = urlParams.get('num-comments');
         const numCommentsStored = parseInt(
             sessionStorage.getItem('numComments'));
@@ -40,12 +38,18 @@ function getCommentsThread() {
         } else {
           sessionStorage.setItem('numComments', numComments);
         }
-        const maxCommentIdx = Math.min(numComments, commentList.length);
+        const maxCommentIdx = Math.min(numComments, 
+                                       commentsThread.text.length);
         document.getElementById('num-comments').value = numComments;
 
-        document.getElementById('comments-thread').innerHTML = '';
+        // Add each comment to the comments thread
+        const commentsThreadContainer = document.
+            getElementById('comments-thread-container');
+        commentsThreadContainer.innerHTML = '';
         for (let cmntIdx = 0; cmntIdx < maxCommentIdx; cmntIdx++) {
-          commentThread.appendChild(createListElement(commentList[cmntIdx]));
+          commentsThreadContainer.appendChild(createListElement(
+                                          commentsThread.texts[cmntIdx],
+                                          commentsThread.imageUrls[cmntIdx]));
         }
       })
       .catch(err => {
@@ -58,14 +62,28 @@ function getCommentsThread() {
 }
 
 /**
- * Creates an <li> element containing 'text'. 
+ * Creates an <li> element containing the comment text and image.
+ *
+ * If there the imageUrl is null, no image element is included in 
+ * parent <li> element. 
  * 
- * @param {string} text the inner text of the created <li> element.
+ * @param {string} text the interior text of the created <li> element.
+ * @param {string} imageUrl the URL for the interior image of the created
+                            <li> element. If it is null, no image element
+                            is included in parent <li> element.
  * @return {HTMLLIElement} The list element created.
  */
-function createListElement(text) {
+function createListElement(text, imageUrl) {
   const liElement = document.createElement('li');
-  liElement.innerText = text;
+  const textElement = document.createElement('p');
+  textElement.innerText = text;
+  liElement.appendChild(textElement);
+
+  if (imageUrl != "null") {
+    const imageElement = document.createElement('img');
+    imageElement.src = imageUrl;
+    liElement.appendChild(imageElement);
+  }
   return liElement;
 }
 
