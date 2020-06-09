@@ -46,9 +46,7 @@ public class NewCommentServlet extends HttpServlet {
    * This Method handles POST requests corresponding to a new comment and creates a new Entity for
    * that comment in the Google Cloud Datastore.
    *
-   * <p>
-   * 
-   * This POST request originates from the 'new comment' form in server-dev.html and is initially
+   * <p>This POST request originates from the 'new comment' form in server-dev.html and is initially
    * sent to Blobstore for file processing. Once the Blobstore forward the request to this servlet,
    * the name of file submitted in the form can be used to get the image URL to be stored in
    * Blobstore. The POST request also results in a re-direct back to the original server-dev page.
@@ -108,11 +106,11 @@ public class NewCommentServlet extends HttpServlet {
     // Check the validity of the file here by making sure it's an image file
     // ----- Testing -----
     System.out.println("content type: " + blobInfo.getContentType());
-    System.out.println("content type (first 5 char): '" + 
-                  blobInfo.getContentType().substring(0,5) + "'");
+    System.out.println(
+        "content type (first 5 char): '" + blobInfo.getContentType().substring(0, 5) + "'");
     System.out.println("file name: " + blobInfo.getFilename());
     // -------------------
-    if (!"image".equals(blobInfo.getContentType().substring(0,5))) {
+    if (!"image".equals(blobInfo.getContentType().substring(0, 5))) {
       blobstoreService.delete(blobKey);
       return null;
     }
