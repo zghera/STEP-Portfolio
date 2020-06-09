@@ -50,8 +50,10 @@
         <section class="content">
           <h2>Add a new comment!
           <form action="/new-comment" method="POST">
-            <textarea name="comment">Enter a comment here.</textarea><br>
-            <input type="submit" /><br>
+            <textarea name="comment">Enter a comment here.</textarea><br/>
+            <label for="image">Upload an image:</label>
+            <input type="file" name="image"><br/>
+            <input type="submit" /><br/>
           </form>
         </section>
         <section class="content">
@@ -63,7 +65,7 @@
                    name="num-comments" value="5" min="0" max="100">
             <button onclick="getCommentsThread()">Submit</button>
           </form>
-          <ul id="comments-thread"></ul><br>
+          <ul id="comments-thread"></ul><br/>
           <form action="/delete-comments" method="POST">
             <button type="submit">Delete Comments</button>
           </form>
