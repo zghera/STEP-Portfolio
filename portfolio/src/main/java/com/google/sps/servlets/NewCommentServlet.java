@@ -14,10 +14,22 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.blobstore.BlobInfo;
+import com.google.appengine.api.blobstore.BlobInfoFactory;
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.ServingUrlOptions;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
+import java.util.Map;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,10 +45,12 @@ public class NewCommentServlet extends HttpServlet {
   /**
    * This Method handles POST requests corresponding to a new comment and creates a new Entity for
    * that comment in the Google Cloud Datastore.
+   *
    * <p>
+   * 
    * This POST request originates from the 'new comment' form in server-dev.html and is initially
    * sent to Blobstore for file processing. Once the Blobstore forward the request to this servlet,
-   * the name of file submitted in the form can be used to get the image URL to be stored in 
+   * the name of file submitted in the form can be used to get the image URL to be stored in
    * Blobstore. The POST request also results in a re-direct back to the original server-dev page.
    * TODO(Issue #15): Do verfification on a new comment before adding it to the comments list.
    *
@@ -50,8 +64,8 @@ public class NewCommentServlet extends HttpServlet {
     long timestamp = System.currentTimeMillis();
     String imageUrl = getUploadedFileUrl(request, "image");
 
-    // ----- Testing ----- 
-    System.out.println("url: "+imageUrl)
+    // ----- Testing -----
+    System.out.println("url: " + imageUrl);
     // -------------------
 
     Entity taskEntity = new Entity("Comment");
@@ -64,13 +78,13 @@ public class NewCommentServlet extends HttpServlet {
     response.sendRedirect("/pages/server-dev.html");
   }
 
-  /** 
-   * Returns a String corresponding to the URL that points to the uploaded file, or 
-   * null if the user didn't upload a file. 
+  /**
+   * Returns a String corresponding to the URL that points to the uploaded file, or null if the user
+   * didn't upload a file.
    *
    * @param request The <code>HttpServletRequest</code> for the POST request.
    * @param formInputElementNameThe Name attribute of the image file input to the form.
-   * @return The URL that points to the uploaded file. 
+   * @return The URL that points to the uploaded file.
    */
   private String getUploadedFileUrl(HttpServletRequest request, String formInputElementName) {
     Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
@@ -92,11 +106,13 @@ public class NewCommentServlet extends HttpServlet {
     }
 
     // Check the validity of the file here by making sure it's an image file
-    // ----- Testing ----- 
-    System.out.println("content type: "+blobInfo.getContentType());
-    System.out.println("file name: "+blobInfo.getFilename());
+    // ----- Testing -----
+    System.out.println("content type: " + blobInfo.getContentType());
+    System.out.println("content type (first 5 char): '" + 
+                  blobInfo.getContentType().substring(0,5) + "'");
+    System.out.println("file name: " + blobInfo.getFilename());
     // -------------------
-    if (blobInfo.getContentType() != "image") {
+    if (!"image".equals(blobInfo.getContentType().substring(0,5))) {
       blobstoreService.delete(blobKey);
       return null;
     }
