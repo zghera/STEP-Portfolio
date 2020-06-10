@@ -22,8 +22,8 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
 import java.io.IOException;
-import java.util.List; 
 import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,21 +35,17 @@ public class ListCommentsServlet extends HttpServlet {
   private static DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
   /**
-  * This Method handles GET requests in order to display all of the comments that are stored 
-  * in the Comments kind of the Google Cloud Datastore.
-  * <p>
-  * 
-  * @param  request  The <code>HttpServletRequest</code> for the GET request.
-  * @param  response The <code>HttpServletResponse</code> for the GET request.
-  * @return None. The Servlet writes to the /comment-data page which JavaScript then fetches 
-  *         in order to serve the comments to the UI. 
-  */
+   * {@inheritDoc}
+   * 
+   * <p>This Method handles GET requests in order to display all of the comments that are stored in the
+   * Comments kind of the Google Cloud Datastore.
+   */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
 
-    List<String> comments = new ArrayList<>();  
+    List<String> comments = new ArrayList<>();
     for (Entity commentEntity : results.asIterable()) {
       String comment = (String) commentEntity.getProperty("text");
       comments.add(comment);
@@ -61,12 +57,11 @@ public class ListCommentsServlet extends HttpServlet {
   }
 
   /**
-  * Converts a list of strings to a JSON string.
-  * <p>
-  *
-  * @param  comments  The List of String comments that should be converted to a JSON string.
-  * @return <code>String</code> The JSON string corresponding to the list of comments.
-  */
+   * Converts a list of strings to a JSON string.
+   *
+   * @param comments The List of String comments that should be converted to a JSON string.
+   * @return <code>String</code> The JSON string corresponding to the list of comments.
+   */
   private String convertToJson(List<String> comments) {
     Gson gson = new Gson();
     String json = gson.toJson(comments);
