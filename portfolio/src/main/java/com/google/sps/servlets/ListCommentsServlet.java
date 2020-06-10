@@ -51,6 +51,8 @@ public class ListCommentsServlet extends HttpServlet {
 
     Comments comments = new Comments();
     for (Entity commentEntity : results.asIterable()) {
+      // System.out.println("text: " + (String) commentEntity.getProperty("text"));
+      // System.out.println("imageUrl: " + (String) commentEntity.getProperty("imageUrl"));
       comments.addNewComment((String) commentEntity.getProperty("text"),
                              (String) commentEntity.getProperty("imageUrl"));
     }

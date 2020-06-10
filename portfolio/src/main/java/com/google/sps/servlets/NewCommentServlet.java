@@ -63,7 +63,7 @@ public class NewCommentServlet extends HttpServlet {
     String imageUrl = getUploadedFileUrl(request, "image");
 
     // ----- Testing -----
-    System.out.println("url: " + imageUrl);
+    // System.out.println("url: " + imageUrl);
     // -------------------
 
     Entity taskEntity = new Entity("Comment");
@@ -105,10 +105,10 @@ public class NewCommentServlet extends HttpServlet {
 
     // Check the validity of the file here by making sure it's an image file
     // ----- Testing -----
-    System.out.println("content type: " + blobInfo.getContentType());
-    System.out.println(
-        "content type (first 5 char): '" + blobInfo.getContentType().substring(0, 5) + "'");
-    System.out.println("file name: " + blobInfo.getFilename());
+    // System.out.println("content type: " + blobInfo.getContentType());
+    // System.out.println(
+    //     "content type (first 5 char): '" + blobInfo.getContentType().substring(0, 5) + "'");
+    // System.out.println("file name: " + blobInfo.getFilename());
     // -------------------
     if (!"image".equals(blobInfo.getContentType().substring(0, 5))) {
       blobstoreService.delete(blobKey);
