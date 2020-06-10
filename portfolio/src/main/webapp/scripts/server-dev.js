@@ -16,37 +16,23 @@
 /**
  * Fetches the previously entered comments from the server and inserts each
  * comment as a list item of the 'comments' <ul> element.
- *
- * An option to determine the maximum number of comments is also included
- * using a Query String parameter created from the num-comments form. When
- * the page is (re-)loaded, the number of comments displayed is determined
- * from the selection in the previous session. Otherwise, the most recently
- * submitted number selection will be used. The number of comments will
- * also never exceed the number of total comments returned from the datastore.
+ * 
+ * The number of comments displayed is determined by 
+ * getNumCommentstoDisplay().
  */
 function getCommentsThread() {
   fetch('/comment-data')
       .then(response => response.json())
       .then((commentsThread) => {
-        // Determine the number of comments to display.
-        const urlParams = new URLSearchParams(window.location.search);
-        let numComments = urlParams.get('num-comments');
-        const numCommentsStored = parseInt(
-            sessionStorage.getItem('numComments'));
-        if (numComments == null) {
-          numComments = numCommentsStored;
-        } else {
-          sessionStorage.setItem('numComments', numComments);
-        }
-        const maxCommentIdx = Math.min(numComments, 
-                                       commentsThread.text.length);
+        numComments = getNumCommentstoDisplay(commentsThread.text.length);
         document.getElementById('num-comments').value = numComments;
 
-        // Add each comment to the comments thread
         const commentsThreadContainer = document.
             getElementById('comments-thread-container');
         commentsThreadContainer.innerHTML = '';
         for (let cmntIdx = 0; cmntIdx < maxCommentIdx; cmntIdx++) {
+          console.log(commentsThread.texts[cmntIdx]);
+          console.log(commentsThread.imageUrls[cmntIdx]);
           commentsThreadContainer.appendChild(createListElement(
                                           commentsThread.texts[cmntIdx],
                                           commentsThread.imageUrls[cmntIdx]));
@@ -57,8 +43,41 @@ function getCommentsThread() {
         document.getElementById('comments-thread').
         // TODO(Issue #19): Create error page/notice
         appendChild(createListElement('Error: Unable to load ' +
-                                      'the comments thread.'));
+                                      'the comments thread.', null));
       });
+}
+
+/**
+ * Determines the number of comments that should be displayed in the comments
+ * thread based on the the current user selection, the last user selection 
+ * cached in the session, and the total number of comments stored in the 
+ * database.
+ * 
+ * An option to determine the maximum number of comments is implemented
+ * using a Query String parameter created from the num-comments form. When
+ * the page is (re-)loaded, the number of comments displayed is determined
+ * using the cached value corresponding to the selection in the previous 
+ * session. Otherwise, the most recently submitted number selection will be
+ * used. The number of comments will also never exceed the number of total
+ * comments returned from the datastore.
+ * 
+ * @param {number} numCommentsDatabase The number of comments stored in the 
+ *    Cloud Datastore.
+ * @return {number} The number of comments to be displayed in the comments 
+ *    thread.
+ */
+function getNumCommentstoDisplay(numCommentsDatabase) {
+  const urlParams = new URLSearchParams(window.location.search);
+  let numCommentsSelected = urlParams.get('num-comments');
+  const numCommentsCached = parseInt(
+      sessionStorage.getItem('numCommentsCached'));
+      
+  if (numCommentsSelected == null) {
+    numCommentsSelected = numCommentsCached;
+  } else {
+    sessionStorage.setItem('numCommentsCached', numCommentsSelected);
+  }
+  return Math.min(numCommentsSelected, numCommentsDatabase);
 }
 
 /**
@@ -68,9 +87,9 @@ function getCommentsThread() {
  * parent <li> element. 
  * 
  * @param {string} text the interior text of the created <li> element.
- * @param {string} imageUrl the URL for the interior image of the created
-                            <li> element. If it is null, no image element
-                            is included in parent <li> element.
+ * @param {?string} imageUrl the URL for the interior image of the created
+ *    <li> element. If it is null, no image element is included in parent 
+ *    <li> element.
  * @return {HTMLLIElement} The list element created.
  */
 function createListElement(text, imageUrl) {
