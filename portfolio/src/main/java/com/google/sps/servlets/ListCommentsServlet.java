@@ -49,28 +49,28 @@ public class ListCommentsServlet extends HttpServlet {
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
 
-    Comments comments = new Comments();
+    CommentsThread commentsThread = new CommentsThread();
     for (Entity commentEntity : results.asIterable()) {
       // System.out.println("text: " + (String) commentEntity.getProperty("text"));
       // System.out.println("imageUrl: " + (String) commentEntity.getProperty("imageUrl"));
-      comments.addNewComment((String) commentEntity.getProperty("text"),
-                             (String) commentEntity.getProperty("imageUrl"));
+      commentsThread.addNewComment((String) commentEntity.getProperty("text"),
+                               (String) commentEntity.getProperty("imageUrl"));
     }
 
-    String jsonComments = convertToJson(comments);
+    String jsonComments = convertToJson(commentsThread);
     response.setContentType("application/json;");
     response.getWriter().println(jsonComments);
   }
 
   /**
-   * Converts a list of strings to a JSON string.
+   * Converts a CommentsThread object to a JSON string.
    *
-   * @param comments The object corresponding to the list of comments (multiple attributes).
+   * @param commentsThread The object corresponding to the list of comments (multiple attributes).
    * @return The JSON string corresponding to the list of comments.
    */
-  private String convertToJson(Comments comments) {
+  private String convertToJson(CommentsThread commentsThread) {
     Gson gson = new Gson();
-    String json = gson.toJson(comments);
+    String json = gson.toJson(commentsThread);
     return json;
   }
 }

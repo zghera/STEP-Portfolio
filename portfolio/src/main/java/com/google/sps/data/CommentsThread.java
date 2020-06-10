@@ -22,7 +22,7 @@ import java.util.List;
  *
  * <p>Note: The private variables in this class are converted into JSON.
  */
-public class Comments {
+public class CommentsThread {
 
   /** List of the strings of text in each comment */
   private final List<String> texts = new ArrayList<>();
