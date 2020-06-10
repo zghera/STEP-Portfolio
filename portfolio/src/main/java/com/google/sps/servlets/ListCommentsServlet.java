@@ -35,13 +35,10 @@ public class ListCommentsServlet extends HttpServlet {
   private static DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
   /**
-   * This Method handles GET requests in order to display all of the comments that are stored in the
+   * {@inheritDoc}
+   * 
+   * <p>This Method handles GET requests in order to display all of the comments that are stored in the
    * Comments kind of the Google Cloud Datastore.
-   *
-   * @param request The <code>HttpServletRequest</code> for the GET request.
-   * @param response The <code>HttpServletResponse</code> for the GET request.
-   * @return None. The Servlet writes to the /comment-data page which JavaScript then fetches in
-   *     order to serve the comments to the UI.
    */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
