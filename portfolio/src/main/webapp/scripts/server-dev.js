@@ -63,18 +63,18 @@ function getNumCommentstoDisplay(numComments) {
   const urlParams = new URLSearchParams(window.location.search);
   let newNumCommentsToDisplay = urlParams.get('num-comments');
   const currNumCommentsToDisplay = parseInt(
-      sessionStorage.getItem('numCommentsCached'));
+      sessionStorage.getItem('currNumCommentsToDisplay'));
 
   if (newNumCommentsToDisplay == null) {
     if (isNaN(currNumCommentsToDisplay)) {
       const defaultNumComments = document.getElementById('num-comments').value;
       newNumCommentsToDisplay = defaultNumComments;
-      sessionStorage.setItem('numCommentsCached', defaultNumComments);   
+      sessionStorage.setItem('currNumCommentsToDisplay', defaultNumComments);   
     } else {
       newNumCommentsToDisplay = currNumCommentsToDisplay;
     }
   } else {
-    sessionStorage.setItem('numCommentsCached', newNumCommentsToDisplay);
+    sessionStorage.setItem('currNumCommentsToDisplay', newNumCommentsToDisplay);
   }
   return Math.min(newNumCommentsToDisplay, numComments);
 }
