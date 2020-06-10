@@ -27,7 +27,7 @@ function getCommentsThread() {
         document.getElementById('num-comments').value = numComments;
 
         const commentsThread = document.getElementById('comments-thread');
-        document.getElementById('comments-thread').innerHTML = "";
+        commentsThread.innerHTML = "";
         for (let cmntIdx = 0; cmntIdx < numComments; cmntIdx++) {
           commentsThread.appendChild(createListElement(commentsList[cmntIdx]));
         }
