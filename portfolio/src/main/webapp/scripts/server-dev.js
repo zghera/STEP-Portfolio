@@ -24,11 +24,12 @@ function getCommentsThread() {
       .then(response => response.json())
       .then((commentsList) => {
         numComments = getNumCommentstoDisplay(commentsList.length);
+        document.getElementById('num-comments').value = numComments;
 
         const commentsThread = document.getElementById('comments-thread');
         document.getElementById('comments-thread').innerHTML = "";
         for (let cmntIdx = 0; cmntIdx < numComments; cmntIdx++) {
-          commentThread.appendChild(createListElement(commentsList[cmntIdx]));
+          commentsThread.appendChild(createListElement(commentsList[cmntIdx]));
         }
       })
       .catch(err => {
@@ -62,12 +63,12 @@ function getNumCommentstoDisplay(numCommentsDatabase) {
   const urlParams = new URLSearchParams(window.location.search);
   let numCommentsSelected = urlParams.get('num-comments');
   const numCommentsCached = parseInt(
-      sessionStorage.getItem("numCommentsCached"));
+      sessionStorage.getItem('numCommentsCached'));
       
   if (numCommentsSelected == null) {
     numCommentsSelected = numCommentsCached;
   } else {
-    sessionStorage.setItem("numCommentsCached", numCommentsSelected);
+    sessionStorage.setItem('numCommentsCached', numCommentsSelected);
   }
   return Math.min(numCommentsSelected, numCommentsDatabase);
 }
