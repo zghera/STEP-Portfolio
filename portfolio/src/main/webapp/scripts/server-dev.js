@@ -31,8 +31,6 @@ function getCommentsThread() {
             getElementById('comments-thread-container');
         commentsThreadContainer.innerHTML = '';
         for (let cmntIdx = 0; cmntIdx < numComments; cmntIdx++) {
-          // console.log(commentsThread.texts[cmntIdx]);
-          // console.log(commentsThread.imageUrls[cmntIdx]);
           commentsThreadContainer.appendChild(createListElement(
                                           commentsThread.texts[cmntIdx],
                                           commentsThread.imageUrls[cmntIdx]));
@@ -104,7 +102,6 @@ function createListElement(text, imageUrl) {
   textElement.innerText = text;
   liElement.appendChild(textElement);
 
-  // console.log(imageUrl);
   if (imageUrl != null) {
     const imageElement = document.createElement('img');
     imageElement.src = imageUrl;

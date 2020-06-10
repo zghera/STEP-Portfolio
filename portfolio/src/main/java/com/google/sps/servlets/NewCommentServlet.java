@@ -62,15 +62,10 @@ public class NewCommentServlet extends HttpServlet {
     long timestamp = System.currentTimeMillis();
     String imageUrl = getUploadedFileUrl(request, "image");
 
-    // ----- Testing -----
-    // System.out.println("url: " + imageUrl);
-    // -------------------
-
     Entity taskEntity = new Entity("Comment");
     taskEntity.setProperty("text", newComment);
     taskEntity.setProperty("timestamp", timestamp);
     taskEntity.setProperty("imageUrl", imageUrl);
-
     datastore.put(taskEntity);
 
     response.sendRedirect("/pages/server-dev.html");
@@ -104,12 +99,6 @@ public class NewCommentServlet extends HttpServlet {
     }
 
     // Check the validity of the file here by making sure it's an image file
-    // ----- Testing -----
-    // System.out.println("content type: " + blobInfo.getContentType());
-    // System.out.println(
-    //     "content type (first 5 char): '" + blobInfo.getContentType().substring(0, 5) + "'");
-    // System.out.println("file name: " + blobInfo.getFilename());
-    // -------------------
     if (!"image".equals(blobInfo.getContentType().substring(0, 5))) {
       blobstoreService.delete(blobKey);
       return null;
