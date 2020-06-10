@@ -24,15 +24,15 @@ function getCommentsThread() {
   fetch('/comment-data')
       .then(response => response.json())
       .then((commentsThread) => {
-        numComments = getNumCommentstoDisplay(commentsThread.text.length);
+        numComments = getNumCommentstoDisplay(commentsThread.texts.length);
         document.getElementById('num-comments').value = numComments;
 
         const commentsThreadContainer = document.
             getElementById('comments-thread-container');
         commentsThreadContainer.innerHTML = '';
-        for (let cmntIdx = 0; cmntIdx < maxCommentIdx; cmntIdx++) {
-          console.log(commentsThread.texts[cmntIdx]);
-          console.log(commentsThread.imageUrls[cmntIdx]);
+        for (let cmntIdx = 0; cmntIdx < numComments; cmntIdx++) {
+          // console.log(commentsThread.texts[cmntIdx]);
+          // console.log(commentsThread.imageUrls[cmntIdx]);
           commentsThreadContainer.appendChild(createListElement(
                                           commentsThread.texts[cmntIdx],
                                           commentsThread.imageUrls[cmntIdx]));
@@ -40,7 +40,7 @@ function getCommentsThread() {
       })
       .catch(err => {
         console.log('Error in getCommentsThread: ' + err);
-        document.getElementById('comments-thread').
+        document.getElementById('comments-thread-container').
         // TODO(Issue #19): Create error page/notice
         appendChild(createListElement('Error: Unable to load ' +
                                       'the comments thread.', null));
@@ -73,7 +73,13 @@ function getNumCommentstoDisplay(numCommentsDatabase) {
       sessionStorage.getItem('numCommentsCached'));
       
   if (numCommentsSelected == null) {
-    numCommentsSelected = numCommentsCached;
+    if (isNaN(numCommentsCached)) {
+      const defaultNumComments = document.getElementById('num-comments').value;
+      numCommentsSelected = defaultNumComments;
+      sessionStorage.setItem('numCommentsCached', defaultNumComments);   
+    } else {
+      numCommentsSelected = numCommentsCached;
+    }
   } else {
     sessionStorage.setItem('numCommentsCached', numCommentsSelected);
   }
@@ -98,7 +104,8 @@ function createListElement(text, imageUrl) {
   textElement.innerText = text;
   liElement.appendChild(textElement);
 
-  if (imageUrl != "null") {
+  // console.log(imageUrl);
+  if (imageUrl != null) {
     const imageElement = document.createElement('img');
     imageElement.src = imageUrl;
     liElement.appendChild(imageElement);
@@ -125,10 +132,10 @@ function fetchBlobstoreUrl() {
       })
       .catch(err => {
         console.log('Error in fetchBlobstoreUrl: ' + err);
-        document.getElementById('comments-thread').
+        document.getElementById('comments-thread-container').
         // TODO(Issue #19): Create error page/notice
         appendChild(createListElement('Error: Unable to fetch ' +
-                              'image upload url from Blobstore.'));
+                              'image upload url from Blobstore.', null));
       });
 }
 
@@ -139,6 +146,6 @@ function fetchBlobstoreUrl() {
  */
 function loadPage() {
   fetchBlobstoreUrl();
-  getCommentsThread()
+  getCommentsThread();
 }
 window.onload = loadPage;
