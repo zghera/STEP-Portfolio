@@ -66,7 +66,13 @@ function getNumCommentstoDisplay(numCommentsDatabase) {
       sessionStorage.getItem('numCommentsCached'));
       
   if (numCommentsSelected == null) {
-    numCommentsSelected = numCommentsCached;
+    if (isNaN(numCommentsCached)) {
+      const defaultNumComments = document.getElementById('num-comments').value;
+      numCommentsSelected = defaultNumComments;
+      sessionStorage.setItem('numCommentsCached', defaultNumComments);   
+    } else {
+      numCommentsSelected = numCommentsCached;
+    }
   } else {
     sessionStorage.setItem('numCommentsCached', numCommentsSelected);
   }
