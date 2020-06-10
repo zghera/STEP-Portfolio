@@ -20,7 +20,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
-import com.google.sps.data.Comments;
+import com.google.sps.data.CommentsThread;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
