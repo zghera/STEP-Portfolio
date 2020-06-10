@@ -39,6 +39,6 @@ public class Comments {
    */
   public void addNewComment(String text, String imageUrl) {
     texts.add(text);
-    imageUrls.add(imageUrl)
+    imageUrls.add(imageUrl);
   }
 }
