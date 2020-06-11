@@ -36,9 +36,9 @@ public class ListCommentsServlet extends HttpServlet {
 
   /**
    * {@inheritDoc}
-   * 
-   * <p>This Method handles GET requests in order to display all of the comments that are stored in the
-   * Comments kind of the Google Cloud Datastore.
+   *
+   * <p>This Method handles GET requests in order to display all of the comments that are stored in
+   * the Comments kind of the Google Cloud Datastore.
    */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -55,7 +55,6 @@ public class ListCommentsServlet extends HttpServlet {
     response.setContentType("application/json;");
     response.getWriter().println(jsonComments);
   }
-
 
   /**
    * Converts a list of strings to a JSON string.
