@@ -29,15 +29,13 @@ public class NewCommentServlet extends HttpServlet {
   private static DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
   /**
-   * This Method handles POST requests corresponding to a new comment and creates a new Entity for
-   * that comment in the Google Cloud Datastore.
+   * {@inheritDoc}
+   * 
+   * <p>This Method handles POST requests corresponding to a new comment and creates a new Entity 
+   * for that comment in the Google Cloud Datastore.
    *
    * <p>The POST request also results in a re-direct back to the original server-dev page.
    * TODO(Issue #15): Do verfification on a new comment before adding it to the comments list.
-   *
-   * @param request The <code>HttpServletRequest</code> for the POST request.
-   * @param response The <code>HttpServletResponse</code> for the POST request.
-   * @return None. A Entity of the Comment kind is created and upserted to the Datastore.
    */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -47,7 +45,6 @@ public class NewCommentServlet extends HttpServlet {
     Entity taskEntity = new Entity("Comment");
     taskEntity.setProperty("text", newComment);
     taskEntity.setProperty("timestamp", timestamp);
-
     datastore.put(taskEntity);
 
     response.sendRedirect("/pages/server-dev.html");
