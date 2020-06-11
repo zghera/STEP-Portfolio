@@ -105,14 +105,15 @@ public class NewCommentServlet extends HttpServlet {
 
     // Use imagesService to get a URL that points to the uploaded file.
     ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
+    String servingUrl = imagesService.getServingUrl(options);
 
     // To support running in Google Cloud Shell with AppEngine's devserver, we must use the relative
     // path to the image, rather than the path returned by imagesService which contains a host.
     try {
-      URL url = new URL(imagesService.getServingUrl(options));
+      URL url = new URL(servingUrl);
       return url.getPath();
     } catch (MalformedURLException e) {
-      return imagesService.getServingUrl(options);
+      return servingUrl;
     }
   }
 }
