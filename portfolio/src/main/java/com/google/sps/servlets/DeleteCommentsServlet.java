@@ -34,14 +34,12 @@ public class DeleteCommentsServlet extends HttpServlet {
   private static DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
   /**
-   * This Method handles POST requests corresponding to deleting all Comment kind Entities from the
-   * Google Cloud Datastore.
+   * {@inheritDoc}
+   *
+   * <p>This Method handles POST requests corresponding to deleting all Comment kind Entities from
+   * the Google Cloud Datastore.
    *
    * <p>The POST request also results in a re-direct back to the original server-dev page.
-   *
-   * @param request The <code>HttpServletRequest</code> for the POST request.
-   * @param response The <code>HttpServletResponse</code> for the POST request.
-   * @return None. All entities in the 'Comments' kind are deleted.
    */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -52,9 +50,7 @@ public class DeleteCommentsServlet extends HttpServlet {
     for (Entity commentEntity : results.asIterable()) {
       entityKeys.add(commentEntity.getKey());
     }
-    for (Key key : entityKeys) {
-      datastore.delete(key);
-    }
+    datastore.delete(entityKeys);
 
     response.sendRedirect("/pages/server-dev.html");
   }

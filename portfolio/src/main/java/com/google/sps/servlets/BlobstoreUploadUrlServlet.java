@@ -28,12 +28,10 @@ public class BlobstoreUploadUrlServlet extends HttpServlet {
   private static BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 
   /**
-   * This Method handles GET requests for /blobstore-upload-url URL. The content of the response is
-   * the URL that allows a user to upload a file to Google Blobstore.
+   * {@inheritDoc}
    *
-   * @param request The <code>HttpServletRequest</code> for the GET request.
-   * @param response The <code>HttpServletResponse</code> for the GET request.
-   * @return None. The Servlet writes the Blobstore URL to the /blobstore-upload-url page.
+   * <p>This Method handles GET requests for /blobstore-upload-url URL. The content of the response
+   * is the URL that allows a user to upload a file to Google Blobstore.
    */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

@@ -24,13 +24,13 @@ function getCommentsThread() {
   fetch('/comment-data')
       .then(response => response.json())
       .then((commentsThread) => {
-        numComments = getNumCommentstoDisplay(commentsThread.texts.length);
-        document.getElementById('num-comments').value = numComments;
+        numCommentsToDisplay = getNumCommentstoDisplay(commentsThread.texts.length);
+        document.getElementById('num-comments').value = numCommentsToDisplay;
 
         const commentsThreadContainer = document.
             getElementById('comments-thread-container');
         commentsThreadContainer.innerHTML = '';
-        for (let cmntIdx = 0; cmntIdx < numComments; cmntIdx++) {
+        for (let cmntIdx = 0; cmntIdx < numCommentsToDisplay; cmntIdx++) {
           commentsThreadContainer.appendChild(createListElement(
                                           commentsThread.texts[cmntIdx],
                                           commentsThread.imageUrls[cmntIdx]));
@@ -59,29 +59,29 @@ function getCommentsThread() {
  * used. The number of comments will also never exceed the number of total
  * comments returned from the datastore.
  * 
- * @param {number} numCommentsDatabase The number of comments stored in the 
- *    Cloud Datastore.
+ * @param {number} numComments The number of comments stored in the Cloud
+ *    Datastore.
  * @return {number} The number of comments to be displayed in the comments 
  *    thread.
  */
-function getNumCommentstoDisplay(numCommentsDatabase) {
+function getNumCommentstoDisplay(numComments) {
   const urlParams = new URLSearchParams(window.location.search);
-  let numCommentsSelected = urlParams.get('num-comments');
-  const numCommentsCached = parseInt(
-      sessionStorage.getItem('numCommentsCached'));
+  let newNumCommentsToDisplay = urlParams.get('num-comments');
+  const currNumCommentsToDisplay = parseInt(
+      sessionStorage.getItem('currNumCommentsToDisplay'));
       
-  if (numCommentsSelected == null) {
-    if (isNaN(numCommentsCached)) {
+  if (newNumCommentsToDisplay == null) {
+    if (isNaN(currNumCommentsToDisplay)) {
       const defaultNumComments = document.getElementById('num-comments').value;
-      numCommentsSelected = defaultNumComments;
-      sessionStorage.setItem('numCommentsCached', defaultNumComments);   
+      newNumCommentsToDisplay = defaultNumComments;
+      sessionStorage.setItem('currNumCommentsToDisplay', defaultNumComments);   
     } else {
-      numCommentsSelected = numCommentsCached;
+      newNumCommentsToDisplay = currNumCommentsToDisplay;
     }
   } else {
-    sessionStorage.setItem('numCommentsCached', numCommentsSelected);
+    sessionStorage.setItem('currNumCommentsToDisplay', newNumCommentsToDisplay);
   }
-  return Math.min(numCommentsSelected, numCommentsDatabase);
+  return Math.min(newNumCommentsToDisplay, numComments);
 }
 
 /**

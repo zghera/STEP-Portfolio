@@ -43,18 +43,17 @@ public class NewCommentServlet extends HttpServlet {
   private static ImagesService imagesService = ImagesServiceFactory.getImagesService();
 
   /**
-   * This Method handles POST requests corresponding to a new comment and creates a new Entity for
-   * that comment in the Google Cloud Datastore.
+   * {@inheritDoc}
+   *
+   * <p>This Method handles POST requests corresponding to a new comment and creates a new Entity
+   * for that comment in the Google Cloud Datastore.
    *
    * <p>This POST request originates from the 'new comment' form in server-dev.html and is initially
    * sent to Blobstore for file processing. Once the Blobstore forward the request to this servlet,
    * the name of file submitted in the form can be used to get the image URL to be stored in
    * Blobstore. The POST request also results in a re-direct back to the original server-dev page.
-   * TODO(Issue #15): Do verfification on a new comment before adding it to the comments list.
    *
-   * @param request The <code>HttpServletRequest</code> for the POST request.
-   * @param response The <code>HttpServletResponse</code> for the POST request.
-   * @return void. A Entity of the Comment kind is created and upserted to the Datastore.
+   * <p>TODO(Issue #15): Do verfification on a new comment before adding it to the comments list.
    */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -106,14 +105,15 @@ public class NewCommentServlet extends HttpServlet {
 
     // Use imagesService to get a URL that points to the uploaded file.
     ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
+    String servingUrl = imagesService.getServingUrl(options);
 
     // To support running in Google Cloud Shell with AppEngine's devserver, we must use the relative
     // path to the image, rather than the path returned by imagesService which contains a host.
     try {
-      URL url = new URL(imagesService.getServingUrl(options));
+      URL url = new URL(servingUrl);
       return url.getPath();
     } catch (MalformedURLException e) {
-      return imagesService.getServingUrl(options);
+      return servingUrl;
     }
   }
 }
