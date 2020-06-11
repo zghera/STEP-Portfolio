@@ -83,7 +83,7 @@ function getNumCommentstoDisplay(numComments) {
 /**
  * Creates an <li> element containing 'text'. 
  * 
- * @param {string} text the inner text of the created <li> element.
+ * @param {string} text The inner text of the created <li> element.
  * @return {HTMLLIElement} The list element created.
  */
 function createListElement(text) {
