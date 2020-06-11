@@ -47,7 +47,9 @@ public class DeleteCommentsServlet extends HttpServlet {
     PreparedQuery results = datastore.prepare(query);
 
     List<Key> entityKeys = new ArrayList<>();
-    results.forEach(entityKeys::add);
+    for (Entity commentEntity : results.asIterable()) {
+      entityKeys.add(commentEntity.getKey());
+    }
     datastore.delete(entityKeys);
 
     response.sendRedirect("/pages/server-dev.html");
