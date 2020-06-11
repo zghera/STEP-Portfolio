@@ -24,7 +24,7 @@ function getCommentsThread() {
   fetch('/comment-data')
       .then(response => response.json())
       .then((commentsThread) => {
-        numCommentsToDisplay = getNumCommentstoDisplay(commentsThread.texts.length);
+        numCommentsToDisplay = getNumCommentstoDisplay(commentsThread.length);
         document.getElementById('num-comments').value = numCommentsToDisplay;
 
         const commentsThreadContainer = document.
@@ -32,8 +32,8 @@ function getCommentsThread() {
         commentsThreadContainer.innerHTML = '';
         for (let cmntIdx = 0; cmntIdx < numCommentsToDisplay; cmntIdx++) {
           commentsThreadContainer.appendChild(createListElement(
-                                          commentsThread.texts[cmntIdx],
-                                          commentsThread.imageUrls[cmntIdx]));
+                                          commentsThread[cmntIdx].text,
+                                          commentsThread[cmntIdx].imageUrl));
         }
       })
       .catch(err => {

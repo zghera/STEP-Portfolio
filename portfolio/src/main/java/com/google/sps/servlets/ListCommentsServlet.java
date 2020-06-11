@@ -20,7 +20,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
-import com.google.sps.data.CommentsThread;
+import com.google.sps.data.Comment;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,10 +46,10 @@ public class ListCommentsServlet extends HttpServlet {
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
 
-    CommentsThread commentsThread = new CommentsThread();
+    List<Comment> commentsThread = new ArrayList<>();
     for (Entity commentEntity : results.asIterable()) {
-      commentsThread.addNewComment((String) commentEntity.getProperty("text"),
-                               (String) commentEntity.getProperty("imageUrl"));
+      commentsThread.add(new Comment((String) commentEntity.getProperty("text"),
+                                     (String) commentEntity.getProperty("imageUrl")));
     }
 
     String jsonComments = convertToJson(commentsThread);
@@ -58,12 +58,12 @@ public class ListCommentsServlet extends HttpServlet {
   }
 
   /**
-   * Converts a CommentsThread object to a JSON string.
+   * Converts a list of Comment objects to a JSON string.
    *
-   * @param commentsThread The object corresponding to the list of comments (multiple attributes).
-   * @return The JSON string corresponding to the list of comments.
+   * @param commentsThread The List of Comment objects that should be converted to a JSON string.
+   * @return               The JSON string corresponding to the list of comments.
    */
-  private String convertToJson(CommentsThread commentsThread) {
+  private String convertToJson(List<Comment> commentsThread) {
     Gson gson = new Gson();
     String json = gson.toJson(commentsThread);
     return json;

@@ -14,31 +14,25 @@
 
 package com.google.sps.data;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Class representing the list of comments created on server-dev.html.
+ * Class representing a comment created on server-dev.html.
  *
  * <p>Note: The private variables in this class are converted into JSON.
  */
-public class CommentsThread {
+public class Comment {
 
-  /** List of the strings of text in each comment */
-  private final List<String> texts = new ArrayList<>();
+  /** The strings of text for the comment */
+  private final String text;
 
-  /** List of the image urls each comment (null if no image for a comment) */
-  private final List<String> imageUrls = new ArrayList<>();
+  /** The image urls for the comment (null if no image for a comment) */
+  private final String imageUrl;
 
   /** 
-   * Adds a new comment with associated text and image. 
-   *
    * @param text The string of text for an individual comment.
    * @param imageUrl The image URL for an individual comment (null if no image).
-   * @return void. The parameters are added to their respective private Lists.
    */
-  public void addNewComment(String text, String imageUrl) {
-    texts.add(text);
-    imageUrls.add(imageUrl);
+  public Comment(String text, String imageUrl) {
+    this.text = text;
+    this.imageUrl = imageUrl; 
   }
 }
