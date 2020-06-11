@@ -45,8 +45,8 @@ public class NewCommentServlet extends HttpServlet {
   /**
    * {@inheritDoc}
    *
-   * <p>This Method handles POST requests corresponding to a new comment and creates a new Entity for
-   * that comment in the Google Cloud Datastore.
+   * <p>This Method handles POST requests corresponding to a new comment and creates a new Entity
+   * for that comment in the Google Cloud Datastore.
    *
    * <p>This POST request originates from the 'new comment' form in server-dev.html and is initially
    * sent to Blobstore for file processing. Once the Blobstore forward the request to this servlet,

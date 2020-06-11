@@ -29,9 +29,9 @@ public class BlobstoreUploadUrlServlet extends HttpServlet {
 
   /**
    * {@inheritDoc}
-   * 
-   * <p>This Method handles GET requests for /blobstore-upload-url URL. The content of the response is
-   * the URL that allows a user to upload a file to Google Blobstore.
+   *
+   * <p>This Method handles GET requests for /blobstore-upload-url URL. The content of the response
+   * is the URL that allows a user to upload a file to Google Blobstore.
    */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
