@@ -16,7 +16,6 @@ package com.google.sps.servlets;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
@@ -35,9 +34,9 @@ public class DeleteCommentsServlet extends HttpServlet {
 
   /**
    * {@inheritDoc}
-   * 
-   * <p>This Method handles POST requests corresponding to deleting all Comment kind Entities from the
-   * Google Cloud Datastore.
+   *
+   * <p>This Method handles POST requests corresponding to deleting all Comment kind Entities from
+   * the Google Cloud Datastore.
    *
    * <p>The POST request also results in a re-direct back to the original server-dev page.
    */
@@ -48,9 +47,7 @@ public class DeleteCommentsServlet extends HttpServlet {
 
     List<Key> entityKeys = new ArrayList<>();
     results.forEach(entityKeys::add);
-    for (Key key : entityKeys) {
-      datastore.delete(key);
-    }
+    datastore.delete(entityKeys);
 
     response.sendRedirect("/pages/server-dev.html");
   }
