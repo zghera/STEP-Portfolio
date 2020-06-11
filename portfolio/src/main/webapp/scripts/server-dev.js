@@ -16,45 +16,68 @@
 /**
  * Fetches the previously entered comments from the server and inserts each
  * comment as a list item of the 'comments' <ul> element.
- *
- * An option to determine the maximum number of comments is also included
- * using a Query String parameter created from the num-comments form. When
- * the page is (re-)loaded, the number of comments displayed is determined
- * from the selection in the previous session. Otherwise, the most recently
- * submitted number selection will be used. The number of comments will
- * also never exceed the number of total comments returned from the datastore.
+ * 
+ * The number of comments displayed is determined by 
+ * getNumCommentstoDisplay().
  */
 function getCommentsThread() {
   fetch('/comment-data')
       .then(response => response.json())
-      .then((commentList) => {
-        const commentThread = document.getElementById('comments-thread');
-        const urlParams = new URLSearchParams(window.location.search);
+      .then((commentsList) => {
+        numCommentsToDisplay = getNumCommentstoDisplay(commentsList.length);
+        document.getElementById('num-comments').value = numCommentsToDisplay;
 
-        // Determine the number of comments to display.
-        let numComments = urlParams.get('num-comments');
-        const numCommentsStored = parseInt(
-            sessionStorage.getItem('numComments'));
-        if (numComments == null) {
-          numComments = numCommentsStored;
-        } else {
-          sessionStorage.setItem('numComments', numComments);
-        }
-        const maxCommentIdx = Math.min(numComments, commentList.length);
-        document.getElementById('num-comments').value = numComments;
-
-        document.getElementById('comments-thread').innerHTML = '';
-        for (let cmntIdx = 0; cmntIdx < maxCommentIdx; cmntIdx++) {
-          commentThread.appendChild(createListElement(commentList[cmntIdx]));
+        const commentsThread = document.getElementById('comments-thread');
+        commentsThread.innerHTML = '';
+        for (let cmntIdx = 0; cmntIdx < numCommentsToDisplay; cmntIdx++) {
+          commentsThread.appendChild(createListElement(commentsList[cmntIdx]));
         }
       })
       .catch(err => {
-        console.log('Error in getCommentsThread: ' + err);
+        console.log('Error: ' + err);
         document.getElementById('comments-thread').
-        // TODO(Issue #19): Create error page/notice
         appendChild(createListElement('Error: Unable to load ' +
                                       'the comments thread.'));
       });
+}
+
+/**
+ * Determines the number of comments that should be displayed in the comments
+ * thread based on the the current user selection, the last user selection 
+ * cached in the session, and the total number of comments stored in the 
+ * database.
+ * 
+ * An option to determine the maximum number of comments is implemented
+ * using a Query String parameter created from the num-comments form. When
+ * the page is (re-)loaded, the number of comments displayed is determined
+ * using the cached value corresponding to the selection in the previous 
+ * session. Otherwise, the most recently submitted number selection will be
+ * used. The number of comments will also never exceed the number of total
+ * comments returned from the datastore.
+ * 
+ * @param {number} numComments The number of comments stored in the Cloud 
+ *    Datastore.
+ * @return {number} The number of comments to be displayed in the comments 
+ *    thread.
+ */
+function getNumCommentstoDisplay(numComments) {
+  const urlParams = new URLSearchParams(window.location.search);
+  let newNumCommentsToDisplay = urlParams.get('num-comments');
+  const currNumCommentsToDisplay = parseInt(
+      sessionStorage.getItem('currNumCommentsToDisplay'));
+
+  if (newNumCommentsToDisplay == null) {
+    if (isNaN(currNumCommentsToDisplay)) {
+      const defaultNumComments = document.getElementById('num-comments').value;
+      newNumCommentsToDisplay = defaultNumComments;
+      sessionStorage.setItem('currNumCommentsToDisplay', defaultNumComments);   
+    } else {
+      newNumCommentsToDisplay = currNumCommentsToDisplay;
+    }
+  } else {
+    sessionStorage.setItem('currNumCommentsToDisplay', newNumCommentsToDisplay);
+  }
+  return Math.min(newNumCommentsToDisplay, numComments);
 }
 
 /**
@@ -102,6 +125,6 @@ function fetchBlobstoreUrl() {
  */
 function loadPage() {
   fetchBlobstoreUrl();
-  getCommentsThread()
+  getCommentsThread();
 }
 window.onload = loadPage;
