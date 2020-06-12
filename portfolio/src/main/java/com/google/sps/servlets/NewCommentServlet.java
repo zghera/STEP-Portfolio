@@ -22,9 +22,6 @@ import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.images.ImagesService;
-import com.google.appengine.api.images.ImagesServiceFactory;
-import com.google.appengine.api.images.ServingUrlOptions;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -40,7 +37,6 @@ import javax.servlet.http.HttpServletResponse;
 public class NewCommentServlet extends HttpServlet {
   private static DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
   private static BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-  private static ImagesService imagesService = ImagesServiceFactory.getImagesService();
 
   /**
    * {@inheritDoc}
@@ -50,7 +46,8 @@ public class NewCommentServlet extends HttpServlet {
    *
    * <p>This POST request originates from the 'new comment' form in server-dev.html and is initially
    * sent to Blobstore for file processing. Once the Blobstore forward the request to this servlet,
-   * the name of file submitted in the form can be used to get the image URL to be stored in
+   * the name of file submitted in the form can be used to get the corresponding blob key to be 
+   * stored in the Datastore
    * Blobstore. The POST request also results in a re-direct back to the original server-dev page.
    *
    * <p>TODO(Issue #15): Do verfification on a new comment before adding it to the comments list.
@@ -59,26 +56,26 @@ public class NewCommentServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String newComment = request.getParameter("comment");
     long timestamp = System.currentTimeMillis();
-    String imageUrl = getUploadedFileUrl(request, "image");
+    BlobKey blobKey = getBlobKey(request, "image");
 
     Entity taskEntity = new Entity("Comment");
     taskEntity.setProperty("text", newComment);
     taskEntity.setProperty("timestamp", timestamp);
-    taskEntity.setProperty("imageUrl", imageUrl);
+    taskEntity.setProperty("blobKey", blobKey);
     datastore.put(taskEntity);
 
     response.sendRedirect("/pages/server-dev.html");
   }
 
   /**
-   * Returns a String corresponding to the URL that points to the uploaded file, or null if the user
-   * didn't upload a file.
+   * Returns a BlobKey object corresponding to the uploaded file.
    *
    * @param request The <code>HttpServletRequest</code> for the POST request.
-   * @param formInputElementNameThe Name attribute of the image file input to the form.
-   * @return The URL that points to the uploaded file.
+   * @param formInputElementName The name attribute of the image file input to the form.
+   * @return The blob key associated with the uploaded image file. Null is returned if 
+   *         the user did not select a file or the file is not an image type.
    */
-  private String getUploadedFileUrl(HttpServletRequest request, String formInputElementName) {
+  private BlobKey getBlobKey(HttpServletRequest request, String formInputElementName) {
     Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
     List<BlobKey> blobKeys = blobs.get(formInputElementName);
 
@@ -103,17 +100,6 @@ public class NewCommentServlet extends HttpServlet {
       return null;
     }
 
-    // Use imagesService to get a URL that points to the uploaded file.
-    ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
-    String servingUrl = imagesService.getServingUrl(options);
-
-    // To support running in Google Cloud Shell with AppEngine's devserver, we must use the relative
-    // path to the image, rather than the path returned by imagesService which contains a host.
-    try {
-      URL url = new URL(servingUrl);
-      return url.getPath();
-    } catch (MalformedURLException e) {
-      return servingUrl;
-    }
+    return blobKey;
   }
 }

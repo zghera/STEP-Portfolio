@@ -33,43 +33,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns comments stored in the Datastore. */
-@WebServlet("/comment-data")
-public class ListCommentsServlet extends HttpServlet {
-  private static DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+/** Servlet that returns (image) files stored in the Blobstore. */
+@WebServlet("/serve-image")
+public class ServeBlobs extends HttpServlet {
   private static BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 
   /**
    * {@inheritDoc}
    *
-   * <p>This Method handles GET requests in order to display all of the comments that are stored in
-   * the Comments kind of the Google Cloud Datastore.
+   * <p>This Method handles GET requests in order to serve files uploaded to Blobstore based on 
+   * the blob key placed in the URL query string. 
    */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
-    PreparedQuery results = datastore.prepare(query);
-
-    List<Comment> commentsThread = new ArrayList<>();
-    for (Entity commentEntity : results.asIterable()) {
-      commentsThread.add(new Comment((String) commentEntity.getProperty("text"),
-                                     (BlobKey) commentEntity.getProperty("blobKey")));
-    }
-
-    String jsonComments = convertToJson(commentsThread);
-    response.setContentType("application/json;");
-    response.getWriter().println(jsonComments);
-  }
-
-  /**
-   * Converts a list of Comment objects to a JSON string.
-   *
-   * @param commentsThread The List of Comment objects that should be converted to a JSON string.
-   * @return               The JSON string corresponding to the list of comments.
-   */
-  private String convertToJson(List<Comment> commentsThread) {
-    Gson gson = new Gson();
-    String json = gson.toJson(commentsThread);
-    return json;
+    BlobKey blobKey = new BlobKey(request.getParameter("blob-key"));
+    blobstoreService.serve(blobKey, response);
   }
 }

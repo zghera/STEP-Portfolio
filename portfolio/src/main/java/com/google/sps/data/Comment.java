@@ -14,6 +14,8 @@
 
 package com.google.sps.data;
 
+import com.google.appengine.api.blobstore.BlobKey;
+
 /**
  * Class representing a comment created on server-dev.html.
  *
@@ -21,18 +23,19 @@ package com.google.sps.data;
  */
 public class Comment {
 
-  /** The strings of text for the comment */
+  /** The strings of text for the comment. */
   private final String text;
 
-  /** The image urls for the comment (null if no image for a comment) */
-  private final String imageUrl;
+  /** The keys corresponding to the image stored in the Blobstore for the
+      comment (null if no image for a comment). */
+  private final BlobKey blobKey;
 
   /** 
    * @param text The string of text for an individual comment.
-   * @param imageUrl The image URL for an individual comment (null if no image).
+   * @param blobKey The associated image blob key for an individual comment.
    */
-  public Comment(String text, String imageUrl) {
+  public Comment(String text, BlobKey blobKey) {
     this.text = text;
-    this.imageUrl = imageUrl; 
+    this.blobKey = blobKey; 
   }
 }
