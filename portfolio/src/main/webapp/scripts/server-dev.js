@@ -31,9 +31,8 @@ function getCommentsThread() {
             getElementById('comments-thread-container');
         commentsThreadContainer.innerHTML = '';
         for (let cmntIdx = 0; cmntIdx < numCommentsToDisplay; cmntIdx++) {
-          commentsThreadContainer.appendChild(createListElement(
-                                          commentsThread[cmntIdx].text,
-                                          commentsThread[cmntIdx].blobKey));
+          commentsThreadContainer.appendChild(
+              createListElement(commentsThread[cmntIdx]));
         }
       })
       .catch(err => {
@@ -96,7 +95,11 @@ function getNumCommentstoDisplay(numComments) {
  *    is included in the parent <li> element.
  * @return {HTMLLIElement} The list element created.
  */
-function createListElement(text, blobKey) {
+function createListElement(commentInJson) {
+  const text = commentInJson.text;
+  const blobKey = commentInJson.blobKey;
+  const landmark = commentInJson.landmark;
+
   const liElement = document.createElement('li');
   const textElement = document.createElement('p');
   textElement.innerText = text;
@@ -106,6 +109,16 @@ function createListElement(text, blobKey) {
     const imageElement = document.createElement('img');
     imageElement.src = "/serve-image?blob-key="+blobKey.blobKey;
     liElement.appendChild(imageElement);
+  }
+
+  if (landmark != null) {
+    const landmarkNameElement = document.createElement('p');
+    landmarkNameElement.innerText = landmark.name;
+    const landmarkLatLng = document.createElement('p');
+    landmarkLatLng.innerText = "(" + landmark.latitude + ", " +
+                                          landmark.longitude + ")";
+    liElement.appendChild(landmarkNameElement);
+    liElement.appendChild(landmarkLatLng);
   }
   return liElement;
 }

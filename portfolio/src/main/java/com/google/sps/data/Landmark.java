@@ -14,31 +14,26 @@
 
 package com.google.sps.data;
 
-import com.google.appengine.api.blobstore.BlobKey;
-
 /**
  * Class representing a comment created on server-dev.html.
  *
  * <p>Note: The private variables in this class are converted into JSON.
  */
-public class Comment {
+public class Landmark {
 
-  /** The strings of text for the comment. */
-  private final String text;
+  private final String name;
 
-  /** The keys corresponding to the image stored in the Blobstore for the
-      comment (null if no image for a comment). */
-  private final BlobKey blobKey;
-
-  private final Landmark landmark;
+  private final float latitude;
+  
+  private final float longitude;
 
   /** 
    * @param text The string of text for an individual comment.
    * @param blobKey The associated image blob key for an individual comment.
    */
-  public Comment(String text, BlobKey blobKey, Landmark landmark) {
-    this.text = text;
-    this.blobKey = blobKey; 
-    this.landmark = landmark;
+  public Landmark(String name, float latitude, float longitude) {
+    this.name = name;
+    this.latitude = latitude; 
+    this.longitude = longitude;
   }
 }
