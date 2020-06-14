@@ -67,18 +67,20 @@ public class NewCommentServlet extends HttpServlet {
     String newComment = request.getParameter("comment");
     long timestamp = System.currentTimeMillis();
     BlobKey blobKey = getBlobKey(request, "image");
-
-    byte[] blobBytes = getBlobBytes(blobKey);
-    List<EntityAnnotation> landmarkInfoList = getLandmarkInfo(blobBytes);
-    System.out.println(landmarkInfoList);
     String landmarkName = null;
     GeoPt landmarkGeoPt = null;
-    if (landmarkInfoList.size() > 0) {
-      EntityAnnotation landmarkInfo = landmarkInfoList.get(0);
-      landmarkName = landmarkInfo.getDescription();
-      LatLng landmarkLatLng = landmarkInfo.getLocationsList().listIterator().next().getLatLng();
-      landmarkGeoPt = new GeoPt((float) landmarkLatLng.getLatitude(), 
-                                (float) landmarkLatLng.getLongitude());
+    
+    if (blobKey != null) {
+      byte[] blobBytes = getBlobBytes(blobKey);
+      List<EntityAnnotation> landmarkInfoList = getLandmarkInfo(blobBytes);
+ 
+      if (landmarkInfoList.size() > 0) {
+        EntityAnnotation landmarkInfo = landmarkInfoList.get(0);
+        landmarkName = landmarkInfo.getDescription();
+        LatLng landmarkLatLng = landmarkInfo.getLocationsList().listIterator().next().getLatLng();
+        landmarkGeoPt = new GeoPt((float) landmarkLatLng.getLatitude(), 
+                                  (float) landmarkLatLng.getLongitude());
+      }
     }
 
     Entity taskEntity = new Entity("Comment");
