@@ -15,21 +15,27 @@
 package com.google.sps.data;
 
 /**
- * Class representing a comment created on server-dev.html.
+ * Class representing a landmark that is part of a Comment instance.
+ * This data was generated using Landmark Detection annotation with 
+ * Cloud Vision API.
  *
  * <p>Note: The private variables in this class are converted into JSON.
  */
 public class Landmark {
 
+  /** The landmark name/decription */
   private final String name;
 
+  /** The landmark latitude */
   private final float latitude;
   
+  /** The landmark longitude */
   private final float longitude;
 
   /** 
-   * @param text The string of text for an individual comment.
-   * @param blobKey The associated image blob key for an individual comment.
+   * @param name Landmark name.
+   * @param latitude Landmark latitude.
+   * @param longitude Landmark longitude.
    */
   public Landmark(String name, float latitude, float longitude) {
     this.name = name;

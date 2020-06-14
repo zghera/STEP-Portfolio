@@ -60,6 +60,9 @@ public class NewCommentServlet extends HttpServlet {
    * stored in the Datastore Blobstore. The POST request also results in a re-direct back to the
    * original server-dev page.
    *
+   * <p> If there is no image uploaded or there is no landmark in the image, the landmark name 
+   * and geo point uploaded to the Datastore will be null.
+   *
    * <p>TODO(Issue #15): Do verfification on a new comment before adding it to the comments list.
    */
   @Override
@@ -134,6 +137,11 @@ public class NewCommentServlet extends HttpServlet {
   /**
    * Blobstore stores files as binary data. This function retrieves the binary data stored at the
    * BlobKey parameter.
+   *
+   * @param blobKey The key associated with the image whose binary data is retrieved.
+   * @return An byte array containing the binary data of the image associated with the blobKey.
+   * @throws IOException - If an output error occurs when writing bytes from the temp blobstore 
+   *                       buffer <code>b</code> to the output byte array <code>outputBytes</code>.
    */
   private byte[] getBlobBytes(BlobKey blobKey) throws IOException {
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
@@ -167,6 +175,8 @@ public class NewCommentServlet extends HttpServlet {
    * @return An landmark annotation object containing information such as name and coordinates for
    *     the landmark detected in the image. Null if there are no landmarks detected or other errors
    *     occur when obtaining the landmark information.
+   * @throws IOException - If an input or output error occurs when creating the 
+   *                       <code>ImageAnnotatorClient</code> object.
    */
   private List<EntityAnnotation> getLandmarkInfo(byte[] imgBytes) throws IOException {
     ByteString byteString = ByteString.copyFrom(imgBytes);

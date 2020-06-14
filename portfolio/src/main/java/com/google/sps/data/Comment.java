@@ -23,18 +23,20 @@ import com.google.appengine.api.blobstore.BlobKey;
  */
 public class Comment {
 
-  /** The strings of text for the comment. */
+  /** The message text for the comment. */
   private final String text;
 
   /** The keys corresponding to the image stored in the Blobstore for the
       comment (null if no image for a comment). */
   private final BlobKey blobKey;
 
+  /** A landmark instance corresponding the the image given by blobKey.  */
   private final Landmark landmark;
 
   /** 
    * @param text The string of text for an individual comment.
    * @param blobKey The associated image blob key for an individual comment.
+   * @param landmark The associated landmark instance for an individual comment.
    */
   public Comment(String text, BlobKey blobKey, Landmark landmark) {
     this.text = text;
