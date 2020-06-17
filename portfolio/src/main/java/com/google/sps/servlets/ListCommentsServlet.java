@@ -62,7 +62,7 @@ public class ListCommentsServlet extends HttpServlet {
                             ((GeoPt) commentEntity.getProperty("landmarkGeoPt")).getLongitude());
       }
       commentsThread.add(new Comment((String) commentEntity.getProperty("text"),
-                                     (BlobKey) commentEntity.getProperty("blobKey"),landmark));
+                                     (BlobKey) commentEntity.getProperty("blobKey"), landmark));
     }
 
     String jsonComments = convertToJson(commentsThread);

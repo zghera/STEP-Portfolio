@@ -77,7 +77,7 @@ public class NewCommentServlet extends HttpServlet {
       byte[] blobBytes = getBlobBytes(blobKey);
       List<EntityAnnotation> landmarkInfoList = getLandmarkInfo(blobBytes);
  
-      if (landmarkInfoList.size() > 0) {
+      if (landmarkInfoList.isEmpty() == false) {
         EntityAnnotation landmarkInfo = landmarkInfoList.get(0);
         landmarkName = landmarkInfo.getDescription();
         LatLng landmarkLatLng = landmarkInfo.getLocationsList().listIterator().next().getLatLng();
