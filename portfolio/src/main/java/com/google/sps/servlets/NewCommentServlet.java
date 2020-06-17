@@ -125,7 +125,7 @@ public class NewCommentServlet extends HttpServlet {
       return null;
     }
 
-    // Check the validity of the file here by making sure it's an image file
+    // Making sure the file is an image file.
     if (!"image".equals(blobInfo.getContentType().substring(0, 5))) {
       blobstoreService.delete(blobKey);
       return null;
