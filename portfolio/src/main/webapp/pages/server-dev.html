@@ -17,7 +17,7 @@
     <script src="/scripts/home.js" defer></script>
     <script src="/scripts/server-dev.js" defer></script>
   </head>
-  <body onload="getCommentsThread()">
+  <body>
     <nav id="outer-nav">
       <div id="home-logo" onclick="reload()">ZG</div>
       <div id="inner-nav-container" class="inner-nav-el">
@@ -49,8 +49,10 @@
       <main>
         <section class="content">
           <h2>Add a new comment!
-          <form action="/new-comment" method="POST">
+          <form id="new-comment-form" method="POST" enctype="multipart/form-data">
             <textarea name="comment">Enter a comment here.</textarea><br/>
+            <label for="image">Upload an image:</label>
+            <input type="file" name="image"><br/>
             <input type="submit" /><br/>
           </form>
         </section>
