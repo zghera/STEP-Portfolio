@@ -152,12 +152,12 @@ public class NewCommentServlet extends HttpServlet {
     boolean continueReading = true;
     while (continueReading) {
       // end index is inclusive, so we have to subtract 1 to get fetchSize bytes
-      byte[] b =
+      byte[] blobSegmentBytes =
           blobstoreService.fetchData(blobKey, currentByteIndex, currentByteIndex + fetchSize - 1);
-      outputBytes.write(b);
+      outputBytes.write(blobSegmentBytes);
 
       // if we read fewer bytes than we requested, then we reached the end
-      if (b.length < fetchSize) {
+      if (blobSegmentBytes.length < fetchSize) {
         continueReading = false;
       }
 
