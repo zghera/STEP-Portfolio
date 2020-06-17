@@ -109,7 +109,7 @@ function createListElement(commentInJson) {
 
   if (blobKey != null) {
     const imageElement = document.createElement('img');
-    imageElement.src = "/serve-image?blob-key="+blobKey.blobKey;
+    imageElement.src = "/serve-image?blob-key=" + blobKey.blobKey;
     liElement.appendChild(imageElement);
   }
 

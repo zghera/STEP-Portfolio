@@ -72,12 +72,11 @@ public class NewCommentServlet extends HttpServlet {
     BlobKey blobKey = getBlobKey(request, "image");
     String landmarkName = null;
     GeoPt landmarkGeoPt = null;
-    
     if (blobKey != null) {
       byte[] blobBytes = getBlobBytes(blobKey);
       List<EntityAnnotation> landmarkInfoList = getLandmarkInfo(blobBytes);
  
-      if (landmarkInfoList.isEmpty() == false) {
+      if (!landmarkInfoList.isEmpty()) {
         EntityAnnotation landmarkInfo = landmarkInfoList.get(0);
         landmarkName = landmarkInfo.getDescription();
         LatLng landmarkLatLng = landmarkInfo.getLocationsList().listIterator().next().getLatLng();
@@ -125,8 +124,8 @@ public class NewCommentServlet extends HttpServlet {
       return null;
     }
 
-    // Making sure the file is an image file.
-    if (!"image".equals(blobInfo.getContentType().substring(0, 5))) {
+    // Ensure that uploaded file is an image file.
+    if (blobInfo.getContentType().startsWith("image") == false) {
       blobstoreService.delete(blobKey);
       return null;
     }
