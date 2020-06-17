@@ -17,6 +17,7 @@ package com.google.sps;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.stream.Collectors;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -40,24 +41,6 @@ public final class FindMeetingQuery {
       return false;
     }
     return true;
-  }
-
-  /**
-   * Remove any events where it does not contains at least one participant that is included in the
-   * meeting request.
-   *
-   * @param eventList The list of events that are used to determine what periods of time that the
-   *     meeting can take place. This list is 'filtered' and sorted in {@code query()}.
-   * @param request The meeting request that contains the requirements for potential meetings.
-   */
-  private void removeEventsWithNoMeetingAttendees(List<Event> eventList, MeetingRequest request) {
-    for (Iterator<Event> it = eventList.iterator(); it.hasNext(); ) {
-      Event cur = it.next();
-      if (!eventParticipantInMeeting(new HashSet<String>(cur.getAttendees()), 
-                                     request.getAttendees())) {
-        it.remove();
-      }
-    }
   }
 
   /**
@@ -113,7 +96,8 @@ public final class FindMeetingQuery {
    * <p>To determine the meeting times ({@code TimeRange}s) that works for all attendees, the event
    * list is filtered and sorted so that {@code getMeetingTimes()} can determine all feasible
    * meeting times. More specifically, filtered means that an event is removed if it does not
-   * contain at least one participant that is included in the meeting request.
+   * contain at least one participant that is included in the meeting request. Both filtering and
+   * then sorting are accomplished using a stream of Event objects.
    *
    * @param events The Collection of events that are used to determine what periods of time that the
    *     meeting can take place.
@@ -121,9 +105,11 @@ public final class FindMeetingQuery {
    * @return A Collection of the feasible meeting {@code TimeRange}s.
    */
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    List<Event> eventList = new ArrayList<>(events);
-
-    removeEventsWithNoMeetingAttendees(eventList, request);
+    List<Event> eventList = events.stream()
+                                  .filter(event -> eventParticipantInMeeting(
+                                      new HashSet<String>(event.getAttendees()), 
+                                      request.getAttendees()))
+                                  .collect(Collectors.toList());
 
     Collections.sort(
         eventList,
