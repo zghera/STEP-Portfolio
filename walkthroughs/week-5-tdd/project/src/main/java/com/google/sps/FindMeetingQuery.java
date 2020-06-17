@@ -67,10 +67,7 @@ public final class FindMeetingQuery {
       Event curEvent = eventList.get(i);
       int startOfCurEvent = curEvent.getWhen().start();
 
-      boolean endTimeIsInclusive = false;
-      if ("EOD".equals(curEvent.getTitle())) {
-        endTimeIsInclusive = true;
-      }
+      boolean endTimeIsInclusive = "EOD".equals(curEvent.getTitle());
       TimeRange timeBetweenEvents =
           TimeRange.fromStartEnd(endOfEarlierEvent, startOfCurEvent, endTimeIsInclusive);
       if (timeBetweenEvents.duration() >= request.getDuration()) {
