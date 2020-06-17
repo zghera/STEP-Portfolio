@@ -117,15 +117,6 @@ public final class FindMeetingQuery {
                 })
             .collect(Collectors.toList());
 
-    // Collections.sort(
-    //     eventList,
-    //     new Comparator<Event>() {
-    //       @Override
-    //       public int compare(Event a, Event b) {
-    //         return Long.compare(a.getWhen().start(), b.getWhen().start());
-    //       }
-    //     });
-
     return getMeettingTimes(eventList, request);
   }
 }
