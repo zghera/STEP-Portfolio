@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 /**
  * Fetches the previously entered comments from the server and inserts each
  * comment as a list item of the 'comments' <ul> element.
@@ -27,7 +28,7 @@ function getCommentsThread() {
         document.getElementById('num-comments').value = numComments;
 
         const commentsThread = document.getElementById('comments-thread');
-        commentsThread.innerHTML = "";
+        commentsThread.innerHTML = '';
         for (let cmntIdx = 0; cmntIdx < numComments; cmntIdx++) {
           commentsThread.appendChild(createListElement(commentsList[cmntIdx]));
         }

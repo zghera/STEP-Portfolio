@@ -61,7 +61,10 @@
             <input type="number" id="num-comments" name="num-comments" value="5" min="0" max="100">
             <button onclick="getCommentsThread()">Submit</button>
           </form>
-          <ul id="comments-thread"></ul>
+          <ul id="comments-thread"></ul><br/>
+          <form action="/delete-comments" method="POST">
+            <button type="submit">Delete Comments</button>
+          </form>
         </section>
       </main>
     </div>

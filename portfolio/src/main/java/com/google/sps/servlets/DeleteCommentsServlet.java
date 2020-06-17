@@ -17,10 +17,9 @@ package com.google.sps.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
-import com.google.appengine.api.datastore.Query.SortDirection;
-import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,42 +28,30 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns comments stored in the Datastore. */
-@WebServlet("/comment-data")
-public class ListCommentsServlet extends HttpServlet {
+/** Servlet that deletes all comments from the Datastore. */
+@WebServlet("/delete-comments")
+public class DeleteCommentsServlet extends HttpServlet {
   private static DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
   /**
    * {@inheritDoc}
    *
-   * <p>This Method handles GET requests in order to display all of the comments that are stored in
-   * the Comments kind of the Google Cloud Datastore.
+   * <p>This Method handles POST requests corresponding to deleting all Comment kind Entities from
+   * the Google Cloud Datastore.
+   *
+   * <p>The POST request also results in a re-direct back to the original server-dev page.
    */
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    Query query = new Query("Comment");
     PreparedQuery results = datastore.prepare(query);
 
-    List<String> comments = new ArrayList<>();
+    List<Key> entityKeys = new ArrayList<>();
     for (Entity commentEntity : results.asIterable()) {
-      String comment = (String) commentEntity.getProperty("text");
-      comments.add(comment);
+      entityKeys.add(commentEntity.getKey());
     }
+    datastore.delete(entityKeys);
 
-    String jsonComments = convertToJson(comments);
-    response.setContentType("application/json;");
-    response.getWriter().println(jsonComments);
-  }
-
-  /**
-   * Converts a list of strings to a JSON string.
-   *
-   * @param comments The List of String comments that should be converted to a JSON string.
-   * @return <code>String</code> The JSON string corresponding to the list of comments.
-   */
-  private String convertToJson(List<String> comments) {
-    Gson gson = new Gson();
-    String json = gson.toJson(comments);
-    return json;
+    response.sendRedirect("/pages/server-dev.html");
   }
 }
