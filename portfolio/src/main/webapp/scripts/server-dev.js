@@ -68,7 +68,7 @@ function getNumCommentstoDisplay(numComments) {
   let newNumCommentsToDisplay = urlParams.get('num-comments');
   const currNumCommentsToDisplay = parseInt(
       sessionStorage.getItem('currNumCommentsToDisplay'));
-  
+
   if (newNumCommentsToDisplay == null) {
     if (isNaN(currNumCommentsToDisplay)) {
       const defaultNumComments = document.getElementById('num-comments').value;
