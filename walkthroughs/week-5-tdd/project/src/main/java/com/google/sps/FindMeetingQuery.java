@@ -16,13 +16,11 @@ package com.google.sps;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.stream.Collectors;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public final class FindMeetingQuery {
   /**
@@ -105,20 +103,28 @@ public final class FindMeetingQuery {
    * @return A Collection of the feasible meeting {@code TimeRange}s.
    */
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    List<Event> eventList = events.stream()
-                                  .filter(event -> eventParticipantInMeeting(
-                                      new HashSet<String>(event.getAttendees()), 
-                                      request.getAttendees()))
-                                  .collect(Collectors.toList());
+    List<Event> eventList =
+        events.stream()
+            .filter(
+                event -> eventParticipantInMeeting(
+                    new HashSet<String>(event.getAttendees()), request.getAttendees()))
+            .sorted(
+                new Comparator<Event>() {
+                  @Override
+                  public int compare(Event a, Event b) {
+                    return Long.compare(a.getWhen().start(), b.getWhen().start());
+                  }
+                })
+            .collect(Collectors.toList());
 
-    Collections.sort(
-        eventList,
-        new Comparator<Event>() {
-          @Override
-          public int compare(Event a, Event b) {
-            return Long.compare(a.getWhen().start(), b.getWhen().start());
-          }
-        });
+    // Collections.sort(
+    //     eventList,
+    //     new Comparator<Event>() {
+    //       @Override
+    //       public int compare(Event a, Event b) {
+    //         return Long.compare(a.getWhen().start(), b.getWhen().start());
+    //       }
+    //     });
 
     return getMeettingTimes(eventList, request);
   }
