@@ -14,8 +14,6 @@
 
 package com.google.sps;
 
-import java.util.regex.Matcher;
-
 /**
  * Utility class for creating greeting messages.
  */
