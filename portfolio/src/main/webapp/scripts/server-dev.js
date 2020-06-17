@@ -104,7 +104,7 @@ function createListElement(text, blobKey) {
 
   if (blobKey != null) {
     const imageElement = document.createElement('img');
-    imageElement.src = "/serve-image?blob-key="+blobKey.blobKey;
+    imageElement.src = "/serve-image?blob-key=" + blobKey.blobKey;
     liElement.appendChild(imageElement);
   }
   return liElement;
