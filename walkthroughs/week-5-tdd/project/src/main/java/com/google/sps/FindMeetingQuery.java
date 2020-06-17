@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -27,19 +28,18 @@ public final class FindMeetingQuery {
    * Returns a boolean based on if at least one participant in the event is also a participant in
    * the meeting request.
    *
-   * @param eventAttendees The set of attendees in a specific event.
+   * @param eventAttendeesCopy A copy of the set of attendees in a specific event.
    * @param meetingAttendees The set of attendees in the meeting request.
    * @return True if at least one participant in the set {@code eventAttendees} is also a
    *     participant in {@code meetingAttendees}. False otherwise.
    */
   private boolean eventParticipantInMeeting(
-      Set<String> eventAttendees, Collection<String> meetingAttendees) {
-    for (String eventAttendee : eventAttendees) {
-      if (meetingAttendees.contains(eventAttendee)) {
-        return true;
-      }
+      Set<String> eventAttendeesCopy, Collection<String> meetingAttendees) {
+    eventAttendeesCopy.retainAll(meetingAttendees);
+    if (eventAttendeesCopy.isEmpty()) {
+      return false;
     }
-    return false;
+    return true;
   }
 
   /**
@@ -53,7 +53,8 @@ public final class FindMeetingQuery {
   private void removeEventsWithNoMeetingAttendees(List<Event> eventList, MeetingRequest request) {
     for (Iterator<Event> it = eventList.iterator(); it.hasNext(); ) {
       Event cur = it.next();
-      if (eventParticipantInMeeting(cur.getAttendees(), request.getAttendees()) == false) {
+      if (!eventParticipantInMeeting(new HashSet<String>(cur.getAttendees()), 
+                                     request.getAttendees())) {
         it.remove();
       }
     }
