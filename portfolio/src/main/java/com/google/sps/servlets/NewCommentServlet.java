@@ -64,7 +64,7 @@ public class NewCommentServlet extends HttpServlet {
     Entity taskEntity = new Entity("Comment");
     taskEntity.setProperty("text", newComment);
     taskEntity.setProperty("timestamp", timestamp);
-    taskEntity.setProperty("imageUrl", timestamp);
+    taskEntity.setProperty("imageUrl", imageUrl);
     datastore.put(taskEntity);
 
     response.sendRedirect("/pages/server-dev.html");
@@ -97,13 +97,12 @@ public class NewCommentServlet extends HttpServlet {
       return null;
     }
 
-    // Check the validity of the file here by making sure it's an image file
+    // Making sure the file is an image file.
     if (!"image".equals(blobInfo.getContentType().substring(0, 5))) {
       blobstoreService.delete(blobKey);
       return null;
     }
 
-    // Use imagesService to get a URL that points to the uploaded file.
     ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
     String servingUrl = imagesService.getServingUrl(options);
 

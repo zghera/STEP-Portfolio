@@ -23,21 +23,25 @@
 function getCommentsThread() {
   fetch('/comment-data')
       .then(response => response.json())
-      .then((commentsList) => {
-        numCommentsToDisplay = getNumCommentstoDisplay(commentsList.length);
+      .then((commentsThread) => {
+        numCommentsToDisplay = getNumCommentstoDisplay(commentsThread.length);
         document.getElementById('num-comments').value = numCommentsToDisplay;
 
-        const commentsThread = document.getElementById('comments-thread');
-        commentsThread.innerHTML = '';
+        const commentsThreadContainer = document.
+            getElementById('comments-thread-container');
+        commentsThreadContainer.innerHTML = '';
         for (let cmntIdx = 0; cmntIdx < numCommentsToDisplay; cmntIdx++) {
-          commentsThread.appendChild(createListElement(commentsList[cmntIdx]));
+          commentsThreadContainer.appendChild(createListElement(
+                                          commentsThread[cmntIdx].text,
+                                          commentsThread[cmntIdx].imageUrl));
         }
       })
       .catch(err => {
-        console.log('Error: ' + err);
-        document.getElementById('comments-thread').
+        console.log('Error in getCommentsThread: ' + err);
+        document.getElementById('comments-thread-container').
+        // TODO(Issue #19): Create error page/notice
         appendChild(createListElement('Error: Unable to load ' +
-                                      'the comments thread.'));
+                                      'the comments thread.', null));
       });
 }
 
@@ -55,7 +59,7 @@ function getCommentsThread() {
  * used. The number of comments will also never exceed the number of total
  * comments returned from the datastore.
  * 
- * @param {number} numComments The number of comments stored in the Cloud 
+ * @param {number} numComments The number of comments stored in the Cloud
  *    Datastore.
  * @return {number} The number of comments to be displayed in the comments 
  *    thread.
@@ -65,7 +69,7 @@ function getNumCommentstoDisplay(numComments) {
   let newNumCommentsToDisplay = urlParams.get('num-comments');
   const currNumCommentsToDisplay = parseInt(
       sessionStorage.getItem('currNumCommentsToDisplay'));
-
+  
   if (newNumCommentsToDisplay == null) {
     if (isNaN(currNumCommentsToDisplay)) {
       const defaultNumComments = document.getElementById('num-comments').value;
@@ -81,14 +85,28 @@ function getNumCommentstoDisplay(numComments) {
 }
 
 /**
- * Creates an <li> element containing 'text'. 
+ * Creates an <li> element containing the comment text and image.
+ *
+ * If there the imageUrl is null, no image element is included in 
+ * parent <li> element. 
  * 
- * @param {string} text The inner text of the created <li> element.
+ * @param {string} text the interior text of the created <li> element.
+ * @param {?string} imageUrl the URL for the interior image of the created
+ *    <li> element. If it is null, no image element is included in parent 
+ *    <li> element.
  * @return {HTMLLIElement} The list element created.
  */
-function createListElement(text) {
+function createListElement(text, imageUrl) {
   const liElement = document.createElement('li');
-  liElement.innerText = text;
+  const textElement = document.createElement('p');
+  textElement.innerText = text;
+  liElement.appendChild(textElement);
+
+  if (imageUrl != null) {
+    const imageElement = document.createElement('img');
+    imageElement.src = imageUrl;
+    liElement.appendChild(imageElement);
+  }
   return liElement;
 }
 
@@ -111,10 +129,10 @@ function fetchBlobstoreUrl() {
       })
       .catch(err => {
         console.log('Error in fetchBlobstoreUrl: ' + err);
-        document.getElementById('comments-thread').
+        document.getElementById('comments-thread-container').
         // TODO(Issue #19): Create error page/notice
         appendChild(createListElement('Error: Unable to fetch ' +
-                              'image upload url from Blobstore.'));
+                              'image upload url from Blobstore.', null));
       });
 }
 

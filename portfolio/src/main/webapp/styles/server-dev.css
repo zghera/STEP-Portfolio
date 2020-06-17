@@ -18,12 +18,12 @@ textarea {
   width: 35px;
 }
 
-#comments-thread {
+#comments-thread-container {
   list-style-type: none;
   width: 80vw;
 }
 
-#comments-thread > li {
+#comments-thread-container > li {
   border: solid 2px #008bb3;
   margin: 0vw;
   padding: 2vh 2vw;
