@@ -60,7 +60,7 @@ public class ListCommentsServlet extends HttpServlet {
    * Converts a list of strings to a JSON string.
    *
    * @param comments The List of String comments that should be converted to a JSON string.
-   * @return <code>String</code> The JSON string corresponding to the list of comments.
+   * @return         The JSON string corresponding to the list of comments.
    */
   private String convertToJson(List<String> comments) {
     Gson gson = new Gson();

@@ -45,7 +45,6 @@ public class NewCommentServlet extends HttpServlet {
     Entity taskEntity = new Entity("Comment");
     taskEntity.setProperty("text", newComment);
     taskEntity.setProperty("timestamp", timestamp);
-
     datastore.put(taskEntity);
 
     response.sendRedirect("/pages/server-dev.html");
