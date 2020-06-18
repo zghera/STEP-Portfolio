@@ -77,7 +77,7 @@ public class NewCommentServlet extends HttpServlet {
       byte[] blobBytes = getBlobBytes(blobKey);
       List<EntityAnnotation> landmarkInfoList = getLandmarkInfo(blobBytes);
 
-      if (landmarkInfoList.isEmpty() == false) {
+      if (!landmarkInfoList.isEmpty()) {
         EntityAnnotation landmarkInfo = landmarkInfoList.get(0);
         landmarkName = landmarkInfo.getDescription();
         LatLng landmarkLatLng = landmarkInfo.getLocationsList().listIterator().next().getLatLng();
@@ -101,7 +101,7 @@ public class NewCommentServlet extends HttpServlet {
   /**
    * Returns a BlobKey object corresponding to the uploaded file.
    *
-   * @param request The <code>HttpServletRequest</code> for the POST request.
+   * @param request The {@code HttpServletRequest} for the POST request.
    * @param formInputElementName The name attribute of the image file input to the form.
    * @return The blob key associated with the uploaded image file. Null is returned if the user did
    *     not select a file or the file is not an image type.
@@ -125,8 +125,8 @@ public class NewCommentServlet extends HttpServlet {
       return null;
     }
 
-    // Check the validity of the file here by making sure it's an image file
-    if (!"image".equals(blobInfo.getContentType().substring(0, 5))) {
+    // Non-image files are not supported.
+    if (blobInfo.getContentType().startsWith("image") == false) {
       blobstoreService.delete(blobKey);
       return null;
     }
@@ -141,7 +141,7 @@ public class NewCommentServlet extends HttpServlet {
    * @param blobKey The key associated with the image whose binary data is retrieved.
    * @return An byte array containing the binary data of the image associated with the blobKey.
    * @throws IOException - If an output error occurs when writing bytes from the temp blobstore
-   *     buffer <code>b</code> to the output byte array <code>outputBytes</code>.
+   *     buffer {@code b} to the output byte array {@code outputBytes}.
    */
   private byte[] getBlobBytes(BlobKey blobKey) throws IOException {
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
@@ -177,8 +177,8 @@ public class NewCommentServlet extends HttpServlet {
    * @return An landmark annotation object containing information such as name and coordinates for
    *     the landmark detected in the image. Null if there are no landmarks detected or other errors
    *     occur when obtaining the landmark information.
-   * @throws IOException - If an input or output error occurs when creating the <code>
-   *     ImageAnnotatorClient</code> object.
+   * @throws IOException - If an input or output error occurs when creating the {@code
+   *     ImageAnnotatorClient} object.
    */
   private List<EntityAnnotation> getLandmarkInfo(byte[] imgBytes) throws IOException {
     ByteString byteString = ByteString.copyFrom(imgBytes);

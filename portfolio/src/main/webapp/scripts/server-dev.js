@@ -68,7 +68,7 @@ function getNumCommentstoDisplay(numComments) {
   let newNumCommentsToDisplay = urlParams.get('num-comments');
   const currNumCommentsToDisplay = parseInt(
       sessionStorage.getItem('currNumCommentsToDisplay'));
-  
+
   if (newNumCommentsToDisplay == null) {
     if (isNaN(currNumCommentsToDisplay)) {
       const defaultNumComments = document.getElementById('num-comments').value;
@@ -109,7 +109,7 @@ function createListElement(commentInJson) {
 
   if (blobKey != null) {
     const imageElement = document.createElement('img');
-    imageElement.src = "/serve-image?blob-key="+blobKey.blobKey;
+    imageElement.src = "/serve-image?blob-key=" + blobKey.blobKey;
     liElement.appendChild(imageElement);
   }
 
