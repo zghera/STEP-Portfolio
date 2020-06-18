@@ -92,7 +92,7 @@ public class NewCommentServlet extends HttpServlet {
       return null;
     }
 
-    // Ensure that uploaded file is an image file.
+    // Non-image files are not supported.
     if (blobInfo.getContentType().startsWith("image") == false) {
       blobstoreService.delete(blobKey);
       return null;
