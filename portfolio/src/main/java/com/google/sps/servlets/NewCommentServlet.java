@@ -72,6 +72,7 @@ public class NewCommentServlet extends HttpServlet {
     BlobKey blobKey = getBlobKey(request, "image");
     String landmarkName = null;
     GeoPt landmarkGeoPt = null;
+    
     if (blobKey != null) {
       byte[] blobBytes = getBlobBytes(blobKey);
       List<EntityAnnotation> landmarkInfoList = getLandmarkInfo(blobBytes);
