@@ -278,9 +278,9 @@ public final class FindMeetingQueryTest {
   // Mandatory and optional attendee tests.
   @Test
   public void onlyMandatoryAttendeesAreConsidered() {
-    // Have each person have different events. We should see three options because the mandattory 
-    // attendee's have non-overlapping events while the optional attendee is not available at
-    // any point in the day.
+    // Have each person have different events. We should see three options because the mandatory 
+    // attendee's (A & B) have non-overlapping events while the optional attendee (C) is not 
+    // available at any point in the day.
     //
     // Events  :       |--A--|     |--B--|
     //           |--------------C--------------|
@@ -402,8 +402,6 @@ public final class FindMeetingQueryTest {
   @Test
   public void notEnoughRoomOnlyOptionalAttendees() {
     // Same as notEnoughRoom() but with two optional attendees.
-    // Have one person, but make it so that there is not enough room at any point in the day to
-    // have the meeting.
     //
     // Events  : |---A----| |----B-----|
     // Day     : |---------------------|
