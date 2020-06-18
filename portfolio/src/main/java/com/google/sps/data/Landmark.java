@@ -15,9 +15,8 @@
 package com.google.sps.data;
 
 /**
- * Class representing a landmark that is part of a Comment instance.
- * This data was generated using Landmark Detection annotation with 
- * Cloud Vision API.
+ * Class representing a landmark that is part of a Comment instance. This data was generated using
+ * Landmark Detection annotation with Cloud Vision API.
  *
  * <p>Note: The private variables in this class are converted into JSON.
  */
@@ -28,18 +27,18 @@ public class Landmark {
 
   /** The landmark latitude */
   private final float latitude;
-  
+
   /** The landmark longitude */
   private final float longitude;
 
-  /** 
+  /**
    * @param name Landmark name.
    * @param latitude Landmark latitude.
    * @param longitude Landmark longitude.
    */
   public Landmark(String name, float latitude, float longitude) {
     this.name = name;
-    this.latitude = latitude; 
+    this.latitude = latitude;
     this.longitude = longitude;
   }
 }
