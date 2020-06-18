@@ -23,8 +23,6 @@ import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.annotation.WebServlet;
@@ -46,9 +44,9 @@ public class NewCommentServlet extends HttpServlet {
    *
    * <p>This POST request originates from the 'new comment' form in server-dev.html and is initially
    * sent to Blobstore for file processing. Once the Blobstore forward the request to this servlet,
-   * the name of file submitted in the form can be used to get the corresponding blob key to be 
-   * stored in the Datastore
-   * Blobstore. The POST request also results in a re-direct back to the original server-dev page.
+   * the name of file submitted in the form can be used to get the corresponding blob key to be
+   * stored in the Datastore Blobstore. The POST request also results in a re-direct back to the
+   * original server-dev page.
    *
    * <p>TODO(Issue #15): Do verfification on a new comment before adding it to the comments list.
    */
@@ -72,8 +70,8 @@ public class NewCommentServlet extends HttpServlet {
    *
    * @param request The <code>HttpServletRequest</code> for the POST request.
    * @param formInputElementName The name attribute of the image file input to the form.
-   * @return The blob key associated with the uploaded image file. Null is returned if 
-   *         the user did not select a file or the file is not an image type.
+   * @return The blob key associated with the uploaded image file. Null is returned if the user did
+   *     not select a file or the file is not an image type.
    */
   private BlobKey getBlobKey(HttpServletRequest request, String formInputElementName) {
     Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
