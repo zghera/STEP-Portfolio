@@ -33,7 +33,7 @@ function getCommentsThread() {
         for (let cmntIdx = 0; cmntIdx < numCommentsToDisplay; cmntIdx++) {
           commentsThreadContainer.appendChild(createListElement(
                                           commentsThread[cmntIdx].text,
-                                          commentsThread[cmntIdx].imageUrl));
+                                          commentsThread[cmntIdx].blobKey));
         }
       })
       .catch(err => {
@@ -91,20 +91,20 @@ function getNumCommentstoDisplay(numComments) {
  * parent <li> element. 
  * 
  * @param {string} text the interior text of the created <li> element.
- * @param {?string} imageUrl the URL for the interior image of the created
- *    <li> element. If it is null, no image element is included in parent 
- *    <li> element.
+ * @param {?JSON} blobKey the blob key as a JSON object for the interior
+ *    image of the created <li> element. If it is null, no image element
+ *    is included in the parent <li> element.
  * @return {HTMLLIElement} The list element created.
  */
-function createListElement(text, imageUrl) {
+function createListElement(text, blobKey) {
   const liElement = document.createElement('li');
   const textElement = document.createElement('p');
   textElement.innerText = text;
   liElement.appendChild(textElement);
 
-  if (imageUrl != null) {
+  if (blobKey != null) {
     const imageElement = document.createElement('img');
-    imageElement.src = imageUrl;
+    imageElement.src = "/serve-image?blob-key=" + blobKey.blobKey;
     liElement.appendChild(imageElement);
   }
   return liElement;
