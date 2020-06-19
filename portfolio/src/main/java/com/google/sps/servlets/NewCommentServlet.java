@@ -92,7 +92,7 @@ public class NewCommentServlet extends HttpServlet {
     taskEntity.setProperty("blobKey", blobKey);
     taskEntity.setProperty("landmarkName", landmarkName);
     taskEntity.setProperty("landmarkGeoPt", landmarkGeoPt);
-
+    
     datastore.put(taskEntity);
 
     response.sendRedirect("/pages/server-dev.html");
