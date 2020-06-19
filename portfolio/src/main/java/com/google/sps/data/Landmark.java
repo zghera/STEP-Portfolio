@@ -22,13 +22,10 @@ package com.google.sps.data;
  */
 public class Landmark {
 
-  /** The landmark name/decription */
   private final String name;
 
-  /** The landmark latitude */
   private final float latitude;
 
-  /** The landmark longitude */
   private final float longitude;
 
   /**
