@@ -35,10 +35,7 @@ public final class FindMeetingQuery {
   private boolean eventParticipantInMeeting(
       Set<String> eventAttendeesCopy, Collection<String> meetingAttendees) {
     eventAttendeesCopy.retainAll(meetingAttendees);
-    if (eventAttendeesCopy.isEmpty()) {
-      return false;
-    }
-    return true;
+    return !eventAttendeesCopy.isEmpty();
   }
 
   /**
@@ -56,15 +53,14 @@ public final class FindMeetingQuery {
    * @param request The meeting request that contains the requirements for potential meetings.
    * @return A Collection of the feasible meeting {@code TimeRange}s.
    */
-  private Collection<TimeRange> getMeettingTimes(List<Event> eventList, MeetingRequest request) {
+  private Collection<TimeRange> getMeetingTimes(List<Event> eventList, MeetingRequest request) {
     eventList.add(
         new Event(
             "EOD", TimeRange.fromStartDuration(TimeRange.END_OF_DAY, 0), request.getAttendees()));
     int endOfEarlierEvent = TimeRange.START_OF_DAY;
 
     Collection<TimeRange> openMeetingTimes = new ArrayList<>();
-    for (int i = 0; i < eventList.size(); i++) {
-      Event curEvent = eventList.get(i);
+    for (Event curEvent : eventList) {
       int startOfCurEvent = curEvent.getWhen().start();
 
       boolean endTimeIsInclusive = "EOD".equals(curEvent.getTitle());
@@ -114,6 +110,6 @@ public final class FindMeetingQuery {
                 })
             .collect(Collectors.toList());
 
-    return getMeettingTimes(eventList, request);
+    return getMeetingTimes(eventList, request);
   }
 }
