@@ -54,9 +54,8 @@ public final class FindMeetingQuery {
    * @return A Collection of the feasible meeting {@code TimeRange}s.
    */
   private Collection<TimeRange> getMeetingTimes(List<Event> eventList, MeetingRequest request) {
-    eventList.add(
-        new Event(
-            "EOD", TimeRange.fromStartDuration(TimeRange.END_OF_DAY, 0), request.getAttendees()));
+    eventList.add(new Event(
+        "EOD", TimeRange.fromStartDuration(TimeRange.END_OF_DAY, 0), request.getAttendees()));
     int endOfEarlierEvent = TimeRange.START_OF_DAY;
 
     Collection<TimeRange> openMeetingTimes = new ArrayList<>();
@@ -98,16 +97,15 @@ public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     List<Event> eventList =
         events.stream()
-            .filter(
-                event -> eventParticipantInMeeting(
+            .filter(event
+                -> eventParticipantInMeeting(
                     new HashSet<String>(event.getAttendees()), request.getAttendees()))
-            .sorted(
-                new Comparator<Event>() {
-                  @Override
-                  public int compare(Event a, Event b) {
-                    return Long.compare(a.getWhen().start(), b.getWhen().start());
-                  }
-                })
+            .sorted(new Comparator<Event>() {
+              @Override
+              public int compare(Event a, Event b) {
+                return Long.compare(a.getWhen().start(), b.getWhen().start());
+              }
+            })
             .collect(Collectors.toList());
 
     return getMeetingTimes(eventList, request);
