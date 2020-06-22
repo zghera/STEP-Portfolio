@@ -15,8 +15,6 @@
 package com.google.sps.servlets;
 
 import com.google.appengine.api.blobstore.BlobKey;
-import com.google.appengine.api.blobstore.BlobstoreService;
-import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -40,7 +38,6 @@ import javax.servlet.http.HttpServletResponse;
 @SuppressWarnings("serial")
 public class ListCommentsServlet extends HttpServlet {
   private static DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-  private static BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 
   /**
    * {@inheritDoc}
