@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /** Servlet that deletes all comments from the Datastore. */
 @WebServlet("/delete-comments")
+@SuppressWarnings("serial")
 public class DeleteCommentsServlet extends HttpServlet {
   private static DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 

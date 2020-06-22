@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /** Servlet that returns (image) files stored in the Blobstore. */
 @WebServlet("/serve-image")
+@SuppressWarnings("serial")
 public class ServeBlobs extends HttpServlet {
   private static BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 

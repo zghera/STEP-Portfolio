@@ -37,6 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /** Servlet that returns comments stored in the Datastore. */
 @WebServlet("/comment-data")
+@SuppressWarnings("serial")
 public class ListCommentsServlet extends HttpServlet {
   private static DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
   private static BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();

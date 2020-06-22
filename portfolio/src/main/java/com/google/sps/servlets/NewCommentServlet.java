@@ -44,6 +44,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /** Servlet that enters new comments into the Datastore. */
 @WebServlet("/new-comment")
+@SuppressWarnings("serial")
 public class NewCommentServlet extends HttpServlet {
   private static DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
   private static BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
