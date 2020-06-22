@@ -147,21 +147,23 @@ public class NewCommentServlet extends HttpServlet {
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     ByteArrayOutputStream outputBytes = new ByteArrayOutputStream();
 
-    int fetchSize = BlobstoreService.MAX_BLOB_FETCH_SIZE;
     long currentByteIndex = 0;
     boolean continueReading = true;
     while (continueReading) {
-      // end index is inclusive, so we have to subtract 1 to get fetchSize bytes
-      byte[] b =
-          blobstoreService.fetchData(blobKey, currentByteIndex, currentByteIndex + fetchSize - 1);
-      outputBytes.write(b);
+      // end index is inclusive, so we have to subtract 1 to get MAX_BLOB_FETCH_SIZE bytes
+      byte[] blobSegmentBytes =
+          blobstoreService.fetchData(
+              blobKey,
+              currentByteIndex,
+              currentByteIndex + BlobstoreService.MAX_BLOB_FETCH_SIZE - 1);
+      outputBytes.write(blobSegmentBytes);
 
       // if we read fewer bytes than we requested, then we reached the end
-      if (b.length < fetchSize) {
+      if (blobSegmentBytes.length < BlobstoreService.MAX_BLOB_FETCH_SIZE) {
         continueReading = false;
       }
 
-      currentByteIndex += fetchSize;
+      currentByteIndex += BlobstoreService.MAX_BLOB_FETCH_SIZE;
     }
 
     return outputBytes.toByteArray();
