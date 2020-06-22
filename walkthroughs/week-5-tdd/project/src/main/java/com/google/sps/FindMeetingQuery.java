@@ -119,7 +119,7 @@ public final class FindMeetingQuery {
    */
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     Collection<TimeRange> mandatoryAndOptionalTimesList =
-        getMeettingTimes(events, request, /*considerOptionalAttendees=*/true);
+        getMeetingTimes(events, request, /*considerOptionalAttendees=*/true);
     if (!mandatoryAndOptionalTimesList.isEmpty()) {
       return mandatoryAndOptionalTimesList;
     }
