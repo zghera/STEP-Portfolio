@@ -22,7 +22,19 @@ import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.GeoPt;
+import com.google.cloud.vision.v1.AnnotateImageRequest;
+import com.google.cloud.vision.v1.AnnotateImageResponse;
+import com.google.cloud.vision.v1.BatchAnnotateImagesResponse;
+import com.google.cloud.vision.v1.EntityAnnotation;
+import com.google.cloud.vision.v1.Feature;
+import com.google.cloud.vision.v1.Image;
+import com.google.cloud.vision.v1.ImageAnnotatorClient;
+import com.google.protobuf.ByteString;
+import com.google.type.LatLng;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.annotation.WebServlet;
@@ -48,6 +60,9 @@ public class NewCommentServlet extends HttpServlet {
    * stored in the Datastore Blobstore. The POST request also results in a re-direct back to the
    * original server-dev page.
    *
+   * <p>If there is no image uploaded or there is no landmark in the image, the landmark name and
+   * geo point uploaded to the Datastore will be null.
+   *
    * <p>TODO(Issue #15): Do verfification on a new comment before adding it to the comments list.
    */
   @Override
@@ -55,11 +70,29 @@ public class NewCommentServlet extends HttpServlet {
     String newComment = request.getParameter("comment");
     long timestamp = System.currentTimeMillis();
     BlobKey blobKey = getBlobKey(request, "image");
+    String landmarkName = null;
+    GeoPt landmarkGeoPt = null;
+
+    if (blobKey != null) {
+      byte[] blobBytes = getBlobBytes(blobKey);
+      List<EntityAnnotation> landmarkInfoList = getLandmarkInfo(blobBytes);
+
+      if (landmarkInfoList != null && !landmarkInfoList.isEmpty()) {
+        EntityAnnotation landmarkInfo = landmarkInfoList.get(0);
+        landmarkName = landmarkInfo.getDescription();
+        LatLng landmarkLatLng = landmarkInfo.getLocationsList().listIterator().next().getLatLng();
+        landmarkGeoPt =
+            new GeoPt((float) landmarkLatLng.getLatitude(), (float) landmarkLatLng.getLongitude());
+      }
+    }
 
     Entity taskEntity = new Entity("Comment");
     taskEntity.setProperty("text", newComment);
     taskEntity.setProperty("timestamp", timestamp);
     taskEntity.setProperty("blobKey", blobKey);
+    taskEntity.setProperty("landmarkName", landmarkName);
+    taskEntity.setProperty("landmarkGeoPt", landmarkGeoPt);
+
     datastore.put(taskEntity);
 
     response.sendRedirect("/pages/server-dev.html");
@@ -68,7 +101,7 @@ public class NewCommentServlet extends HttpServlet {
   /**
    * Returns a BlobKey object corresponding to the uploaded file.
    *
-   * @param request The <code>HttpServletRequest</code> for the POST request.
+   * @param request The {@code HttpServletRequest} for the POST request.
    * @param formInputElementName The name attribute of the image file input to the form.
    * @return The blob key associated with the uploaded image file. Null is returned if the user did
    *     not select a file or the file is not an image type.
@@ -99,5 +132,72 @@ public class NewCommentServlet extends HttpServlet {
     }
 
     return blobKey;
+  }
+
+  /**
+   * Blobstore stores files as binary data. This function retrieves the binary data stored at the
+   * BlobKey parameter.
+   *
+   * @param blobKey The key associated with the image whose binary data is retrieved.
+   * @return An byte array containing the binary data of the image associated with the blobKey.
+   * @throws IOException - If an output error occurs when writing bytes from the temp blobstore
+   *     buffer {@code b} to the output byte array {@code outputBytes}.
+   */
+  private byte[] getBlobBytes(BlobKey blobKey) throws IOException {
+    BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+    ByteArrayOutputStream outputBytes = new ByteArrayOutputStream();
+
+    int fetchSize = BlobstoreService.MAX_BLOB_FETCH_SIZE;
+    long currentByteIndex = 0;
+    boolean continueReading = true;
+    while (continueReading) {
+      // end index is inclusive, so we have to subtract 1 to get fetchSize bytes
+      byte[] b =
+          blobstoreService.fetchData(blobKey, currentByteIndex, currentByteIndex + fetchSize - 1);
+      outputBytes.write(b);
+
+      // if we read fewer bytes than we requested, then we reached the end
+      if (b.length < fetchSize) {
+        continueReading = false;
+      }
+
+      currentByteIndex += fetchSize;
+    }
+
+    return outputBytes.toByteArray();
+  }
+
+  /**
+   * Uses the Google Cloud Vision API to generate location information for a landmark detected in
+   * the image represented by the binary data stored in imgBytes.
+   *
+   * @param imgBytes Binary data for the image that is being inspected for landmark detection.
+   * @return An landmark annotation object containing information such as name and coordinates for
+   *     the landmark detected in the image. Null if there are no landmarks detected or other errors
+   *     occur when obtaining the landmark information.
+   * @throws IOException - If an input or output error occurs when creating the {@code
+   *     ImageAnnotatorClient} object.
+   */
+  private List<EntityAnnotation> getLandmarkInfo(byte[] imgBytes) throws IOException {
+    ByteString byteString = ByteString.copyFrom(imgBytes);
+    Image image = Image.newBuilder().setContent(byteString).build();
+
+    Feature feature = Feature.newBuilder().setType(Feature.Type.LANDMARK_DETECTION).build();
+    AnnotateImageRequest request =
+        AnnotateImageRequest.newBuilder().addFeatures(feature).setImage(image).build();
+    List<AnnotateImageRequest> requests = new ArrayList<>();
+    requests.add(request);
+
+    ImageAnnotatorClient client = ImageAnnotatorClient.create();
+    BatchAnnotateImagesResponse batchResponse = client.batchAnnotateImages(requests);
+    client.close();
+
+    AnnotateImageResponse imageResponse = batchResponse.getResponsesList().get(0);
+    if (imageResponse.hasError()) {
+      System.err.println("Error: " + imageResponse.getError().getMessage());
+      return null;
+    }
+
+    return imageResponse.getLandmarkAnnotationsList();
   }
 }

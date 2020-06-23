@@ -20,11 +20,13 @@ import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.GeoPt;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
 import com.google.sps.data.Comment;
+import com.google.sps.data.Landmark;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,10 +54,19 @@ public class ListCommentsServlet extends HttpServlet {
 
     List<Comment> commentsThread = new ArrayList<>();
     for (Entity commentEntity : results.asIterable()) {
+      Landmark landmark = null;
+      if (commentEntity.getProperty("landmarkName") != null) {
+        landmark =
+            new Landmark(
+                (String) commentEntity.getProperty("landmarkName"),
+                ((GeoPt) commentEntity.getProperty("landmarkGeoPt")).getLatitude(),
+                ((GeoPt) commentEntity.getProperty("landmarkGeoPt")).getLongitude());
+      }
       commentsThread.add(
           new Comment(
               (String) commentEntity.getProperty("text"),
-              (BlobKey) commentEntity.getProperty("blobKey")));
+              (BlobKey) commentEntity.getProperty("blobKey"),
+              landmark));
     }
 
     String jsonComments = convertToJson(commentsThread);

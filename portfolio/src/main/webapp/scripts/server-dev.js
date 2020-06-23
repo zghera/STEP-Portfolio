@@ -15,7 +15,7 @@
 
 /**
  * Fetches the previously entered comments from the server and inserts each
- * comment as a list item of the 'comments' <ul> element.
+ * comment as a list item of the 'comments-thread-container' <ul> element.
  * 
  * The number of comments displayed is determined by 
  * getNumCommentstoDisplay().
@@ -31,9 +31,8 @@ function getCommentsThread() {
             getElementById('comments-thread-container');
         commentsThreadContainer.innerHTML = '';
         for (let cmntIdx = 0; cmntIdx < numCommentsToDisplay; cmntIdx++) {
-          commentsThreadContainer.appendChild(createListElement(
-                                          commentsThread[cmntIdx].text,
-                                          commentsThread[cmntIdx].blobKey));
+          commentsThreadContainer.appendChild(
+              createListElement(commentsThread[cmntIdx]));
         }
       })
       .catch(err => {
@@ -69,7 +68,7 @@ function getNumCommentstoDisplay(numComments) {
   let newNumCommentsToDisplay = urlParams.get('num-comments');
   const currNumCommentsToDisplay = parseInt(
       sessionStorage.getItem('currNumCommentsToDisplay'));
-  
+
   if (newNumCommentsToDisplay == null) {
     if (isNaN(currNumCommentsToDisplay)) {
       const defaultNumComments = document.getElementById('num-comments').value;
@@ -85,18 +84,24 @@ function getNumCommentstoDisplay(numComments) {
 }
 
 /**
- * Creates an <li> element containing the comment text and image.
+ * Creates an <li> element containing the comment data.
  *
- * If there the imageUrl is null, no image element is included in 
- * parent <li> element. 
+ * Each comment contains a message text, image, landmark name/location,
+ * and landmark latitude-longitude coordinates. However, both the blobKey
+ * and landmark fields of the comment JSON object can be null. If the  
+ * blobKey value null, no image element is included in the parent <li> element.
+ * If the landmark value is null, no landmark information is included. 
  * 
- * @param {string} text the interior text of the created <li> element.
- * @param {?JSON} blobKey the blob key as a JSON object for the interior
- *    image of the created <li> element. If it is null, no image element
- *    is included in the parent <li> element.
+ * @param {JSON} commentInJson A string that contains a JSON object of an 
+ *    individual comment. This JSON object contains fields for message text,
+ *    image, landmark name, and landmark latitude-longitude coordinates.
  * @return {HTMLLIElement} The list element created.
  */
-function createListElement(text, blobKey) {
+function createListElement(commentInJson) {
+  const text = commentInJson.text;
+  const blobKey = commentInJson.blobKey;
+  const landmark = commentInJson.landmark;
+
   const liElement = document.createElement('li');
   const textElement = document.createElement('p');
   textElement.innerText = text;
@@ -106,6 +111,16 @@ function createListElement(text, blobKey) {
     const imageElement = document.createElement('img');
     imageElement.src = "/serve-image?blob-key=" + blobKey.blobKey;
     liElement.appendChild(imageElement);
+  }
+
+  if (landmark != null) {
+    const landmarkNameElement = document.createElement('p');
+    landmarkNameElement.innerText = landmark.name;
+    const landmarkLatLng = document.createElement('p');
+    landmarkLatLng.innerText = "(" + landmark.latitude + ", " +
+                                          landmark.longitude + ")";
+    liElement.appendChild(landmarkNameElement);
+    liElement.appendChild(landmarkLatLng);
   }
   return liElement;
 }
