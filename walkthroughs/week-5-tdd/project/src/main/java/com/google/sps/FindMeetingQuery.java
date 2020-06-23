@@ -15,7 +15,6 @@
 package com.google.sps;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -107,10 +106,8 @@ public final class FindMeetingQuery {
    * Returns a collection of all meeting times that will work for attendees' schedules.
    *
    * <p>Initially, meeting times ({@code TimeRange}s) that will works for both mandatory and
-   * optional attendies are identified. If there are no meeting times that work for all attendees,
-   * only meeting times with mandatory attendees are identified and returned. In the special case
-   * where there are no mandatory attendees, at least one optional attendee, and no times work out,
-   * return an empty list.
+   * optional attendees are identified. If there are no meeting times that work for all attendees,
+   * only meeting times with mandatory attendees are identified and returned.
    *
    * @param events The Collection of events that are used to determine what periods of time that the
    *     meeting can take place.
@@ -120,11 +117,13 @@ public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     Collection<TimeRange> mandatoryAndOptionalTimesList =
         getMeetingTimes(events, request, /*considerOptionalAttendees=*/true);
-    if (!mandatoryAndOptionalTimesList.isEmpty()) {
+
+    // In the special case where there are no mandatory attendees, at least one optional attendee,
+    // and no times work out, return an empty list rather than considering only mandatory attendees.
+    // This will result in a time range for the whole day and is not desirable.
+    if (!mandatoryAndOptionalTimesList.isEmpty()
+        || request.getAttendees().isEmpty() && !request.getOptionalAttendees().isEmpty()) {
       return mandatoryAndOptionalTimesList;
-    }
-    if (request.getAttendees().isEmpty() && !request.getOptionalAttendees().isEmpty()) {
-      return Arrays.asList();
     }
 
     return getMeetingTimes(events, request, /*considerOptionalAttendees=*/false);
