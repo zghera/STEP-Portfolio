@@ -54,15 +54,16 @@ public final class FindMeetingQuery {
    * @return A Collection of the feasible meeting {@code TimeRange}s.
    */
   private Collection<TimeRange> getMeetingTimes(List<Event> eventList, MeetingRequest request) {
+    String eod_title = "EOD";
     eventList.add(new Event(
-        "EOD", TimeRange.fromStartDuration(TimeRange.END_OF_DAY, 0), request.getAttendees()));
+        eod_title, TimeRange.fromStartDuration(TimeRange.END_OF_DAY, 0), request.getAttendees()));
     int endOfEarlierEvent = TimeRange.START_OF_DAY;
 
     Collection<TimeRange> openMeetingTimes = new ArrayList<>();
     for (Event curEvent : eventList) {
       int startOfCurEvent = curEvent.getWhen().start();
 
-      boolean endTimeIsInclusive = "EOD".equals(curEvent.getTitle());
+      boolean endTimeIsInclusive = eod_title.equals(curEvent.getTitle());
       TimeRange timeBetweenEvents =
           TimeRange.fromStartEnd(endOfEarlierEvent, startOfCurEvent, endTimeIsInclusive);
       if (timeBetweenEvents.duration() >= request.getDuration()) {
