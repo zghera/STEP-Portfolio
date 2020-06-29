@@ -30,4 +30,34 @@ public final class GreeterTest {
 
     Assert.assertEquals("Hello Ada", greeting);
   }
+
+  @Test
+  public void testGreetingTrimsWhitespace() {
+    Greeter greeter = new Greeter();
+
+    String greeting = greeter.greet("\t\t   Ada   ");
+
+    // Whitespace should be trimmed.
+    Assert.assertEquals("Hello Ada", greeting);
+  }
+
+  @Test
+  public void testGreetingTrimsNonAlphanumeric() {
+    Greeter greeter = new Greeter();
+
+    String greeting = greeter.greet("\t@#@$@ Ada !*&");
+
+    // Non-alphanumeric characters should be trimmed.
+    Assert.assertEquals("Hello Ada", greeting);
+  }
+
+  @Test
+  public void testGreetingDoesNotTrimNumbers() {
+    Greeter greeter = new Greeter();
+
+    String greeting = greeter.greet("\t Ada $*)#123 ");
+
+    // Number characters should not be trimmed.
+    Assert.assertEquals("Hello Ada123", greeting);
+  }
 }
