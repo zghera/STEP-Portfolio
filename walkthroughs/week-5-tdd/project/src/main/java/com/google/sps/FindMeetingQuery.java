@@ -76,15 +76,16 @@ public final class FindMeetingQuery {
             })
             .collect(Collectors.toList());
 
-    eventList.add(
-        new Event("EOD", TimeRange.fromStartDuration(TimeRange.END_OF_DAY, 0), meetingAttendees));
+    String eod_title = "EOD";
+    eventList.add(new Event(
+        eod_title, TimeRange.fromStartDuration(TimeRange.END_OF_DAY, 0), request.getAttendees()));
     int endOfEarlierEvent = TimeRange.START_OF_DAY;
 
     Collection<TimeRange> openMeetingTimes = new ArrayList<>();
     for (Event curEvent : eventList) {
       int startOfCurEvent = curEvent.getWhen().start();
 
-      boolean endTimeIsInclusive = "EOD".equals(curEvent.getTitle());
+      boolean endTimeIsInclusive = eod_title.equals(curEvent.getTitle());
       TimeRange timeBetweenEvents =
           TimeRange.fromStartEnd(endOfEarlierEvent, startOfCurEvent, endTimeIsInclusive);
       if (timeBetweenEvents.duration() >= request.getDuration()) {
@@ -93,10 +94,7 @@ public final class FindMeetingQuery {
 
       // Only move reference points of end of last event if the cur event end point is later
       // than the end of the event with the latest end point so far.
-      int endOfCurEvent = curEvent.getWhen().end();
-      if (endOfCurEvent >= endOfEarlierEvent) {
-        endOfEarlierEvent = endOfCurEvent;
-      }
+      endOfEarlierEvent = max(endOfEarlierEvent, curEvent.getWhen().end());
     }
 
     return openMeetingTimes;
