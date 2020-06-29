@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /** Servlet that provides the URL that allows a user to upload a file to Blobstore. */
 @WebServlet("/blobstore-upload-url")
+@SuppressWarnings("serial")
 public class BlobstoreUploadUrlServlet extends HttpServlet {
   private static BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 
