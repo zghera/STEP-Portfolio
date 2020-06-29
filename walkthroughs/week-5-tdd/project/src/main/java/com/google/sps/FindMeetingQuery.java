@@ -72,10 +72,7 @@ public final class FindMeetingQuery {
 
       // Only move reference points of end of last event if the cur event end point is later
       // than the end of the event with the latest end point so far.
-      int endOfCurEvent = curEvent.getWhen().end();
-      if (endOfCurEvent >= endOfEarlierEvent) {
-        endOfEarlierEvent = endOfCurEvent;
-      }
+      endOfEarlierEvent = max(endOfEarlierEvent, curEvent.getWhen().end());
     }
 
     return openMeetingTimes;
