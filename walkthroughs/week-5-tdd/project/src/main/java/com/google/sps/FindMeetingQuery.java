@@ -113,8 +113,8 @@ public final class FindMeetingQuery {
     // In the special case where there are no mandatory attendees, at least one optional attendee,
     // and no times work out, return an empty list rather than considering only mandatory attendees.
     // This will result in a time range for the whole day and is not desirable.
-    if (!mandatoryAndOptionalTimesList.isEmpty()
-        || request.getAttendees().isEmpty() && !request.getOptionalAttendees().isEmpty()) {
+    if (!mandatoryAndOptionalTimesList.isEmpty() ||
+          (request.getAttendees().isEmpty() && !request.getOptionalAttendees().isEmpty())) {
       return mandatoryAndOptionalTimesList;
     }
 
