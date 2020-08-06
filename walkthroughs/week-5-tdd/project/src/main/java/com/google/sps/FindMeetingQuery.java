@@ -41,16 +41,6 @@ public final class FindMeetingQuery {
   /**
    * Returns a collection of all meeting times that will work for all attendees' schedules.
    *
-   * <p>Initially, the meeting attendees is set based on {@code considerOptionalAttendees}. Once
-   * this is determined, the event list is filtered and sorted. More specifically, the events are
-   * filtered if it does not contain at least one participant that is also a meeting participant.
-   * The open meeting times are determined by iterating through each event and creating a new {@code
-   * TimeRange} for each range between meetings. If the duration is greater than or equal to the
-   * duration of the requested meeting, that {@code TimeRange} instance is added to the list {@code
-   * openMeetingTimes}. The initial value of {@code endOfEarlierEvent} is set to the start of the
-   * day for convenience when evaluating the first event. Also, the end of day time is appended as
-   * an additional event to the current event list to avoid more conditional statements.
-   *
    * @param eventList The list of events that are used to determine what periods of time that the
    *     meeting can take place. This list is 'filtered' and sorted in {@code query()}.
    * @param request The meeting request that contains the requirements for potential meetings.
@@ -76,10 +66,14 @@ public final class FindMeetingQuery {
             })
             .collect(Collectors.toList());
 
+    //  The initial value of {@code endOfEarlierEvent} is set to the start of the
+    //  day for convenience when evaluating the first event.
+    int endOfEarlierEvent = TimeRange.START_OF_DAY;
+    // The end of day time is appended as an additional event to the current
+    // event list to avoid more conditional statements.
     String eod_title = "EOD";
     eventList.add(new Event(
         eod_title, TimeRange.fromStartDuration(TimeRange.END_OF_DAY, 0), request.getAttendees()));
-    int endOfEarlierEvent = TimeRange.START_OF_DAY;
 
     Collection<TimeRange> openMeetingTimes = new ArrayList<>();
     for (Event curEvent : eventList) {
