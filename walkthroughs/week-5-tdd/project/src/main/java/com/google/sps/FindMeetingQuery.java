@@ -24,15 +24,15 @@ import java.util.stream.Collectors;
 
 public final class FindMeetingQuery {
   /**
-   * Returns a boolean based on if at least one participant in the event is also a participant in
-   * the meeting request.
+   * Returns a boolean if at least one participant in the event is also a meeting attendee from the
+   * mandatory and/or optional attendee list.
    *
    * @param eventAttendeesCopy A copy of the set of attendees in a specific event.
    * @param meetingAttendees The set of attendees in the meeting request.
    * @return True if at least one participant in the set {@code eventAttendees} is also a
    *     participant in {@code meetingAttendees}. False otherwise.
    */
-  private boolean eventParticipantInMeeting(
+  private boolean eventAttendeeIsMeetingAttendee(
       Set<String> eventAttendeesCopy, Collection<String> meetingAttendees) {
     eventAttendeesCopy.retainAll(meetingAttendees);
     return !eventAttendeesCopy.isEmpty();
@@ -41,23 +41,39 @@ public final class FindMeetingQuery {
   /**
    * Returns a collection of all meeting times that will work for all attendees' schedules.
    *
-   * <p>The open meeting times are determined by iterating through each event and creating a new
-   * {@code TimeRange} for each range between meetings. If the duration is greater than or equal to
-   * the duration of the requested meeting, that {@code TimeRange} instance is added to the list
-   * {@code openMeetingTimes}. The initial value of {@code endOfEarlierEvent} is set to the start of
-   * the day for convenience when evaluating the first event. Also, the end of day time is appended
-   * as an additional event to the current event list to avoid more conditional statements.
-   *
    * @param eventList The list of events that are used to determine what periods of time that the
    *     meeting can take place. This list is 'filtered' and sorted in {@code query()}.
    * @param request The meeting request that contains the requirements for potential meetings.
    * @return A Collection of the feasible meeting {@code TimeRange}s.
    */
-  private Collection<TimeRange> getMeetingTimes(List<Event> eventList, MeetingRequest request) {
+  private Collection<TimeRange> getMeetingTimes(
+      Collection<Event> events, MeetingRequest request, boolean considerOptionalAttendees) {
+    Collection<String> meetingAttendees = new HashSet<String>(request.getAttendees());
+    if (considerOptionalAttendees) {
+      meetingAttendees.addAll(request.getOptionalAttendees());
+    }
+
+    List<Event> eventList =
+        events.stream()
+            .filter(event
+                -> eventAttendeeIsMeetingAttendee(
+                    new HashSet<String>(event.getAttendees()), meetingAttendees))
+            .sorted(new Comparator<Event>() {
+              @Override
+              public int compare(Event a, Event b) {
+                return Long.compare(a.getWhen().start(), b.getWhen().start());
+              }
+            })
+            .collect(Collectors.toList());
+
+    //  The initial value of {@code endOfEarlierEvent} is set to the start of the
+    //  day for convenience when evaluating the first event.
+    int endOfEarlierEvent = TimeRange.START_OF_DAY;
+    // The end of day time is appended as an additional event to the current
+    // event list to avoid more conditional statements.
     String eod_title = "EOD";
     eventList.add(new Event(
         eod_title, TimeRange.fromStartDuration(TimeRange.END_OF_DAY, 0), request.getAttendees()));
-    int endOfEarlierEvent = TimeRange.START_OF_DAY;
 
     Collection<TimeRange> openMeetingTimes = new ArrayList<>();
     for (Event curEvent : eventList) {
@@ -72,20 +88,18 @@ public final class FindMeetingQuery {
 
       // Only move reference points of end of last event if the cur event end point is later
       // than the end of the event with the latest end point so far.
-      endOfEarlierEvent = max(endOfEarlierEvent, curEvent.getWhen().end());
+      endOfEarlierEvent = Math.max(endOfEarlierEvent, curEvent.getWhen().end());
     }
 
     return openMeetingTimes;
   }
 
   /**
-   * Returns a collection of all meeting times that will work for all attendees' schedules.
+   * Returns a collection of all meeting times that will work for attendees' schedules.
    *
-   * <p>To determine the meeting times ({@code TimeRange}s) that works for all attendees, the event
-   * list is filtered and sorted so that {@code getMeetingTimes()} can determine all feasible
-   * meeting times. More specifically, filtered means that an event is removed if it does not
-   * contain at least one participant that is included in the meeting request. Both filtering and
-   * then sorting are accomplished using a stream of Event objects.
+   * <p>Initially, meeting times ({@code TimeRange}s) that will works for both mandatory and
+   * optional attendees are identified. If there are no meeting times that work for all attendees,
+   * only meeting times with mandatory attendees are identified and returned.
    *
    * @param events The Collection of events that are used to determine what periods of time that the
    *     meeting can take place.
@@ -93,19 +107,17 @@ public final class FindMeetingQuery {
    * @return A Collection of the feasible meeting {@code TimeRange}s.
    */
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    List<Event> eventList =
-        events.stream()
-            .filter(event
-                -> eventParticipantInMeeting(
-                    new HashSet<String>(event.getAttendees()), request.getAttendees()))
-            .sorted(new Comparator<Event>() {
-              @Override
-              public int compare(Event a, Event b) {
-                return Long.compare(a.getWhen().start(), b.getWhen().start());
-              }
-            })
-            .collect(Collectors.toList());
+    Collection<TimeRange> mandatoryAndOptionalTimesList =
+        getMeetingTimes(events, request, /*considerOptionalAttendees=*/true);
 
-    return getMeetingTimes(eventList, request);
+    // In the special case where there are no mandatory attendees, at least one optional attendee,
+    // and no times work out, return an empty list rather than considering only mandatory attendees.
+    // This will result in a time range for the whole day and is not desirable.
+    if (!mandatoryAndOptionalTimesList.isEmpty() ||
+          (request.getAttendees().isEmpty() && !request.getOptionalAttendees().isEmpty())) {
+      return mandatoryAndOptionalTimesList;
+    }
+
+    return getMeetingTimes(events, request, /*considerOptionalAttendees=*/false);
   }
 }
